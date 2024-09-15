@@ -33,7 +33,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '8000-eneliviu-lovinescapades-zperjpx7l8c.ws.codeinstitute-ide.net',
-    '.herokuapp.com'
+    '.herokuapp.com',
+    'https://*.codeanyapp.com',
+    'https://*.herokuapp.com',
+    'https://*.127.0.0.1'
 ]
 
 
@@ -93,6 +96,16 @@ DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.codeanyapp.com",
+    "https://*.herokuapp.com",
+    'https://*.127.0.0.1',
+    "https://*8000-eneliviu-lovinescapades-zperjpx7l8c.ws.codeinstitute-ide.net"
+    
+]
+
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -110,6 +123,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # not using email verification in this project
 
 
 # Internationalization
