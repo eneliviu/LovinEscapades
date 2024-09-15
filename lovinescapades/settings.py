@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 # Connect the settings.py file to the env.py file:
 import dj_database_url
+import mimetypes
 if os.path.isfile('env.py'):
     import env
 
@@ -30,6 +31,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+if DEBUG:
+    mimetypes.add_type("text/javascript", ".js", True)
+
 
 ALLOWED_HOSTS = [
     '8000-eneliviu-lovinescapades-zperjpx7l8c.ws.codeinstitute-ide.net',
