@@ -118,7 +118,7 @@ class Image(models.Model):
 
     # Optional field,stored as an empty string if left blank
     description = models.TextField(blank=True)  
-    
+
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
