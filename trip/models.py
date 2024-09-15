@@ -1,3 +1,125 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
+'''
+**blank=True**: Specifies that the field is optional. 
+- The field is allowed to be empty in forms. It's used for form validation
+
+**null=True**: controls whether the database column allows `NULL` values.
+- Use this for fields that are not required in the database.
+
+Usually, both `blank=True` and `null=True` are used together for fields where
+you want to allow empty values both in the database and in forms. However,
+for `CharField` and `TextField`, it's generally recommended to use
+only `blank=True` and not `null=True`.
+
+### When to Use `null=True`:
+- For non-string-based fields, such as `DateTimeField`, `IntegerField`,
+    `ForeignKey`, etc., where a field might be optional and you would like it
+    to be stored as NULL in the database.
+- Avoid using `null=True` for `CharField` and `TextField` fields to avoid
+    confusing behavior. Instead, use `blank=True` for form validation and
+    allow the empty string to indicate the absence of data.
+
+### Summary
+1. **String Fields (`CharField` and `TextField`):**
+   - Use `blank=True` to allow forms to submit empty values.
+   - Do not use `null=True` to keep data handling consistent and 
+   avoid storing NULL values in string fields.
+
+2. **Non-String Fields:**
+   - Use both `blank=True` and `null=True` for optional fields 
+   to allow NULL values in the database.
+
+'''
+
+
+class Trip(models.Model):
+    TRIP_CATEGORY = (('LEISURE', 'Leisure'),
+                     ('BUSINESS', 'Business'),
+                     ('ADVENTURE', 'Adventure'),
+                     ('FAMILY', 'Family'),
+                     ('ROMANTIC', 'Romantic'))
+    TRIP_STATUS = ((0, "Finished"),
+                   (1, "Ongoing"),
+                   (2, "Planned"))
+
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             related_name='trips')
+    title = models.CharField(max_length=100)
+
+    # Optional field,stored as an empty string if left blank
+    description = models.TextField(blank=True)  
+
+    place = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+    trip_category = models.CharField(max_length=50, choices=TRIP_CATEGORY)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    trip_status = models.ImageField(choices=TRIP_STATUS, default=0)
+
+    def __str__(self):
+        return self.name
+
+
+class Activity(models.Model):
+    trip = models.ForeignKey(Trip,
+                             on_delete=models.CASCADE,
+                             related_name='activities')
+    name = models.CharField(max_length=255)
+
+    # Optional field,stored as an empty string if left blank
+    description = models.TextField(blank=True)
+
+    date = models.DateTimeField()
+
+    def __str__(self):
+        return self.name
+
+
+class AbstractPostModel(models.Model):
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             related_name='%(class)ss')
+    content = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
+
+
+class Comment(AbstractPostModel):
+    COMMENT_STATUS = ((0, "Draft"),
+                      (1, "Published"))
+    trip = models.ForeignKey(Trip,
+                             on_delete=models.CASCADE,
+                             related_name='comments')
+
+    def __str__(self):
+        return f'Comment by {self.user.username} on {self.trip.name}'
+
+
+class Note(AbstractPostModel):
+    trip = models.ForeignKey(Trip,
+                             on_delete=models.CASCADE,
+                             related_name='notes')
+
+    def __str__(self):
+        return f'Post by {self.user.username} on {self.trip.name}'
+
+
+class Image(models.Model):
+    trip = models.ForeignKey(Trip,
+                             on_delete=models.CASCADE,
+                             related_name='images')
+    image = models.ImageField() # upload_to='trip_images/'
+
+    # Optional field,stored as an empty string if left blank
+    description = models.TextField(blank=True)  
+    
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Image for {self.trip.name} uploaded at {self.uploaded_at}'
