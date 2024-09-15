@@ -19,6 +19,6 @@ from django.urls import path, include
 from trip import views as trip_views
 
 urlpatterns = [
-    path("trip/", trip_views.index, name='trip'),
-    path('', admin.site.urls),
+    path("", trip_views.index, name='trip'),
+    path('admin', admin.site.urls),
 ]
