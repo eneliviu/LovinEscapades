@@ -50,7 +50,7 @@ class Trip(models.Model):
     title = models.CharField(max_length=100)
 
     # Optional field,stored as an empty string if left blank
-    description = models.TextField(blank=True)  
+    description = models.TextField(blank=True)
 
     place = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
