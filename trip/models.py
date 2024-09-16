@@ -31,6 +31,9 @@ only `blank=True` and not `null=True`.
    - Use both `blank=True` and `null=True` for optional fields 
    to allow NULL values in the database.
 
+### Relationships:
+ForeignKey field type defines a many-to-one relationship
+
 '''
 
 
@@ -55,13 +58,16 @@ class Trip(models.Model):
     place = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
     trip_category = models.CharField(max_length=50, choices=TRIP_CATEGORY)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    start_date = models.DateField()
+    end_date = models.DateField()
     created_on = models.DateTimeField(auto_now_add=True)
-    trip_status = models.ImageField(choices=TRIP_STATUS, default=0)
-
+    trip_status = models.IntegerField(choices=TRIP_STATUS, default=0)
+    
     def __str__(self):
-        return self.name
+        return f'{self.trip_category} trip to {self.place}, {self.country}'
+
+    class Meta:
+        ordering = ["-created_on"]
 
 
 class Activity(models.Model):
@@ -73,7 +79,7 @@ class Activity(models.Model):
     # Optional field,stored as an empty string if left blank
     description = models.TextField(blank=True)
 
-    date = models.DateTimeField()
+    date = models.DateField()
 
     def __str__(self):
         return self.name
@@ -88,6 +94,7 @@ class AbstractPostModel(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ["-created_on"]
 
 
 class Comment(AbstractPostModel):
@@ -96,18 +103,25 @@ class Comment(AbstractPostModel):
     trip = models.ForeignKey(Trip,
                              on_delete=models.CASCADE,
                              related_name='comments')
+    approved = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Comment by {self.user.username} on {self.trip.name}'
+        return f'Comment by {self.user.username} for \
+                            {self.trip.user} on \
+                            "{self.trip.title}" post'
 
 
 class Note(AbstractPostModel):
+    NOTE_STATUS = ((0, "Draft"),
+                   (1, "Published"))
     trip = models.ForeignKey(Trip,
                              on_delete=models.CASCADE,
                              related_name='notes')
+    status = models.IntegerField(choices=NOTE_STATUS,
+                                 default=0)
 
     def __str__(self):
-        return f'Post by {self.user.username} on {self.trip.name}'
+        return f'Post by {self.user.username} on {self.trip.title}'
 
 
 class Image(models.Model):
@@ -117,9 +131,12 @@ class Image(models.Model):
     image = models.ImageField() # upload_to='trip_images/'
 
     # Optional field,stored as an empty string if left blank
-    description = models.TextField(blank=True)  
+    description = models.TextField(blank=True)
 
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'Image for {self.trip.name} uploaded at {self.uploaded_at}'
+
+    class Meta:
+        ordering = ["-uploaded_at"]
