@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'lovinescapades',
+    'trip',
 ]
 
 MIDDLEWARE = [
@@ -104,6 +104,7 @@ DATABASES = {
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.codeanyapp.com",
+    "https://*.codeinstitute-ide.net/",
     "https://*.herokuapp.com",
     'https://*.127.0.0.1',
     "https://*8000-eneliviu-lovinescapades-zperjpx7l8c.ws.codeinstitute-ide.net"
