@@ -94,7 +94,7 @@ class AbstractPostModel(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ["-created_on"]
+        ordering = ["-created_on"]  # descending order of creation date
 
 
 class Comment(AbstractPostModel):
