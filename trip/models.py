@@ -62,6 +62,7 @@ class Trip(models.Model):
     end_date = models.DateField()
     created_on = models.DateTimeField(auto_now_add=True)
     trip_status = models.IntegerField(choices=TRIP_STATUS, default=0)
+    shared = models.BooleanField(default=False)
     
     def __str__(self):
         return f'{self.trip_category} trip to {self.place}, {self.country}'
