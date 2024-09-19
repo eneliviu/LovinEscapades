@@ -1,153 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LovinEscapades</title>
-
-    <!-- Google Fonts CSS -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" rel="stylesheet" />
-
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css"
-        integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous" />
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-
-    <!-- Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="">
-        </script>
-
-    <!-- Leaflet.MarkerCluster -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js'></script>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css'
-        rel='stylesheet' />
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css'
-        rel='stylesheet' />
+{% block content %}
+<!-- Content Goes here -->
 
 
-</head>
-
-<body>
-
-    <!-- Navigation -->
-    <header class="container-fluid">
-        <nav class="navbar navbar__base nav-underline navbar-expand-lg">
-            <div class="container-fluid">
-                <!-- LOGO -->
-                <a class="navbar-brand text-capitalize mb-1" href="/">
-                    <i class="bi bi-robot ms-2 me-3"></i>
-                    <strong id="logo"> Lovin|Escapades </strong>
-                </a>
-
-                <!-- Toggler button for small screens -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-                    aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-
-                <!-- Collapsible content -->
-                <div class="collapse navbar-collapse" id="navbar">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" href="#"> About </a>
-                        </li>
-
-                        <!-- { if user.is_authenticated } -->
-                        <li class="nav-item mx-3">
-                            <a class="nav-link " aria-current="page" href="">Logout</a>
-                        </li>
-                        <!--{ else }-->
-                        <li class="nav-item mx-3">
-                            <a class="nav-link " aria-current="page" href="">
-                                Register
-                            </a>
-                        </li>
-
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" aria-current="page" href="">Login</a>
-                        </li>
-                        <!--{ endif }-->
-
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" href="#"> Blog </a>
-                        </li>
-
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" href="#"> Contact Us </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- { if user.is_authenticated } -->
-
-                <span class="navbar-text mx-3 d-none d-xl-inline text-success-emphasis ms-2">
-                    <!-- Welcome, {{ user | safe }}! 
-                    <i class="bi bi-person-circle ms-2"></i>
-                    -->
-                </span>
-                <!-- { else } -->
-                <span class="navbar-text mx-3 d-none d-xl-inline small fst-italic text-primary-emphasis">
-                    sharing travel experiences
-                </span>
-                <!-- { endif } -->
+<div class="container">
+    
+    <!-- Hero Section -->
+    <div class="container my-5">
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg flex-lg-row-reverse">
+            <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+                <img class="rounded-lg-3" src="static/images/leandro-barreto-nomAp6_KVXU-unsplash.jpg" alt="" width="720">
             </div>
-        </nav>
-    </header>
+            <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+                <h1 class="display-4 fw-bold lh-1 text-body-emphasis">Map Your Adventures, Share Your Stories</h1>
+                <p class="lead">Discover new places, share your travel experiences, and connect with fellow explorers.</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+                    <a href="#start-mapping" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Add Your Trip</a>
+                    <a href="#features" class="btn btn-outline-secondary btn-lg px-4">Learn More</a>
+                </div>
+            </div>
 
-
-
-    <!-- Footer -->
-    <footer class="container-fluid d-flex flex-column footer__base bg-black position-fixed bottom-0 p-2">
-
-        <div class="text-center mx-4 social-icons">
-
-            <i class="fa-brands fa-facebook"> </i>
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener"
-                aria-label="Visit our Facebook page (opens in a new tab)">
-            </a>
-
-            <i class="fa-brands fa-twitter"></i>
-            <a href="https://www.twitter.com/" target="_blank" rel="noopener"
-                aria-label="Visit our Twitter page (opens in a new tab)">
-
-            </a>
-
-            <i class="fa-brands fa-square-youtube"></i>
-            <a href="https://www.youtube.com/" target="_blank" rel="noopener"
-                aria-label="Visit our Youtube channel (opens in a new tab)"></a>
         </div>
+    </div>
 
-        <div class=" text-center text-white px-5">
-            <small>Copyright &copy;
-                <script>
-                    document.write(new Date().getFullYear());
-                </script>
-                <span> Code|Star: All Rights Reserved </span>
-            </small>
+    <!-- Testimonials Section -->
+    <section id="carousel-testimonials" class="py-5 bg-body-tertiary">
+        <div id="testimonials" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="testimonial text-center">
+                        <p>"This platform made my trip to Europe unforgettable!"</p>
+                        <small>- Alex R.</small>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="testimonial text-center">
+                        <p>"Sharing my travel notes has never been easier!"</p>
+                        <small>- Jamie L.</small>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="testimonial text-center">
+                        <p>"An essential tool for every traveler!"</p>
+                        <small>- Morgan S.</small>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
 
-    </footer>
+    <!-- Begin Map Section -->
+    <section id="map-section" class="map-container">
+        <div id="map" style="width: 100%; height: 100%;"></div>
+    </section>
 
-    <!--Javascript-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/498c29f243.js" crossorigin="anonymous"></script>
+    <!-- Scripts -->
 
 
-</body>
+</div>
 
-</html>
+
+{% endblock %}

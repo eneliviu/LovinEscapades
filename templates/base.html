@@ -1,0 +1,173 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LovinEscapades</title>
+
+  
+     <!--FAVICON-->
+     <link rel="apple-touch-icon" sizes="180x180" href="static/favicon/apple-touch-icon.png">
+     <link rel="icon" type="image/png" sizes="32x32" href="static/favicon/favicon-32x32.png">
+     <link rel="icon" type="image/png" sizes="16x16" href="static/favicon/favicon-16x16.png">
+     <link rel="manifest" href="static/favicon/site.webmanifest">
+     <link rel="mask-icon" href="static/favicon/safari-pinned-tab.svg" color="#5bbad5">
+     <meta name="msapplication-TileColor" content="#da532c">
+     <meta name="theme-color" content="#dafeff">
+
+    <!-- Google Fonts CSS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css"
+        integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="">
+        </script>
+
+    <!-- Leaflet.MarkerCluster -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css'
+        rel='stylesheet' />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css'
+        rel='stylesheet' />
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="container-fluid">
+        <nav class="navbar navbar__base nav-underline navbar-expand-lg">
+            <div class="container-fluid">
+                <!-- LOGO -->
+                <a class="navbar-brand text-capitalize mb-1" href="/">
+                    <i class="bi bi-robot ms-2 me-3"></i>
+                    <strong id="logo"> Lovin|Escapades </strong>
+                </a>
+
+                <!-- Toggler button for small screens -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+                    aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+                <!-- Collapsible content -->
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="navbar-nav me-auto">
+
+                        <!-- { if user.is_authenticated } -->
+                        <li class="nav-item mx-3">
+                            <a class="nav-link " aria-current="page" href="">Logout</a>
+                        </li>
+                        <!--{ else }-->
+                        <li class="nav-item mx-3">
+                            <a class="nav-link " aria-current="page" href="">
+                                Register
+                            </a>
+                        </li>
+
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" aria-current="page" href="">Login</a>
+                        </li>
+                        <!--{ endif }-->
+
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" href="#"> Blog </a>
+                        </li>
+
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" href="#"> Contact Us </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- { if user.is_authenticated } -->
+
+                <span class="navbar-text mx-3 d-none d-xl-inline text-success-emphasis ms-2">
+                    <!-- Welcome, {{ user | safe }}! 
+                    <i class="bi bi-person-circle ms-2"></i>
+                    -->
+                </span>
+                <!-- { else } -->
+                <span class="navbar-text mx-3 d-none d-xl-inline small fst-italic text-primary-emphasis">
+                    sharing travel experiences
+                </span>
+                <!-- { endif } -->
+            </div>
+        </nav>
+    </header>
+
+
+
+    <main>
+
+        {% block content %}
+    
+
+        {% endblock content %}
+    
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="container-fluid d-flex flex-column footer__base bg-black bottom-0 p-2 fixed-bottom">
+
+        <div class="text-center mx-4 social-icons">
+            <i class="fa-brands fa-facebook"> </i>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener"
+                aria-label="Visit our Facebook page (opens in a new tab)">
+            </a>
+
+            <i class="fa-brands fa-twitter"></i>
+            <a href="https://www.twitter.com/" target="_blank" rel="noopener"
+                aria-label="Visit our Twitter page (opens in a new tab)">
+
+            </a>
+
+            <i class="fa-brands fa-square-youtube"></i>
+            <a href="https://www.youtube.com/" target="_blank" rel="noopener"
+                aria-label="Visit our Youtube channel (opens in a new tab)"></a>
+        </div>
+
+        <div class=" text-center text-white px-5">
+            <small>Copyright &copy;
+                <script>
+                    document.write(new Date().getFullYear());
+                </script>
+                <span> Code|Star: All Rights Reserved </span>
+            </small>
+        </div>
+
+
+    </footer>
+
+    <!--Javascript-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/498c29f243.js" crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
