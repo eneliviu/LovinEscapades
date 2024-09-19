@@ -10,12 +10,11 @@ body {
    flex-direction: column;
    position: relative;
    background-color: #F9FAFC;
-   height: 100%;
-   min-height: 100vh;
    padding-top: 56px;
    font: 1rem/1.4 system-ui, sans-serif;
+   height: 100%;
    width: 100%;
-   min-width: 344px;
+   min-width: 280px;
    margin-bottom: 61px;
 }
 
