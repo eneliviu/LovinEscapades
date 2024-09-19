@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from trip import views as trip_views
 
+
+# it is best not to give your URLs the same name
+# as your view function or vice-versa.
 urlpatterns = [
-    path("", trip_views.index, name='trip'),
     path('admin', admin.site.urls),
+    path("", include('trip.urls'), name='trip-urls')
 ]
