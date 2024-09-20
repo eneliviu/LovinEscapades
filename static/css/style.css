@@ -73,6 +73,7 @@ main {
     color: #666;
 }
 
+/*
 .social-icons i {
     color: #fafafa;
     opacity: 0.7;
@@ -84,9 +85,28 @@ main {
 	opacity: 1;
     display:inline-block;
 }
+*/
 
 .footer__base{
     max-height: 70px;
     margin: 0;
-    width: 100%;
+    width: 100%; 
+}
+
+
+footer a i {
+    color: white;
+    transition: color 0.3s;
+    scale: 1.1;
+}
+
+footer a:hover i {
+    color: #ccc; /* Adjust the color on hover as needed */
+    display:inline-block;
+    scale: 1.5;
+}
+
+footer a {
+    text-decoration: none; /* Remove underline from anchor tags */
+    justify-content: space-between;
 }

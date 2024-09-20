@@ -8,18 +8,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LovinEscapades</title>
 
-  
-     <!--FAVICON-->
 
-     <link rel="apple-touch-icon" sizes="180x180" href="static/favicon/apple-touch-icon.png">
-     <link rel="icon" type="image/png" sizes="192x192" href="static/favicon/android-chrome-192x192.png">
-     <link rel="icon" type="image/png" sizes="512x512" href="static/favicon/android-chrome-512x512.png">
-     <link rel="icon" type="image/png" sizes="32x32" href="static/favicon/favicon-32x32.png">
-     <link rel="icon" type="image/png" sizes="16x16" href="static/favicon/favicon-16x16.png">
-     <link rel="manifest" href="static/favicon/site.webmanifest" crossorigin="use-credentials">
-     <link rel="mask-icon" href="static/favicon/safari-pinned-tab.svg" color="#5bbad5">
-     <meta name="msapplication-TileColor" content="#da532c">
-     <meta name="theme-color" content="#dafeff">
+    <!--FAVICON-->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="static/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="static/favicon/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/favicon/favicon-16x16.png">
+    <link rel="manifest" href="static/favicon/site.webmanifest" crossorigin="use-credentials">
+    <link rel="mask-icon" href="static/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#dafeff">
 
     <!-- Google Fonts CSS -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -125,34 +125,42 @@
     <main>
 
         {% block content %}
-    
+
 
         {% endblock content %}
-    
+
     </main>
 
 
     <!-- Footer -->
-    <footer class="container-fluid d-flex flex-column footer__base bg-black bottom-0 p-2 fixed-bottom">
+    <!-- Footer -->
+    <footer class="container-fluid d-flex flex-column footer__base bg-black p-2 fixed-bottom">
 
-        <div class="text-center mx-4 social-icons">
-            <i class="fa-brands fa-facebook"> </i>
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener"
+        <!-- Social Media Icons space -->
+        <div class="text-center mx-4">
+
+            <!-- Facebook Icon -->
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener" class="mx-3"
                 aria-label="Visit our Facebook page (opens in a new tab)">
+                <i class="fa-brands fa-facebook"></i>
             </a>
 
-            <i class="fa-brands fa-twitter"></i>
-            <a href="https://www.twitter.com/" target="_blank" rel="noopener"
+            <!-- Twitter Icon -->
+            <a href="https://www.twitter.com/" target="_blank" rel="noopener" class="mx-3"
                 aria-label="Visit our Twitter page (opens in a new tab)">
-
+                <i class="fa-brands fa-twitter"></i>
             </a>
 
-            <i class="fa-brands fa-square-youtube"></i>
-            <a href="https://www.youtube.com/" target="_blank" rel="noopener"
-                aria-label="Visit our Youtube channel (opens in a new tab)"></a>
+            <!-- YouTube Icon -->
+            <a href="https://www.youtube.com/" target="_blank" rel="noopener" class="mx-3"
+                aria-label="Visit our Youtube channel (opens in a new tab)">
+                <i class="fa-brands fa-square-youtube"></i>
+            </a>
+
         </div>
 
-        <div class=" text-center text-white px-5">
+        <!-- Copyright Text -->
+        <div class="text-center text-white px-5">
             <small>Copyright &copy;
                 <script>
                     document.write(new Date().getFullYear());
@@ -160,7 +168,6 @@
                 <span> Code|Star: All Rights Reserved </span>
             </small>
         </div>
-
 
     </footer>
 
