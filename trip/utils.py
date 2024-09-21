@@ -18,7 +18,7 @@ def get_coordinates(location, attempt=1, max_attempts=5):
     Raises:
     GeocoderTimedOut: If the max number of attempts is exceeded.
     '''
-    geocoder = geocoders.Nominatim(user_agent='leaflet_app')
+    geocoder = geocoders.Nominatim(user_agent='trip')
     try:
         location = geocoder.geocode(location, exactly_one=True, language='en')
         lat = geocoder.geocode(location).latitude

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from . utils import get_coordinates
 
 '''
 **blank=True**: Specifies that the field is optional. 
@@ -66,19 +67,18 @@ class Trip(models.Model):
     trip_status = models.IntegerField(choices=TRIP_STATUS, default=0)
     shared = models.BooleanField(default=False)
     
-
     def save(self, *args, **kwargs):
         '''
         Override the save() method to set the Lat and Lon values 
         before saving.
         '''
         try:
-            coords = get_coordinates(self.location)
+            coords = get_coordinates(self.place)
             self.lat = coords[0]
             self.lon = coords[1]
         except Exception as e:
             print(f"Operation failed: {e}")
-    
+
         super(Trip, self).save(*args, **kwargs)
 
     def __str__(self):
