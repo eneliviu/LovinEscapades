@@ -1,5 +1,9 @@
 {% load static %}
 
+<!-- assign the 'home' URL to a variable named home_url -->
+{% url 'home' as home_url %} 
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -77,7 +81,7 @@
                     <ul class="navbar-nav me-auto">
 
                         <li class="nav-item mx-3">
-                            <a class="nav-link {% if request.path == '/' %} active" aria-current="page{% endif %}"
+                            <a class="nav-link {% if request.path == home_url %} active" aria-current="page{% endif %}"
                             href="{% url 'home' %}">Home</a>
                             
                         </li>
