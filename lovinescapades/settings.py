@@ -25,15 +25,13 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECRET_KEY = 'django-insecure-@=xcjzjp-tw$kb-u+i#8l^fh6l_1zceviy+8k=2h)qssq25hqo'
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-mimetypes.add_type("text/javascript", ".js", True)
-mimetypes.add_type("text/css", ".css", True)
+# mimetypes.add_type("text/javascript", ".js", True)
+# mimetypes.add_type("text/css", ".css", True)
 
 
 ALLOWED_HOSTS = [
@@ -152,9 +150,16 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
-# Create a staticfiles directory and collect the static files
+# Create a staticfiles directory and collect the static files. 
+# to store all static files from all apps (including admin).
 # RUN: python3 manage.py collectstatic
+
+# By removing DISABLE_COLLECTSATIC, Heroku will manage static files
+# automatically every time it deploys. So, from now on, no need to run
+# collectstatic manually unless DEBUG == False.
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

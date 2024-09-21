@@ -57,6 +57,8 @@ class Trip(models.Model):
 
     place = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
+    lat = models.FloatField(blank=True, null=True)
+    lon = models.FloatField(blank=True, null=True)
     trip_category = models.CharField(max_length=50, choices=TRIP_CATEGORY)
     start_date = models.DateField()
     end_date = models.DateField()
@@ -64,11 +66,26 @@ class Trip(models.Model):
     trip_status = models.IntegerField(choices=TRIP_STATUS, default=0)
     shared = models.BooleanField(default=False)
     
+
+    def save(self, *args, **kwargs):
+        '''
+        Override the save() method to set the Lat and Lon values 
+        before saving.
+        '''
+        try:
+            coords = get_coordinates(self.location)
+            self.lat = coords[0]
+            self.lon = coords[1]
+        except Exception as e:
+            print(f"Operation failed: {e}")
+    
+        super(Trip, self).save(*args, **kwargs)
+
     def __str__(self):
         return f'{self.trip_category} trip to {self.place}, {self.country}'
 
     class Meta:
-        ordering = ["-created_on"]
+        ordering = ["-created_on", 'start_date', 'country']
 
 
 class Activity(models.Model):
