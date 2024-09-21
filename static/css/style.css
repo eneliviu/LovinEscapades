@@ -19,18 +19,19 @@ body {
 }
 
 header {
-   width: 100%;
-   top: 0;
-   position: fixed;
+    position: fixed;
+    width: 100%;
+    top: 0;
 }
+
+
 #logo{
    color:rgb(16, 63, 218)
 }
 
 
-
 .navbar__base {
-   z-index: 999;
+   z-index: 2000;
    background-color: rgba(255, 255, 255, 0.7) !important;
    backdrop-filter: blur(1px);
 }
@@ -40,11 +41,12 @@ main {
 }
 
 #testimonials {
-    padding: 60px 0;
-    background: rgba(255, 255, 255, 0.9);
+    padding: 1.5rem 0;
+    background: rgba(255, 255, 255, 0.9) !important;
+    z-index: 0 !important;
 }
 #testimonials h2 {
-    margin-bottom: 40px;
+    margin-bottom: 0.5rem;
     font-size: 36px;
     font-weight: 700;
     text-align: center;
@@ -53,9 +55,10 @@ main {
     background: #fff;
     border: none;
     border-radius: 15px;
-    padding: 20px;
+    padding: 1rem;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    margin: 10px;
+    margin: 0.5rem 0;
+    z-index: -2 !important; 
 }
 .testimonial-text {
     font-size: 18px;
@@ -71,6 +74,32 @@ main {
     display: block;
     font-style: normal;
     color: #666;
+}
+.carousel-item{
+    z-index: -2 !important;
+}
+
+
+.carousel-inner {
+    position: relative; /* Ensure carousel forms a new stacking context */
+    z-index: 1!important;  /* Lower z-index to ensure it stays below the navbar */
+}
+
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.3;
+    transition: all 0.2s ease-out;
+}
+
+.c_map{
+    width: 100%;
+    height: auto;
+    min-height: 300px; 
+    min-width: 280px;
 }
 
 /*

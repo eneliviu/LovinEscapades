@@ -4,18 +4,19 @@
 <!-- Content Goes here -->
 
 
-<div class="container">
+<div class="container-fluid d-flex flex-column">
 
     <!-- Hero Section -->
-    <div class="container my-5">
+    <section id = 'hero-section' class="container my-5 col-12" aria-labelledby="hero-section">
         <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg flex-lg-row-reverse">
             <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-                <img class="rounded-lg-3" src="static/images/leandro-barreto-nomAp6_KVXU-unsplash.jpg" alt=""
+                <img class="rounded-lg-3" src="static/images/leandro-barreto-nomAp6_KVXU-unsplash.jpg" alt="Map image with pinned locations"
                     width="720">
             </div>
             <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
                 <h1 class="display-4 fw-bold lh-1 text-body-emphasis">Map Your Adventures, Share Your Stories</h1>
-                <p class="lead">Discover new places, share your travel experiences, and connect with fellow explorers.
+                <p class="lead">Discover new places, share your travel experiences, and connect with fellow
+                    explorers.
                 </p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
                     <a href="#start-mapping" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Add Your Trip</a>
@@ -24,51 +25,64 @@
             </div>
 
         </div>
-    </div>
+    </section>
 
-    <!-- Testimonials Section  -->
-    <section id="carousel-testimonials" class="bg-body-tertiary">
-        <div id="testimonials" class="carousel slide py-2" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="testimonial-card text-center">
+    <!-- Testimonials Section -->
+    <section id="carousel-testimonials" class="row my-0 bg-body-tertiary" aria-labelledby="testimonials-title">
+    
+        <div class="container py-0 col-12  z-1">
+        
+            <h2 id="testimonials-title" class="visually-hidden">Testimonials</h2>
+            <div id="testimonials" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner ">
+                    <div class="carousel-item active ">
+                        <div class="testimonial-card text-center">
                             <p class="testimonial-text">"This platform made my trip to Europe unforgettable!"</p>
                             <div class="testimonial-author">
                                 Alex R.
                                 <small>Travel Enthusiast</small>
                             </div>
                         </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="testimonial-card text-center">
-                        <p class="testimonial-text">"Sharing my travel notes has never been easier!"</p>
-                        <div class="testimonial-author">
-                            Jamie L.
-                            <small>Travel Blogger</small>
+                    </div>
+                    <div class="carousel-item ">
+                        <div class="testimonial-card text-center">
+                            <p class="testimonial-text">"Sharing my travel notes has never been easier!"</p>
+                            <div class="testimonial-author">
+                                Jamie L.
+                                <small>Travel Blogger</small>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="testimonial-card text-center">
-                        <p class="testimonial-text">"An essential tool for every traveler!"</p>
-                        <div class="testimonial-author">
-                            Morgan S.
-                            <small>Adventurer</small>
+                    <div class="carousel-item ">
+                        <div class="testimonial-card text-center">
+                            <p class="testimonial-text">"An essential tool for every traveler!"</p>
+                            <div class="testimonial-author">
+                                Morgan S.
+                                <small>Adventurer</small>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div> 
+        
+    </section>
+
+    <!-- Map section -->
+    <section id="map-section" class="row my-4" aria-labelledby="map-title">
+        <div class="col-12 text-center">
+            <h2 id="map-title" class="text-center py-0 m-2">Explore the World with Our Interactive Map</h2>
+            <div id="map" class="c_map mx-auto container-fluid"></div>
         </div>
     </section>
-   
 
-    <!-- Begin Map Section -->
-    <section id="map-section" class="map-container">
-        <div id="map" style="width: 100%; height: 100%;"></div>
-    </section>
-
-    <!-- Scripts -->
-
+    <!-- 
+    <section id="map-section" class='row my-5 container-fluid' aria-labelledby="map-title">
+        <div class='container-fluid d-flex align-items-center justify-content-center'>
+            <div id="map"  class="my-5 mx-auto"></div>
+        </div>
+    </div>
+    -->
 
 </div>
 
