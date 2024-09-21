@@ -115,7 +115,9 @@
                 .bindPopup(
                     '<div>' +
                     //<img src='img/" + feature.properties.img_name + "' width='259'/>+
-                    '<b>' + element.location + '</b>' +
+                    '<b>' + element.place + ', ' + element.country + '</b>' +
+                    '</br>' + 
+                    '<b>' + element.trip_category + '</b>' +
                     '</br>' +
                     'From: ' + element.start_date + '</br>' +
                     'To: ' + element.end_date +
