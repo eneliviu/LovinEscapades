@@ -11,7 +11,8 @@ body {
    position: relative;
    background-color: #F9FAFC;
    padding-top: 56px;
-   font: 1rem/1.4 system-ui, sans-serif;
+   font-family: Roboto, sans-serif;
+   font: 1rem/1.4;
    height: 100%;
    width: 100%;
    min-width: 280px;
@@ -34,6 +35,17 @@ header {
    z-index: 2000;
    background-color: rgba(255, 255, 255, 0.7) !important;
    backdrop-filter: blur(1px);
+}
+
+.link {
+    color: #23BBBB;
+    text-decoration: none;
+}
+
+.link:hover,
+.link:active {
+    color: #445261;
+    text-decoration: underline;
 }
 
 main {
@@ -83,16 +95,6 @@ main {
 .carousel-inner {
     position: relative; /* Ensure carousel forms a new stacking context */
     z-index: 1!important;  /* Lower z-index to ensure it stays below the navbar */
-}
-
-
-.overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    opacity: 0.3;
-    transition: all 0.2s ease-out;
 }
 
 .c_map{

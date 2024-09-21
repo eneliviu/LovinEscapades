@@ -10,5 +10,5 @@ def landing_page(request):
     '''
     View for Landing page
     '''
-
+    
     return render(request, "trip/landing_page.html")

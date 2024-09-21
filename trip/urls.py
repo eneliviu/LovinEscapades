@@ -6,5 +6,5 @@ from . import views as trip_views
 # as your view function or vice-versa.
 
 urlpatterns = [
-    path('', trip_views.landing_page, name='landing-page'),
+    path('', trip_views.landing_page, name='home'),
 ]
