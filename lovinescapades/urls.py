@@ -22,6 +22,7 @@ from django.urls import path, include
 # as your view function or vice-versa.
 urlpatterns = [
     path('admin', admin.site.urls),
+    path("accounts/", include("allauth.urls")),
     path("", include('trip.urls'), name='trip')  # look in trip app URL file
                                                  # for any trip urlpatterns.
 ]

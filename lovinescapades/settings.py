@@ -52,8 +52,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'trip',
 ]
+
+SITE_ID = 1
+# Note: We need to add a SITE_ID of 1 so that Django can handle multiple
+# sites from one database. We need to give each project an ID value so
+# that the database is aware of which project is contacting it.
+# We only have one site here using our one database, but we'll still need
+# to tell Django the site number of 1 explicitly.
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+# The redirection URLs are also added so that after we've logged in
+# or logged out, the site will automatically redirect us to the home page.
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,6 +81,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'lovinescapades.urls'
@@ -129,7 +147,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-ACCOUNT_EMAIL_VERIFICATION = 'none'  # not using email verification in this project
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # not using email verification
 
 
 # Internationalization
