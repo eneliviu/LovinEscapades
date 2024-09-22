@@ -13,7 +13,6 @@ from .models import (Trip, Activity, Comment, Note, Image)
 #     return render(request, "trip/landing_page.html")
 
 
-
 def landing_page(request):
     print(request)
     
