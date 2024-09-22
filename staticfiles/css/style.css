@@ -104,6 +104,18 @@ main {
     min-width: 280px;
 }
 
+.btn-signup,
+.btn-edit {
+    background-color: #188181;
+    color: #fff;
+}
+
+.btn-signup:hover,
+.btn-signup:active {
+    background-color: #fff;
+    color: #23BBBB;
+}
+
 /*
 .social-icons i {
     color: #fafafa;

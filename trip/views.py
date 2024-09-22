@@ -66,3 +66,10 @@ def landing_page(request):
     return render(request, 
                   'trip/landing_page.html',
                   context={'trips': trips})
+
+
+# def custom_404_view(request, exception):
+#     ''' 
+#     Render 404 Error page
+#     '''
+#     return render(request, '404.html', {}, status=404)
