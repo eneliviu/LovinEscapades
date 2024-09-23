@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Content Goes here -->
+
+  <!-- Main Content: Dashboard -->
+  <div class="container mt-5">
+    <!-- Dashboard Header -->
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <h1>Welcome, {{ user.username }}</h1>
+            <p>Here's a quick overview of your trips and activities.</p>
+        </div>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Total Trips</h5>
+                    <p class="card-text display-4">{{ trips|length }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Notes</h5>
+                    <p class="card-text display-4">30</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Photos</h5>
+                    <p class="card-text display-4">120</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Trips Section -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h3>Recent Trips</h3>
+            <div class="list-group">
+                {% for trip in trips %}
+                <a href="#" class="list-group-item list-group-item-action mb-3" data-bs-toggle="modal" data-bs-target="#tripModal{{ trip.id }}">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ trip.title }}</h5>
+                        <small>{{ trip.date_created|timesince }} ago</small>
+                    </div>
+                    <p class="mb-1">{{ trip.description }}</p>
+                    <small>{{ trip.images.count }} photos, 2 notes.</small>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals for Recent Trips -->
+    {% for trip in trips %}
+    <div class="modal fade" id="tripModal{{ trip.id }}" tabindex="-1" aria-labelledby="tripModalLabel{{ trip.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tripModalLabel{{ trip.id }}">{{ trip.title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Images Section -->
+                    <div class="mb-4">
+                        <h5>Photos</h5>
+                        <div class="row">
+                            {% for image in trip.images.all %}
+                            
+
+                            <div class="image-container col-md-4 mb-3">
+                                {% if "placeholder" in image.url %}
+                                    <img class="card-img-top" src="{% static 'images/default.jpg' %}"
+                                        alt="placeholder image">
+                                {% else %}
+                                    <img class="card-img-top" src=" {{ trip.featured_image.url }}" alt="{{ image.description }}">
+                                {% endif %}
+                                <div class="image-flash">
+                                    <p class="author">Author: {{ post.author }}</p>
+                                </div>
+                            </div>
+
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Notes Section -->
+                    <div class="mb-4">
+                        <h5>Notes</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <p>Example note content for {{ trip.title }}.</p>
+                                <!-- Add more notes as needed -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="mb-4">
+                        <h5>Comments</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item">User1: Great photos! <span class="text-muted float-end">2 hours ago</span></li>
+                            <li class="list-group-item">User2: I wish I could visit {{ trip.title }} someday. <span class="text-muted float-end">5 hours ago</span></li>
+                            <!-- Add more comments as needed -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

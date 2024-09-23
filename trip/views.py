@@ -6,15 +6,19 @@ from .models import (Trip, Activity, Comment, Note, Image)
 
 
 # Create your views here.
-# def landing_page(request):
-#     '''
-#     View for Landing page
-#     '''
-#     return render(request, "trip/landing_page.html")
+def user_page(request):
+    '''
+    View for Landing page
+    '''
+    trips = Trip.objects.filter(user=request.user).prefetch_related('images')
+    context = {
+        'trips': trips
+    }
+
+    return render(request, "trip/user_page.html", context)
 
 
 def landing_page(request):
-    print(request)
     
     if request.method == 'GET':
         # Handle no trip data:

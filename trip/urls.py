@@ -7,5 +7,6 @@ from . import views as trip_views
 
 urlpatterns = [
     path('', trip_views.landing_page, name='home'),
-    # path('', trip_views.custom_404_view, name='404_page'),
+    path('dashboard/', trip_views.user_page, name='user'),
+    # path('', trip_views.custom_404_view, name='404_page'), <str:username>
 ]

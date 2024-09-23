@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 from . utils import get_coordinates
 
 '''
@@ -96,8 +97,12 @@ class Activity(models.Model):
 
     # Optional field,stored as an empty string if left blank
     description = models.TextField(blank=True)
-
     date = models.DateField()
+
+    class Meta:
+        verbose_name = 'Activity'
+        verbose_name_plural = 'Activity'
+
 
     def __str__(self):
         return self.name
@@ -146,8 +151,10 @@ class Image(models.Model):
     trip = models.ForeignKey(Trip,
                              on_delete=models.CASCADE,
                              related_name='images')
-    image = models.ImageField() # upload_to='trip_images/'
-
+    # image = models.ImageField(upload_to='trip_images/')
+    title = models.CharField(max_length=100, blank=True, null=True) 
+    image = CloudinaryField('image', default='media/default.jpg')
+    
     # Optional field,stored as an empty string if left blank
     description = models.TextField(blank=True)
 
@@ -160,7 +167,7 @@ class Image(models.Model):
         ordering = ["-uploaded_at"]
 
 
-class UserProfile(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User,
                                 on_delete=models.CASCADE)
     follows = models.ManyToManyField('self',
