@@ -99,28 +99,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Images Section 
-                    <div class="mb-4">
-                        <h5>Photos</h5>
-                        <div class="row">
-
-                            {% for image in trip.images.all %}
-
-                            <div class="image-container col-md-4 mb-3">
-                                {% if "placeholder" in image.url %}
-                                <img class="card-img-top scale" src="{% static 'images/default.jpg' %}"
-                                    alt="placeholder image">
-                                {% else %}
-                                <img class="card-img-top" src=" {{ image.image.url }}" alt="{{ image.description }}">
-                                {% endif %}
-                                <div class="image-flash">
-                                    <p class="author">Author: {{ post.author }}</p>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    -->
 
                     <!-- Images Section with Carousel -->
                     <div class="mb-4">
