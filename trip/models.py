@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.validators import MaxValueValidator as mxvv
+# from django.core.validators import ValidationError
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from . utils import get_coordinates
@@ -40,14 +42,14 @@ ForeignKey field type defines a many-to-one relationship
 
 
 class Trip(models.Model):
-    TRIP_CATEGORY = (('LEISURE', 'Leisure'),
-                     ('BUSINESS', 'Business'),
-                     ('ADVENTURE', 'Adventure'),
-                     ('FAMILY', 'Family'),
-                     ('ROMANTIC', 'Romantic'))
-    TRIP_STATUS = ((0, "Finished"),
-                   (1, "Ongoing"),
-                   (2, "Planned"))
+    TRIP_CATEGORY = (('Leisure', 'LEISURE'),
+                     ('Business', 'BUSINESS'),
+                     ('Adventure', 'ADVENTURE'),
+                     ('Family', 'FAMILY'),
+                     ('Romantic', 'ROMANTIC'))
+    TRIP_STATUS = (("Completed", 'COMPLETED'),
+                   ("Ongoing", "ONGOING"),
+                   ("Planned", 'PLANNED'))
 
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
@@ -61,16 +63,21 @@ class Trip(models.Model):
     country = models.CharField(max_length=100)
     lat = models.FloatField(blank=True, null=True)
     lon = models.FloatField(blank=True, null=True)
-    trip_category = models.CharField(max_length=50, choices=TRIP_CATEGORY)
+    trip_category = models.CharField(max_length=50,
+                                     choices=TRIP_CATEGORY,
+                                     default='LEISURE')
     start_date = models.DateField()
     end_date = models.DateField()
     created_on = models.DateTimeField(auto_now_add=True)
-    trip_status = models.IntegerField(choices=TRIP_STATUS, default=0)
+    trip_status = models.CharField(choices=TRIP_STATUS, default='PLANNED')
     shared = models.BooleanField(default=False)
+
+    # ratings = models.PositiveSmallIntegerField(default=1,
+    #                                        validators=[mxvv(5)])
     
     def save(self, *args, **kwargs):
         '''
-        Override the save() method to set the Lat and Lon values 
+        Override the save() method to set the Lat and Lon values
         before saving.
         '''
         try:
@@ -152,8 +159,8 @@ class Image(models.Model):
                              on_delete=models.CASCADE,
                              related_name='images')
     # image = models.ImageField(upload_to='trip_images/')
-    title = models.CharField(max_length=100, blank=True, null=True) 
-    image = CloudinaryField('image', default='media/default.jpg')
+    title = models.CharField(max_length=100, blank=True, null=True)
+    image = CloudinaryField('image', default='placeholder')
     
     # Optional field,stored as an empty string if left blank
     description = models.TextField(blank=True)
@@ -161,7 +168,7 @@ class Image(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Image for {self.trip.name} uploaded at {self.uploaded_at}'
+        return f'Image for {self.trip.title} uploaded at {self.uploaded_at}'
 
     class Meta:
         ordering = ["-uploaded_at"]

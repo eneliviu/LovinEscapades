@@ -13,7 +13,7 @@ def get_coordinates(location, attempt=1, max_attempts=5):
     max_attempts (int, optional): Maximum retry attempts. Default is 5.
     
     Returns:
-    Geocoded location data (Latitude and Longitude).
+    tuple: Geocoded location data (Latitude and Longitude).
      
     Raises:
     GeocoderTimedOut: If the max number of attempts is exceeded.
@@ -21,12 +21,14 @@ def get_coordinates(location, attempt=1, max_attempts=5):
     geocoder = geocoders.Nominatim(user_agent='trip')
     try:
         location = geocoder.geocode(location, exactly_one=True, language='en')
-        lat = geocoder.geocode(location).latitude
-        lon = geocoder.geocode(location).longitude
-        return lat, lon
+        if location:
+            return location.latitude, location.longitude
+        else:
+            raise ValueError("Could not geocode the location")
     except GeocoderTimedOut:
         if attempt <= max_attempts:
+            print(f"Attempt {attempt} failed; retrying...")
             return get_coordinates(location,
-                                   attempt=attempt+1)
-        raise
-    
+                                   attempt=attempt+1,
+                                   max_attempts=max_attempts)
+        raise GeocoderTimedOut("Max attempts exceeded")

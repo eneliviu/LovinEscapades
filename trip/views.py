@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
+from django.core import serializers
 from .models import (Trip, Activity, Comment, Note, Image)
 
 # Create your views here.
@@ -8,8 +9,9 @@ from .models import (Trip, Activity, Comment, Note, Image)
 # Create your views here.
 def user_page(request):
     '''
-    View for Landing page
+    View for Dashboard
     '''
+    # trips = Trip.objects.values().filter(user=request.user).prefetch_related('images')
     trips = Trip.objects.filter(user=request.user).prefetch_related('images')
     context = {
         'trips': trips
@@ -18,8 +20,11 @@ def user_page(request):
     return render(request, "trip/user_page.html", context)
 
 
+
 def landing_page(request):
-    
+    '''
+    View for Landing page
+    ''' 
     if request.method == 'GET':
         # Handle no trip data:
         if Trip.objects.all().last() is None:
@@ -34,12 +39,13 @@ def landing_page(request):
             context = {# 'form': form,
                        'trips': trips}
         
-        trips = list(Trip.objects.values())
+        trips = list(Trip.objects.values().
+                     filter(shared=True))
         print(trips)
         return render(request, 
                       'trip/landing_page.html',
                       context={'trips': trips})
-  
+
     # if request.method == 'POST':
     #     form = TripForm(request.POST)
     #     if form.is_valid():
