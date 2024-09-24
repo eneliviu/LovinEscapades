@@ -120,7 +120,7 @@
                                     <img class="d-block w-100" src="{% static 'images/default.jpg' %}"
                                         alt="placeholder image">
                                     {% else %}
-                                    <img class="d-block w-100" src="{{ image.url }}"
+                                    <img class="d-block w-100" src="{{ image.image.url }}"
                                         alt="{{ image.description }}">
                                     {% endif %}
                                 </div>
