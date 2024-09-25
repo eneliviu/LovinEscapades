@@ -123,8 +123,8 @@
 
     {% for trip in trips %}
     <div class="modal fade" id="tripModal{{ trip.id }}" tabindex="-1" aria-labelledby="tripModalLabel{{ trip.id }}"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" >
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="tripModalLabel{{ trip.id }}"><strong>{{ trip.title }}</strong></h5>
@@ -173,13 +173,25 @@
                         </div>
                     </div>
 
-                    <!-- Notes Section -->
+                    <!-- Notes Section: TODO: Edit, Delete -->
                     <div class="mb-4">
                         <h5>Notes</h5>
-                        <div class="card">
+                        <div class="card">    
                             <div class="card-body">
-                                <p>Example note content for {{ trip.title }}.</p>
-                                <!-- Add more notes as needed -->
+                                <ul class="list-group">
+                                    {% for note in trip.notes.all %}
+                                    <p class="mb-0"><span class="text-muted float-start">{{ note.created_on }}</span></p>
+                                    <li class="list-group-item mb-3">
+                                        {{ note.content | linebreaks }}
+                                        <div class="d-flex justify-content-between">
+                                            <button type="button" class="btn btn-outline-primary rounded-pill">Edit</button>
+                                            <button type="button" class="btn btn-outline-danger rounded-pill">Delete</button>
+                                        </div>
+                                           
+                                    </li>
+                                    
+                                    {% endfor %}
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -198,6 +210,7 @@
                                     Like (<span id="like-count-{{ comment.id }}">{{ comment.likes }}</span>)
                                 </button>
                             </li>
+
                             {% empty %}
                             <li class="list-group-item">No comments yet.</li>
                             {% endfor %}
