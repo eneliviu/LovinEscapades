@@ -20,7 +20,7 @@
             <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title">Total Trips</h5>
-                    <p class="card-text display-4">{{ trips | length }}</p>
+                    <p class="card-text display-4">{{ trips.count | default:0 }}</p>
                 </div>
             </div>
         </div>
@@ -28,7 +28,9 @@
             <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title">Comments</h5>
-                    <p class="card-text display-4">{{ trip.comments.count|default:0 }}</p>
+                    <p class="card-text display-4">
+                        {{ comments_count }}
+                    </p>
                 </div>
             </div>
         </div>
@@ -36,7 +38,7 @@
             <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title">Photos</h5>
-                    <p class="card-text display-4">{{ trip.images.count|default:0 }}</p>
+                    <p class="card-text display-4">{{ images_count }}</p>
                 </div>
             </div>
         </div>
@@ -44,7 +46,7 @@
             <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title">Likes</h5>
-                    <p class="card-text display-4">{{ trip.images.count|default:0 }}</p>
+                    <p class="card-text display-4">{{ images_count }}</p>
                 </div>
             </div>
         </div>
@@ -60,22 +62,18 @@
                     data-bs-target="#tripModal{{ trip.id }}">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{ trip.title }}</h5>
-                        <small>{{ trip.created_on|timesince }} ago</small>
+                        <small>{{ trip.created_on | timesince }} ago</small>
                     </div>
                     <p class="mb-1">{{ trip.description }}</p>
                     
-
                     <small>
-                        {%if trip.images.count > 1 %}
-                            {{ trip.images.count }} photos
-                        {% else %}
-                            {{ trip.images.count|default:0 }} photo
-                        {% endif %}
-                        {%if trip.comments.count > 1 %}
-                            {{ trip.comments.count|default:0 }} comments
-                        {% else %}
-                            {{ trip.comments.count|default:0 }} comment
-                        {% endif %}
+                        {% with total=trip.images.count %}
+                        {{ total }} photo{{ total|pluralize }} /
+                        {% endwith %} 
+
+                        {% with total=trip.comments.count %}
+                        {{ total }} comment{{ total|pluralize }}
+                        {% endwith %} 
                     </small>
 
                     <div class="d-flex justify-content-between">
@@ -204,7 +202,7 @@
                             {% for comment in trip.comments.all %}
                             <li class="list-group-item">
                                 <strong> {{ comment.user }}</strong>: {{ comment.content }}
-                                <span class="text-muted float-end">{{ comment.created_on }}</span>
+                                <span class="text-muted float-end"><small> {{ comment.created_on }}</small></span>
                                 <!-- Like button -->
                                 <button class="btn btn-light btn-sm like-button">
                                     Like (<span id="like-count-{{ comment.id }}">{{ comment.likes }}</span>)

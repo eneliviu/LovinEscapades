@@ -13,8 +13,17 @@ def user_page(request):
     '''
     # trips = Trip.objects.values().filter(user=request.user).prefetch_related('images')
     trips = Trip.objects.filter(user=request.user).prefetch_related('images')
+    comments_count = 0
+    images_count = 0
+    if trips:
+        for trip in trips:
+            comments_count += trip.comments.all().count()
+            images_count += trip.images.all().count()
+
     context = {
-        'trips': trips
+        'trips': trips,
+        'comments_count': comments_count,
+        'images_count': images_count
     }
 
     return render(request, "trip/user_page.html", context)
