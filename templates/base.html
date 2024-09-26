@@ -117,27 +117,32 @@
                         {% endif %}
 
                         <li class="nav-item mx-3">
-                            <a class="nav-link" href="#"> Blog </a>
+                            <a class="nav-link" href="#"> Gallery </a>
                         </li>
 
                         <li class="nav-item mx-3">
                             <a class="nav-link" href="#"> Contact Us </a>
                         </li>
+
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" href="{% url 'account_reset_password' %}">Reset Password</a>
+                        </li>
                     </ul>
                 </div>
 
-                <!-- { if user.is_authenticated } -->
-
+                {% if user.is_authenticated %} 
                 <span class="navbar-text mx-3 d-none d-xl-inline text-success-emphasis ms-2">
-                    <!-- Welcome, {{ user | safe }}! 
-                    <i class="bi bi-person-circle ms-2"></i>
-                    -->
+                    <small>Welcome, {{ user | safe }}! </small>
+                   
+                    
+                    <a href="{% url 'profile' %}"> <small>  My profile</small>
+                        <i class="bi bi-person-circle ms-2"></i></a>
                 </span>
-                <!-- { else } -->
+                {% else %}
                 <span class="navbar-text mx-3 d-none d-xl-inline small fst-italic text-primary-emphasis">
                     sharing travel experiences
                 </span>
-                <!-- { endif } -->
+                {% endif %}
             </div>
         </nav>
 

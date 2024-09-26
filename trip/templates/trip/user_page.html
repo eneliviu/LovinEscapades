@@ -92,11 +92,11 @@
                         </div>
                         <div>
                             {% if trip.trip_status == 'Planned' %}
-                            <span class="badge bg-warning text-dark">Planned</span>
+                            <span class="badge bg-secondary">Planned</span>
                             {% elif trip.trip_status == 'Ongoing' %}
-                            <span class="badge bg-danger-subtle">Ongoing</span>
+                            <span class="badge bg-danger">Ongoing</span>
                             {% else %}
-                            <span class="badge bg-success-subtle">Completed</span>
+                            <span class="badge bg-success">Completed</span>
                             {% endif %}
                         </div>
                     </div>

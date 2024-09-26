@@ -29,6 +29,12 @@ def user_page(request):
     return render(request, "trip/user_page.html", context)
 
 
+def user_profile(request):
+    ''' 
+    User profile page
+    '''
+    return render(request, 'trip/user_profile.html', {})
+
 
 def landing_page(request):
     '''
