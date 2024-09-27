@@ -100,17 +100,6 @@
                             {% endif %}
                         </div>
                     </div>
-
-                    <!-- Displaying count of comments 
-                    <div class="row">
-                        <div class="col-12">
-                            <strong class="text-secondary">
-                                <i class="far fa-comments"></i> {{ trip.comments.count }}
-                            </strong>
-                        </div>
-                    </div>
-                -->
-
                 </a>
                 {% endfor %}
             </div>
@@ -173,21 +162,23 @@
 
                     <!-- Notes Section: TODO: Edit, Delete -->
                     <div class="mb-4">
-                        <h5>Notes</h5>
+                        <div class="d-flex justify-content-between">
+                            <h5>Notes</h5>
+                            <button type="button" class="btn btn-outline-primary rounded-pill">Add note</button>
+                        </div>
+                        
                         <div class="card">    
                             <div class="card-body">
                                 <ul class="list-group">
                                     {% for note in trip.notes.all %}
-                                    <p class="mb-0"><span class="text-muted float-start">{{ note.created_on }}</span></p>
-                                    <li class="list-group-item mb-3">
-                                        {{ note.content | linebreaks }}
+                                        <p class="mb-0"><span class="text-muted float-start">{{ note.created_on }}</span></p>
+                                        <li class="list-group-item mb-3">
+                                            {{ note.content | linebreaks }}
+                                        </li>
                                         <div class="d-flex justify-content-between">
                                             <button type="button" class="btn btn-outline-primary rounded-pill">Edit</button>
                                             <button type="button" class="btn btn-outline-danger rounded-pill">Delete</button>
                                         </div>
-                                           
-                                    </li>
-                                    
                                     {% endfor %}
                                 </ul>
                             </div>

@@ -1,11 +1,93 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <!-- Content Goes here -->
 
 
-<h1>My Profile</h1>
+<div class="container mt-4">
+    <h1>Trips</h1>
+    
+    <form method="get" class="form-inline mb-4">
+        {{ form.category.label_tag }}
+        {{ form.category }}
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+    
+    <!-- Recent Trips Section -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h3>My trips</h3>
+            <div class="list-group">
+                {% for trip in trips %}
+                <a href="#" class="list-group-item list-group-item-action mb-3" data-bs-toggle="modal"
+                    data-bs-target="#tripModal{{ trip.id }}">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ trip.title }}</h5>
+                        <small>{{ trip.created_on | timesince }} ago</small>
+                    </div>
+                    <p class="mb-1">{{ trip.description }}</p>
+                    
+                    <small>
+                        {% with total=trip.images.count %}
+                        {{ total }} photo{{ total|pluralize }} /
+                        {% endwith %} 
+
+                        {% with total=trip.comments.count %}
+                        {{ total }} comment{{ total|pluralize }}
+                        {% endwith %} 
+                    </small>
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            {% if trip.trip_category == 'Leisure' %}
+                            <span class="badge bg-primary">Leisure</span>
+                            {% elif trip.trip_category == 'Business' %}
+                            <span class="badge bg-primary">Business</span>
+                            {% elif trip.trip_category == 'Adventure' %}
+                            <span class="badge bg-primary">Adventure</span>
+                            {% elif trip.trip_category == 'Family' %}
+                            <span class="badge bg-primary">Family</span>
+                            {% else %}
+                            <span class="badge bg-primary">{{ trip.trip_category }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if trip.trip_status == 'Planned' %}
+                            <span class="badge bg-secondary">Planned</span>
+                            {% elif trip.trip_status == 'Ongoing' %}
+                            <span class="badge bg-danger">Ongoing</span>
+                            {% else %}
+                            <span class="badge bg-success">Completed</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        {% for trip in trips %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ trip.title }}</h5>
+                        <p class="card-text">{{ trip.description }}</p>
+                        <p class="card-text"><small class="text-muted">{{ trip.trip_category }}</small></p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+        {% if not trips %}
+            <p>No trips available in this category.</p>
+        {% endif %}
+    </div>
+</div>
 
 
 {% endblock %}

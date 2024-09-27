@@ -10,4 +10,6 @@ urlpatterns = [
     path('dashboard/', trip_views.user_page, name='user'),
     # path('', trip_views.custom_404_view, name='404_page'), <str:username>
     path('dashboard/user_profile', trip_views.user_profile, name='profile'),
+    path('dashboard/shared_gallery', trip_views.gallery, name='gallery'),
+    path('dashboard/contact_us', trip_views.contact, name='contact'),
 ]

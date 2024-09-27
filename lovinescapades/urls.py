@@ -25,5 +25,7 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("", include('trip.urls'), name='trip'),  # look in trip app URL file
                                                   # for any trip urlpatterns.
-    path("", include('trip.urls'), name='profile'),                                         
+    path("", include('trip.urls'), name='profile'),
+    path("", include('trip.urls'), name='gallery'),
+    path("", include('trip.urls'), name='contact'),                                      
 ]

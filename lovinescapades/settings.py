@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'crispy_forms',
+    'crispy_bootstrap5',
     'cloudinary',
     'trip',
 ]
@@ -72,6 +74,9 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 # The redirection URLs are also added so that after we've logged in
 # or logged out, the site will automatically redirect us to the home page.
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 MIDDLEWARE = [

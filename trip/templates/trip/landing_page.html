@@ -19,7 +19,11 @@
                     explorers.
                 </p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-                    <a href="#start-mapping" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Add Your Trip</a>
+                    {% if not user.is_authenticated %}
+                        <a href="{% url 'account_login' %}" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Add Your Trip</a>
+                    {% else %}
+                        <a href="{% url 'user' %}" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Add Your Trip</a>
+                    {% endif %}
                     <a href="#features" class="btn btn-outline-secondary btn-lg px-4">Learn More</a>
                 </div>
             </div>
@@ -85,58 +89,116 @@
 <!-- Leaflet -->
 {{ trips | json_script:"trips_json" }}
 
-<script type='text/javascript'>
-    // Greenwich Coordinates default
-    var map = L.map('map', { zoomControl: true }).setView([51.4934, 0.0098], 3);
 
-    // Creating scale control
-    var scale = L.control.scale();
-    scale.addTo(map);
+{%  if not user.is_authenticated %}
+    <script type='text/javascript'>
+        // Greenwich Coordinates default
+        var map = L.map('map', { zoomControl: true }).setView([51.4934, 0.0098], 3);
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+        // Creating scale control
+        var scale = L.control.scale();
+        scale.addTo(map);
 
-    let locations = JSON.parse(document.getElementById('trips_json').textContent);
-    if (!Array.isArray(locations)) {
-        locations = [locations];
-    }
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
 
-    const markers = L.markerClusterGroup();
-    if (Object.keys(locations)) {
-        locations.forEach(element => {
-            const marker = L.marker([element.lat, element.lon])
-                .bindPopup(
-                    '<div>' +
-                    //<img src='img/" + feature.properties.img_name + "' width='259'/>+
-                    '<b>' + element.place + ', ' + element.country + '</b>' +
-                    '</br>' +
-                    '<b>' + element.trip_category + '</b>' +
-                    '</br>' +
-                    'From: ' + element.start_date + '</br>' +
-                    'To: ' + element.end_date +
-                    '</br>' +
-                    "<a href='https://www.google.com' target='_blank' rel='noopener noreferrer'>" + "Gallery" + "</a>" +
-                    '</div>'
-                );
-            markers.addLayer(marker);
-        })
-        map.addLayer(markers);
-
-        if (Object.keys(locations).length > 1) {
-            var bounds = markers.getBounds();
-            if (bounds.isValid()) {
-                map.fitBounds(bounds, maxZoom = 8);
-            }
+        let locations = JSON.parse(document.getElementById('trips_json').textContent);
+        console.log(locations)
+        if (!Array.isArray(locations)) {
+            locations = [locations];
         }
 
-        markers.on('click', function (e) {
-            map.flyTo(e.latlng, 6);
-        });
-    }
+        const markers = L.markerClusterGroup();
+        if (Object.keys(locations)) {
+            locations.forEach(element => {
+                const marker = L.marker([element.lat, element.lon])
+                    .bindPopup(
+                        '<div>' +
+                        //<img src='img/" + feature.properties.img_name + "' width='259'/>+
+                        '<b>' + element.place + ', ' + element.country + '</b>' +
+                        '</br>' +
+                        '<b>' + element.trip_category + '</b>' +
+                        '</br>' +
+                        'From: ' + element.start_date + '</br>' +
+                        'To: ' + element.end_date +
+                        '</br>' +
+                        "<a href='{% url 'account_login' %}' rel='noopener noreferrer'>" + "More..." + "</a>" +
+                        '</div>'
+                    );
+                markers.addLayer(marker);
+            })
+            map.addLayer(markers);
 
-</script>
+            if (Object.keys(locations).length > 1) {
+                var bounds = markers.getBounds();
+                if (bounds.isValid()) {
+                    map.fitBounds(bounds, maxZoom = 8);
+                }
+            }
+
+            markers.on('click', function (e) {
+                map.flyTo(e.latlng, 6);
+            });
+        }
+
+    </script>
+{%  else %}
+    <script type='text/javascript'>
+        // Greenwich Coordinates default
+        var map = L.map('map', { zoomControl: true }).setView([51.4934, 0.0098], 3);
+
+        // Creating scale control
+        var scale = L.control.scale();
+        scale.addTo(map);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        let locations = JSON.parse(document.getElementById('trips_json').textContent);
+        console.log(locations)
+        if (!Array.isArray(locations)) {
+            locations = [locations];
+        }
+
+        const markers = L.markerClusterGroup();
+        if (Object.keys(locations)) {
+            locations.forEach(element => {
+                const marker = L.marker([element.lat, element.lon])
+                    .bindPopup(
+                        '<div>' +
+                        //<img src='img/" + feature.properties.img_name + "' width='259'/>+
+                        '<b>' + element.place + ', ' + element.country + '</b>' +
+                        '</br>' +
+                        '<b>' + element.trip_category + '</b>' +
+                        '</br>' +
+                        'From: ' + element.start_date + '</br>' +
+                        'To: ' + element.end_date +
+                        '</br>' +
+                        "<a href='{% url 'gallery' %}' rel='noopener noreferrer'>" + "More..." + "</a>" +
+                        '</div>'
+                    );
+                markers.addLayer(marker);
+            })
+            map.addLayer(markers);
+
+            if (Object.keys(locations).length > 1) {
+                var bounds = markers.getBounds();
+                if (bounds.isValid()) {
+                    map.fitBounds(bounds, maxZoom = 8);
+                }
+            }
+
+            markers.on('click', function (e) {
+                map.flyTo(e.latlng, 6);
+            });
+        }
+
+    </script>
+{% endif  %}
 
 
 {% endblock %}

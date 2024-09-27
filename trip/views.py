@@ -2,11 +2,9 @@ from django.shortcuts import render
 from django.views import generic
 from django.core import serializers
 from .models import (Trip, Activity, Comment, Note, Image)
+from .forms import AddTripForm
 
-# Create your views here.
 
-
-# Create your views here.
 def user_page(request):
     '''
     View for Dashboard
@@ -29,11 +27,39 @@ def user_page(request):
     return render(request, "trip/user_page.html", context)
 
 
+def user_registration(request):
+    ''' 
+    Redirect user after registration
+    '''
+    return render(request, 'trip/user_page.html', {})
+
+
+def user_logout(request):
+    pass
+
 def user_profile(request):
     ''' 
     User profile page
     '''
     return render(request, 'trip/user_profile.html', {})
+
+
+def gallery(request):
+    ''' 
+    Redirect user after registration
+    '''
+    print(request.path)
+    return render(request, 'trip/shared_gallery.html', {})
+
+
+def contact(request):
+    ''' 
+    Redirect user after registration
+    '''
+    print(request.path)
+    return render(request, 'trip/contact_us.html', {})
+
+
 
 
 def landing_page(request):
@@ -56,7 +82,7 @@ def landing_page(request):
         
         trips = list(Trip.objects.values().
                      filter(shared=True))
-        print(trips)
+        # print(trips)
         return render(request, 
                       'trip/landing_page.html',
                       context={'trips': trips})
