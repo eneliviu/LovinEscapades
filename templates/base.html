@@ -134,13 +134,15 @@
                         -->
 
                         {% if user.is_authenticated %}
-                        <li class="nav-item navbar-text mx-3 ms-lg-auto ">
-                            <a href="{% url 'profile' %}" class="text-decoration-none">
+                        <li class="nav-item mx-3 ms-lg-auto ">
+                            <a class="nav-link text-decoration-none {% if request.path == '/dashboard/user_profile' %}active{% endif %}"
+                                aria-current="page" href="{% url 'profile' %}">
                                 My profile
                                 <i class="bi bi-person-circle ms-2"></i>
                             </a>
                         </li>
                         {% endif %}
+
                     </ul>
                 </div>
                 {% if not user.is_authenticated %}
