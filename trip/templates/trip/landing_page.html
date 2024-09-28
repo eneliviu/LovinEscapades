@@ -110,15 +110,15 @@
         }).addTo(map);
 
         let locations = JSON.parse(document.getElementById('trips_json').textContent);
-        console.log(locations)
-        if (!Array.isArray(locations)) {
-            locations = [locations];
-        }
 
-        const markers = L.markerClusterGroup();
+        // if (!Array.isArray(locations)) {
+        //     locations = [locations];
+        // }
+
+        let markers = L.markerClusterGroup();
         if (Object.keys(locations)) {
             locations.forEach(element => {
-                const marker = L.marker([element.lat, element.lon])
+                let marker = L.marker([element.lat, element.lon])
                     .bindPopup(
                         '<div>' +
                         //<img src='img/" + feature.properties.img_name + "' width='259'/>+
