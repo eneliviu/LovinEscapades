@@ -1,10 +1,13 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms.forms import NON_FIELD_ERRORS
+from django.utils import timezone
 from .models import Trip
 
 
 class AddTripForm(forms.ModelForm):
+    '''
+    Model form for new Trip submission. 
+    '''
 
     class Meta:
         model = Trip
@@ -14,29 +17,55 @@ class AddTripForm(forms.ModelForm):
             'end_date': forms.widgets.DateInput(attrs={'type': 'date'}),
             'description': forms.Textarea(attrs={'rows': 3, 'cols': 40})
         }
-
-    # def clean(self):
-    #     cleaned_data = super(AddTripForm, self).clean()
-    #     start_date = cleaned_data.get('start_date')
-    #     end_date = cleaned_data.get('end_date')
-    #     if start_date and end_date:
-    #         if end_date < start_date:
-    #             self.add_error('end_date', 
-    #                            'End date cannot be earlier than start date.')        
-    #     return cleaned_data
-
+        
+    # Server-side validation:
     def clean(self, *args, **kwargs):
         '''
-        Add custom validation to ensure that ```end_date``` is not
-        prior to ```start_date```
+        - Add custom validation to ensure that `end_date` and
+        `start_date` are appropriate for the selected trip category:
+        - Check for partial time interval overlaps:
+            - `start_date__lte=end_date` ensures the start date of the
+                existing trip is before or on the end date of the new trip.
+            - `end_date__gte=start_date` ensures the end date of the existing
+                trip is after or on the start date of the new trip.
+            - don't check overlaps with completed trips as they
+                don't affect planning
         '''
         cleaned_data = super(AddTripForm, self).clean()
         start_date = cleaned_data.get('start_date')
         end_date = cleaned_data.get('end_date')
-        if start_date and end_date:
-            if end_date < start_date:
-                raise ValidationError({
-                        # NON_FIELD_ERRORS: ['End date cannot be earlier than start date',],
-                        'End date cannot be earlier than start date'
-                    })
+        current_date = timezone.now().date()
+        selected_option = cleaned_data.get('trip_status')
+     
+        # Check if end date is earlier than start date
+        if end_date < start_date:
+            errMsg = 'End date cannot be earlier than start date'
+            raise ValidationError(errMsg)
+        
+        # Validate dates for Planned trips
+        if ((selected_option == 'Planned') and 
+           (start_date < current_date)):
+            errMsg = "Error: Cannot plan a trip on past dates."
+            raise ValidationError(errMsg)
+        
+        # Validate dates for Ongoing trips
+        if ((selected_option == 'Ongoing') and 
+           ((current_date <= start_date) or (current_date >= end_date))):
+            errMsg = "Error: Ongoing trip must include the current date."
+            raise ValidationError(errMsg)
+        
+        # Validate dates for Completed trips
+        if ((selected_option == 'Completed') and
+           ((start_date > current_date) or (current_date < end_date))):
+            errMsg = "Error: Completed trip end date cannot past current date."
+            raise ValidationError(errMsg)
+
+        overlapping_trips = Trip.objects.filter(
+            user=self.user,
+            start_date__lte=end_date,
+            end_date__gte=start_date)  # exclude(status='Completed')
+
+        if overlapping_trips.exists():
+            raise ValidationError('These dates overlap with another trip.')
+
         super().clean(*args, **kwargs)

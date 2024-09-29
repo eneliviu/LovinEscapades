@@ -76,7 +76,9 @@
                             <form id="addTripForm" method="POST" style="margin-top: 1.2em;">
                                 {% csrf_token %}
                                 {{ add_trip_form | crispy }}
-                                <button id="submitButton" type="submit" class="btn btn-signup float-end">Submit</button>
+                                <button id="submitButton" type="submit" class="btn btn-signup float-end">
+                                    Submit
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -262,42 +264,60 @@
 
 
 <script type="text/javascript">
+
     document.addEventListener("DOMContentLoaded", function () {
         let form = document.getElementById("addTripForm");
+        let button = document.getElementById("submitButton");
 
         form.addEventListener("submit", function (e) {
             // Prevent the form from submitting
-            e.preventDefault();
+            // e.preventDefault();
 
             // Retrieve the start and end dates
             let startDateValue = document.getElementById("id_start_date").value;
             let endDateValue = document.getElementById("id_end_date").value;
             let tripStatus = document.getElementById("id_trip_status");
-            
+
             let selectedIndex = tripStatus.selectedIndex;
-            let selectedOption = tripStatus.options[selectedIndex];
+            let selectedOption = tripStatus.options[selectedIndex].value;
+            console.log(selectedOption)
 
             // Convert the date strings to Date objects
             let startDate = new Date(startDateValue);
             let endDate = new Date(endDateValue);
             let currentDate = new Date();
 
+            let errMsg;
+
             // Check if end date is earlier than start date
             if (endDate < startDate) {
-                alert("Error: end date cannot be earlier than start date.");
-            }
-            // Check if start/end dates are later or equal to current date for planned trips
-            if ( (startDate < currentDate) && (selectedOption.value === 'Planned') ) {
-                alert("Error: Cannot plan a trip on previous dates.");
-            } else if( (startDate <= currentDate) && (selectedOption.value === 'Ongoing') ) {
-                // Check if end date is later and start date is earlier than the current date for ongoing trips
-                alert("Error: Cannot post an ongoing trip on these dates.");
-            } else if ((endDate > startDate) && (endDate < currentDate) && (selectedOption.value === 'Completed') ){
-                // Check if start and end dates are earlier than the current date for completed trips
-                alert("Error: Cannot post a completed trip on later dates.");
-            }
-            
-
+                errMsg = "Error: End date cannot be earlier than start date.";
+            };
+            if ((selectedOption === 'Planned') && (startDate < currentDate)) {
+                // Validate dates for Planned trips
+                errMsg = "Error: Cannot plan a trip on past dates.";
+            };
+            if ((selectedOption === 'Ongoing') &&
+                ((currentDate <= startDate) || (currentDate >= endDate))) {
+                // Validate dates for Ongoing trips
+                errMsg = "Error: Ongoing trip must include the current date.";
+            };
+            if ((selectedOption === 'Completed') &&
+                ((startDate > currentDate) || (currentDate < endDate))) {
+                // Validate dates for Completed trips
+                console.log('OK')
+                errMsg = "Error: Completed trip cannot have an end date in the future.";
+            };
+        
+            if (errMsg) {
+                // Prevent default submission if there is an error.        
+                e.preventDefault();
+                alert(errMsg);
+            };
+            // Otherwise, allows the form to be submitted naturally 
+            // if validations passes (standard HTTP form submission).
+            // The form data will be sent to the server, and Django will handle the form processing
+            // and validation on the server-side.
         });
     });
 </script>
