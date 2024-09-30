@@ -91,7 +91,7 @@
     <div class="row mb-4">
         <div class="col-md-12">
             <div class="list-group">
-                <h3>My trips</h3>
+                <h3>View trips</h3>
                 {% for trip in trips %}
                 <div class="container d-flex justify-content-around mb-3">
 
@@ -209,7 +209,6 @@
                     <div class="mb-4">
                         <div class="d-flex justify-content-between">
                             <h5>Notes</h5>
-                            <button type="button" class="btn btn-primary rounded-pill btn-sm">Add note</button>
                         </div>
 
                         <div class="card">
@@ -234,7 +233,9 @@
 
                     <!-- Comments Section -->
                     <div class="mb-4">
-                        <h5>Comments</h5>
+                        <div>
+                            <button type="button" class="btn btn-primary rounded-pill btn-sm mb-2">Leave a comment:</button>
+                        </div>
                         <ul class="list-group">
                             {% for comment in trip.comments.all %}
                             <li class="list-group-item">

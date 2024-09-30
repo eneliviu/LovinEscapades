@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'cloudinary',
     'trip',
+    'user_profile',
+    'django_filters',
 ]
 
 SITE_ID = 1

@@ -1,13 +1,19 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django.db.models import Q
 from .models import Trip
 
 
 class AddTripForm(forms.ModelForm):
     '''
-    Model form for new Trip submission. 
+    Model form for new Trip submission.
+    Pass the user to the form and use it in the `clean` method.
     '''
+
+    # def __init__(self, user, *args, **kwargs):
+    #     user = kwargs.pop('user', None)
+    #     super().__init__(*args, **kwargs)
 
     class Meta:
         model = Trip
@@ -15,7 +21,7 @@ class AddTripForm(forms.ModelForm):
         widgets = {
             'start_date': forms.widgets.DateInput(attrs={'type': 'date'}),
             'end_date': forms.widgets.DateInput(attrs={'type': 'date'}),
-            'description': forms.Textarea(attrs={'rows': 3, 'cols': 40})
+            'description': forms.Textarea(attrs={'rows': 2, 'cols': 40})
         }
         
     # Server-side validation:
@@ -60,12 +66,49 @@ class AddTripForm(forms.ModelForm):
             errMsg = "Error: Completed trip end date cannot past current date."
             raise ValidationError(errMsg)
 
-        overlapping_trips = Trip.objects.filter(
-            user=self.user,
-            start_date__lte=end_date,
-            end_date__gte=start_date)  # exclude(status='Completed')
+        # Initialize overlapping_trips to an empty queryset
+        collide_trips = Trip.objects.none()
 
-        if overlapping_trips.exists():
-            raise ValidationError('These dates overlap with another trip.')
+        # This query checks:
+        # `start_date__lte=end_date`: trips starts on/before new trip ends.
+        # `end_date__gte=start_date`: trips ends on/after new trip starts.
+        
+        collide_trips = Trip.objects.filter(
+                                    Q(start_date__lte=start_date,
+                                        end_date__gte=end_date) |
+                                    Q(start_date__lte=end_date,
+                                        end_date__gte=start_date)
+                                            )
+
+        collide_trips = collide_trips.exclude(id=self.instance.id
+                                              if self.instance
+                                              else None)
+        collide_trips = collide_trips.exclude(trip_status__in=['Completed',
+                                                               'Ongoing'])
+
+        if collide_trips.exists():
+            errMsg = 'These dates overlap with another trip.'
+            raise ValidationError(errMsg)
 
         super().clean(*args, **kwargs)
+
+
+class TripSelectionForm(forms.ModelForm):
+
+    class Meta:
+        model = Trip
+        fields = ('trip_status', 'trip_category',)
+
+    # TRIP_STATUS = (("Completed", 'COMPLETED'),
+    #                ("Ongoing", "ONGOING"),
+    #                ("Planned", 'PLANNED'))
+
+    # TRIP_CATEGORY = (('Leisure', 'LEISURE'),
+    #                  ('Business', 'BUSINESS'),
+    #                  ('Adventure', 'ADVENTURE'),
+    #                  ('Family', 'FAMILY'),
+    #                  ('Romantic', 'ROMANTIC'))
+    
+    # trip_status = forms.ChoiceField(choices=TRIP_STATUS, required=True)
+    # trip_category = forms.ChoiceField(choices=TRIP_CATEGORY, required=True)
+

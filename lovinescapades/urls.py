@@ -23,9 +23,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin', admin.site.urls),
     path("accounts/", include("allauth.urls")),
-    path("", include('trip.urls'), name='trip'),  # look in trip app URL file
-                                                  # for any trip urlpatterns.
-    path("", include('trip.urls'), name='profile'),
+    # look in trip app URL file for any trip urlpatterns.
+    path("dashboard/profile/", include('user_profile.urls'), name='profile'),
+    path("", include('trip.urls'), name='trip'),  
     path("", include('trip.urls'), name='gallery'),
-    path("", include('trip.urls'), name='contact'),                                      
+    path("", include('trip.urls'), name='contact'),             
 ]
