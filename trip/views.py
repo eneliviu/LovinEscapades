@@ -120,8 +120,7 @@ def handle_post_request(request):
         trip_form = add_trip_form.save(commit=False)
         trip_form.user = request.user
         trip_form.save()  # Save the trip instance
-        add_trip_form = AddTripForm()
-
+        
         messages.add_message(
             request,
             messages.SUCCESS,
@@ -134,7 +133,7 @@ def handle_post_request(request):
         context = {'trips': trips,
                    'comments_count': comments_count,
                    'images_count': images_count,
-                   'add_trip_form': add_trip_form,
+                   'add_trip_form': AddTripForm(),
                    }
         # Redirect to avoid re-posting the form on refresh
         return redirect('user')
@@ -184,17 +183,11 @@ def trip_filters(request):
                   context)
    
 
-def user_registration(request):
-    ''' 
-    Redirect user after registration
-    '''
-    return render(request, 'trip/user_profile.html', {})
-
-
-def user_logout(request):
-    pass
-
-
+# def user_registration(request):
+#     ''' 
+#     Redirect user after registration
+#     '''
+#     return render(request, 'trip/user_profile.html', {})
 
 
 def gallery(request):

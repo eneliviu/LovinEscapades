@@ -1,12 +1,23 @@
 import django_filters
+from django import forms
 from trip.models import Trip
 
 
 class TripFilter(django_filters.FilterSet):
+    
+    # https://stackoverflow.com/questions/66964037/boolean-field-for-django-filter-search-bar
+    shared__exact = django_filters.BooleanFilter(
+        field_name='shared',
+        label='Shared',
+        lookup_expr='exact',
+        widget=forms.CheckboxInput,
+    )
+
     class Meta:
         model = Trip
-        fields = ['place', 'country',
-                  'trip_category', 'trip_status',
+        fields = {'place': ['icontains'],
+                  'country': ['icontains'],
+                  'trip_category': ['exact'],
+                  'trip_status': ['exact'],
                   # 'start_date', 'end_date',
-                  'shared']
-    
+                  }

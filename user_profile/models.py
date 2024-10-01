@@ -18,3 +18,12 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+
+class Testimonial(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s Testimonial"
+

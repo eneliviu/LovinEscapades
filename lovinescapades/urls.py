@@ -20,12 +20,17 @@ from django.urls import path, include
 
 # it is best not to give your URLs the same name
 # as your view function or vice-versa.
+# Look in app URL file for any trip urlpatterns.
 urlpatterns = [
     path('admin', admin.site.urls),
     path("accounts/", include("allauth.urls")),
-    # look in trip app URL file for any trip urlpatterns.
-    path("dashboard/profile/", include('user_profile.urls'), name='profile'),
+    path("dashboard/",
+         include('user_profile.urls'),
+         name='profile'),
+    path("dashboard/",
+         include('user_profile.urls'),
+         name='update_profile'),
     path("", include('trip.urls'), name='trip'),  
     path("", include('trip.urls'), name='gallery'),
-    path("", include('trip.urls'), name='contact'),             
+    path("", include('trip.urls'), name='contact'),       
 ]

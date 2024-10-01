@@ -1,9 +1,118 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+<!-- assign the 'home' URL to a variable named home_url -->
+{% url 'home' as home_url %}
+
+<!-- assign the 'account_xxx' URLs to a variables named xxx_url -->
+{% url 'account_login' as login_url %}
+{% url 'account_signup' as signup_url %}
+{% url 'account_logout' as logout_url %}
 
 {% block content %}
 <!-- Content Goes here -->
 
-<h1>Gallery</h1>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col col-lg-2">
+            <div class="container position-fixes mt-5">
+                <button class="btn btn-primary my-3" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+                    <h4>My trips</h4>
+                </button>
+            </div>
+
+            <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
+                aria-labelledby="staticBackdropLabel">
+                <div class="offcanvas-header">
+                    <h3 class="offcanvas-title mt-3" id="staticBackdropLabel">Select:</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="container ">
+                        <form id="tripSelectionForm" method="GET" style="margin-top: 1.2em;">
+                            {% csrf_token %}
+                            {{ trip_filter_form | crispy }}
+                            <button id="submitButton" type="submit" class="btn btn-signup float-end">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Recent Trips Section -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="list-group">
+            {% for trip in trips %}
+            <div class="container d-flex justify-content-around mb-3">
+
+                <a href="#" class="list-group-item list-group-item-action mb-3 " data-bs-toggle="modal"
+                    data-bs-target="#tripModal{{ trip.id }}">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ trip.title }}</h5>
+                        <small>{{ trip.created_on | timesince }} ago</small>
+                    </div>
+                    <p class="mb-1">{{ trip.description }}</p>
+
+                    <small>
+                        {% with total=trip.images.count %}
+                        {{ total }} photo{{ total|pluralize }} /
+                        {% endwith %}
+
+                        {% with total=trip.comments.count %}
+                        {{ total }} comment{{ total|pluralize }}
+                        {% endwith %}
+                    </small>
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            {% if trip.trip_category == 'Leisure' %}
+                            <span class="badge bg-primary">Leisure</span>
+                            {% elif trip.trip_category == 'Business' %}
+                            <span class="badge bg-primary">Business</span>
+                            {% elif trip.trip_category == 'Adventure' %}
+                            <span class="badge bg-primary">Adventure</span>
+                            {% elif trip.trip_category == 'Family' %}
+                            <span class="badge bg-primary">Family</span>
+                            {% else %}
+                            <span class="badge bg-primary">{{ trip.trip_category }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if trip.trip_status == 'Planned' %}
+                            <span class="badge bg-secondary">Planned</span>
+                            {% elif trip.trip_status == 'Ongoing' %}
+                            <span class="badge bg-danger">Ongoing</span>
+                            {% else %}
+                            <span class="badge bg-success">Completed</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+
+                <div class="d-flex align-middle mb-3 py-4">
+                    <button type="button" class="btn btn-danger btn-sm rounded-pill  " data-bs-toggle="#"
+                        data-bs-target="#">
+                        Delete
+                    </button>
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+</div>
 
 
 {% endblock %}
