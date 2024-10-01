@@ -6,9 +6,9 @@ from . import views as trip_views
 # as your view function or vice-versa.
 
 urlpatterns = [
-    path('', trip_views.landing_page, name='home'),
-    path('dashboard/', trip_views.user_page, name='user'),
-    # path('', trip_views.custom_404_view, name='404_page'), <str:username>
-    path('dashboard/shared_gallery', trip_views.gallery, name='gallery'),
+    path('dashboard/user',       trip_views.user_page, name='user'),
+    path('dashboard/gallery',    trip_views.gallery, name='gallery'),
     path('dashboard/contact_us', trip_views.contact, name='contact'),
+    path('',                     trip_views.landing_page, name='home'),
+    # path('', trip_views.custom_404_view, name='404_page'), <str:username>
 ]

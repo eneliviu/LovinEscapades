@@ -24,13 +24,13 @@ from django.urls import path, include
 urlpatterns = [
     path('admin', admin.site.urls),
     path("accounts/", include("allauth.urls")),
-    path("dashboard/",
-         include('user_profile.urls'),
-         name='profile'),
-    path("dashboard/",
-         include('user_profile.urls'),
-         name='update_profile'),
-    path("", include('trip.urls'), name='trip'),  
-    path("", include('trip.urls'), name='gallery'),
-    path("", include('trip.urls'), name='contact'),       
+    path("dashboard/", include('user_profile.urls'), name='user'),
+    path("dashboard/user/profile/", include('user_profile.urls'), name='profile'),
+    # path("dashboard/user/testimonial/", include('user_profile.urls'), name='testimonial'),
+    # path("dashboard/user/profile/update/", include('user_profile.urls'), name='update_profile'),
+    path("", include('trip.urls'), name='home'), 
+    path("", include('trip.urls'), name='user'), 
+    path("", include('trip.urls'), name='contact'), 
+    path("", include('trip.urls'), name='gallery'),      
 ]
+

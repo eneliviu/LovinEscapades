@@ -53,6 +53,8 @@ class Trip(models.Model):
     TRIP_STATUS = (("Completed", 'COMPLETED'),
                    ("Ongoing", "ONGOING"),
                    ("Planned", 'PLANNED'))
+    SHARE_CHOICES = (("Yes", "YES"),
+                     ("NO", 'No'))
 
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
@@ -73,7 +75,9 @@ class Trip(models.Model):
     end_date = models.DateField()
     created_on = models.DateTimeField(auto_now_add=True)
     trip_status = models.CharField(choices=TRIP_STATUS, default='PLANNED')
-    shared = models.BooleanField(default=False)
+    shared = models.CharField(max_length=5,
+                              choices=SHARE_CHOICES,
+                              default='YES')
 
     # ratings = models.PositiveSmallIntegerField(default=1,
     #                                        validators=[mxvv(5)])

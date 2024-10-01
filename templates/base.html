@@ -134,7 +134,7 @@
 
                         {% if user.is_authenticated %}
                         <li class="nav-item mx-3 ms-lg-auto ">
-                            <a class="nav-link text-decoration-none {% if request.path == '/dashboard/profile/' %}active{% endif %}"
+                            <a class="nav-link text-decoration-none {% if request.path == '/dashboard/user/profile/' %}active{% endif %}"
                                 aria-current="page" href="{% url 'profile' %}">
                                 My profile
                                 <i class="bi bi-person-circle ms-2"></i>

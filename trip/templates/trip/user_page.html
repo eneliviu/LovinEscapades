@@ -263,7 +263,7 @@
     {% endfor %}
 </div>
 
-
+<!--  User feedback for form completion -->
 <script type="text/javascript">
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -286,7 +286,14 @@
             // Convert the date strings to Date objects
             let startDate = new Date(startDateValue);
             let endDate = new Date(endDateValue);
-            let currentDate = new Date();
+            
+            // let currentDate = new Date(new Date().toDateString());
+
+            let currentDate = new Date().toLocaleDateString();
+
+            console.log(currentDate)
+            console.log(startDate)
+            console.log(endDate)
 
             let errMsg;
 
@@ -294,12 +301,13 @@
             if (endDate < startDate) {
                 errMsg = "Error: End date cannot be earlier than start date.";
             };
-            if ((selectedOption === 'Planned') && (startDate < currentDate)) {
+            if ((selectedOption === 'Planned') && (startDate < currentDate)) { 
+                console.log(startDate < currentDate)               
                 // Validate dates for Planned trips
                 errMsg = "Error: Cannot plan a trip on past dates.";
             };
             if ((selectedOption === 'Ongoing') &&
-                ((currentDate <= startDate) || (currentDate >= endDate))) {
+                ((currentDate < startDate) || (currentDate > endDate))) {
                 // Validate dates for Ongoing trips
                 errMsg = "Error: Ongoing trip must include the current date.";
             };

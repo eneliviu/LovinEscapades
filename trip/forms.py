@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.db.models import Q
 from .models import Trip
@@ -12,7 +13,8 @@ class AddTripForm(forms.ModelForm):
     '''
 
     # def __init__(self, user, *args, **kwargs):
-    #     user = kwargs.pop('user', None)
+    #     self.user = kwargs.pop('user', None)
+    #     self.request = kwargs.pop('request', None)
     #     super().__init__(*args, **kwargs)
 
     class Meta:
@@ -42,21 +44,21 @@ class AddTripForm(forms.ModelForm):
         end_date = cleaned_data.get('end_date')
         current_date = timezone.now().date()
         selected_option = cleaned_data.get('trip_status')
-     
+        
         # Check if end date is earlier than start date
         if end_date < start_date:
             errMsg = 'End date cannot be earlier than start date'
             raise ValidationError(errMsg)
         
         # Validate dates for Planned trips
-        if ((selected_option == 'Planned') and 
+        if ((selected_option == 'Planned') and
            (start_date < current_date)):
             errMsg = "Error: Cannot plan a trip on past dates."
             raise ValidationError(errMsg)
         
         # Validate dates for Ongoing trips
         if ((selected_option == 'Ongoing') and 
-           ((current_date <= start_date) or (current_date >= end_date))):
+           ((current_date < start_date) or (current_date > end_date))):
             errMsg = "Error: Ongoing trip must include the current date."
             raise ValidationError(errMsg)
         
@@ -79,13 +81,11 @@ class AddTripForm(forms.ModelForm):
                                     Q(start_date__lte=end_date,
                                         end_date__gte=start_date)
                                             )
-
+        collide_trips = collide_trips.exclude(trip_status__in=['Completed',
+                                                               'Ongoing'])
         collide_trips = collide_trips.exclude(id=self.instance.id
                                               if self.instance
                                               else None)
-        collide_trips = collide_trips.exclude(trip_status__in=['Completed',
-                                                               'Ongoing'])
-
         if collide_trips.exists():
             errMsg = 'These dates overlap with another trip.'
             raise ValidationError(errMsg)
