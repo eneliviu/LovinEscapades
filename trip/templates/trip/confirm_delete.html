@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Sign Out" %}{% endblock %}
+
+{% block content %}
+
+<div class="container"></div>
+    <div class="row">
+        <div class="col-md-8 mt-3 offset-md-2">
+            <h3>{% trans "Delete trip" %}</h3>
+            <p>{% trans 'Are you sure you want to delete this trip?' %}</p>
+            <p>{{ trip }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 mt-3 offset-md-2">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit">Confirm</button>
+                <a href="{% url 'user' %}">Cancel</a>  
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

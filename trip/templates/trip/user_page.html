@@ -23,7 +23,7 @@
                     <div class="card text-center mb-1">
                         <div class="card-body">
                             <h5 class="card-title">Total Trips</h5>
-                            <p class="card-text display-4">{{ trips.count | default:0 }}</p>
+                            <p class="card-text display-4">{{ trips | length }}</p>
                         </div>
                     </div>
                 </div>
@@ -87,53 +87,6 @@
             </div>
         </div>
 
-        <!-- Recent Trips Section 
-        <a href="#" class="list-group-item list-group-item-action mb-3 " data-bs-toggle="modal"
-            data-bs-target="#tripModal{{ trip.id }}">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{ trip.title }}</h5>
-                <small>{{ trip.created_on | timesince }} ago</small>
-            </div>
-            <p class="mb-1">{{ trip.description }}</p>
-
-            <small>
-                {% with total=trip.images.count %}
-                {{ total }} photo{{ total|pluralize }} /
-                {% endwith %}
-
-                {% with total=trip.comments.count %}
-                {{ total }} comment{{ total|pluralize }}
-                {% endwith %}
-            </small>
-
-            <div class="d-flex justify-content-between">
-                <div>
-                    {% if trip.trip_category == 'Leisure' %}
-                    <span class="badge bg-primary">Leisure</span>
-                    {% elif trip.trip_category == 'Business' %}
-                    <span class="badge bg-primary">Business</span>
-                    {% elif trip.trip_category == 'Adventure' %}
-                    <span class="badge bg-primary">Adventure</span>
-                    {% elif trip.trip_category == 'Family' %}
-                    <span class="badge bg-primary">Family</span>
-                    {% else %}
-                    <span class="badge bg-primary">{{ trip.trip_category }}</span>
-                    {% endif %}
-                </div>
-                <div>
-                    {% if trip.trip_status == 'Planned' %}
-                    <span class="badge bg-secondary">Planned</span>
-                    {% elif trip.trip_status == 'Ongoing' %}
-                    <span class="badge bg-danger">Ongoing</span>
-                    {% else %}
-                    <span class="badge bg-success">Completed</span>
-                    {% endif %}
-                </div>
-            </div>
-        </a>
-
-                
-    -->
         <!-- Trip Entries Column -->
         <div class="col-12 mt-3 left">
             <div class="row">
@@ -150,11 +103,11 @@
                             <!-- <span class="badge c-badge bg-primary">{{ trip.trip_status }}</span>-->
 
                             {% if trip.trip_status == 'Planned' %}
-                                <span class="badge c-badge bg-info-subtle  text-muted">Planned</span>
+                            <span class="badge c-badge bg-info-subtle  text-muted">Planned</span>
                             {% elif trip.trip_status == 'Ongoing' %}
-                                <span class="badge c-badge bg-info-subtle text-muted">Ongoing</span>
+                            <span class="badge c-badge bg-info-subtle text-muted">Ongoing</span>
                             {% else %}
-                                <span class="badge c-badge bg-info-subtle text-muted">Completed</span>
+                            <span class="badge c-badge bg-info-subtle text-muted">Completed</span>
                             {% endif %}
 
                         </div>
@@ -162,20 +115,18 @@
                         <div class="card-body">
                             <div>
                                 <h5 class="card-title">{{ trip.title }}</h5>
-                                <!-- <p class="card-text">{{ trip.description }} Something here</p> -->
                                 <div class="d-flex flex-column align-items-center">
-                                    <!-- <div class="badge bg-success w-50">{{ trip.trip_category }}</div> -->
                                     <div class="card-text text-muted">From: {{ trip.start_date }}
                                         <span class="fw-bold red-o"> | </span>
                                         To: {{ trip.end_date }}
                                     </div>
-
                                 </div>
                             </div>
                             <div class="mt-2 text-center">
                                 <a type="button" href="#" class="btn btn-edit btn-sm float-start">Edit</a>
                                 <a href="#" class="btn btn-more btn-sm">More...</a>
-                                <a href="#" class="btn btn-delete btn-sm float-end">Delete</a>
+                                <a href="#" class="btn btn-delete btn-sm float-end"
+                                    data-trip_id="{{ trip.id }}">Delete</a>
                             </div>
                         </div>
 
@@ -194,9 +145,6 @@
             </div>
         </div>
     </div>
-
-
-
     {% if trips.has_other_pages %}
     <nav aria-label="Page navigation conatiner">
         <ul class="pagination justify-content-center">
@@ -206,9 +154,7 @@
             <li><a href="?page={{ trips.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
             {% endif %}
         </ul>
-
     </nav>
-
     {% endif %}
 
     <!-- Modals for Recent Trips -->
@@ -264,7 +210,7 @@
                         </div>
                     </div>
 
-                    <!-- Notes Section: TODO: Edit, Delete -->
+                    <!-- Notes  -->
                     <div class="mb-4">
                         <div class="d-flex justify-content-between">
                             <h5>Notes</h5>
@@ -320,6 +266,27 @@
         </div>
     </div>
     {% endfor %}
+
+
+
+    <!-- Delete confirmation modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete comment?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete your comment? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -390,5 +357,10 @@
         });
     });
 </script>
+
+{% endblock content %}
+
+{% block extras %}
+<script src="{% static 'js/manage_trips.js' %}" type="text/javascript"></script> 
 
 {% endblock %}

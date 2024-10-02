@@ -161,7 +161,60 @@ def contact(request):
     return render(request, 'trip/contact_us.html', {})
 
 
+def trip_edit(request, trip_id):
+    """
+    Display an individual trip for edit.
 
+    **Context**
+
+    ``trip``
+        An instance of :model:`trip.Trip`.
+    ``note``
+        A note related to the trip.
+    ``note_form``
+        An instance of :form:`trip.NoteForm`
+    """
+
+    if request.method == "POST":
+
+        queryset = Trip.objects.filter(user=request.user)
+        post = get_object_or_404(queryset)
+        note = get_object_or_404(Comment, pk=trip_id)
+        note_form = NoteForm(data=request.POST, instance=note)
+
+        if note_form.is_valid():
+            note = note_form.save(commit=False)
+            note.post = post
+            note.approved = False
+            note.save()
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                'Trip Note Updated!')
+        else:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                'Error updating trip note!')
+
+    return HttpResponseRedirect(reverse('post_detail'))
+
+
+def delete_trip(request, trip_id):
+    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
+
+    if trip.user == request.user:
+        trip.delete()
+        messages.success(request, 'Trip deleted successfully.')
+        return redirect('user')
+
+    return HttpResponseRedirect(reverse('user'))
+
+    # return render(
+    #     request,
+    #     'trip/confirm_delete.html',
+    #     {'trip': trip}
+    #     )
 
 # def custom_404_view(request, exception):
 #     ''' 

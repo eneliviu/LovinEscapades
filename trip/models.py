@@ -117,7 +117,6 @@ class Activity(models.Model):
         verbose_name = 'Activity'
         verbose_name_plural = 'Activity'
 
-
     def __str__(self):
         return self.name
 

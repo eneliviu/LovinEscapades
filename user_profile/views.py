@@ -41,6 +41,9 @@ def user_profile(request):
 
 
 def submit_testimonial(request):
+    if request.method == 'GET':
+        form = TestimonialForm()
+
     if request.method == 'POST':
         form = TestimonialForm(request.POST)
         if form.is_valid():
@@ -61,12 +64,16 @@ def submit_testimonial(request):
                 context={'testimonial_form': form},
                 )
 
-@login_required
+
 def update_profile(request):
     # if request.user.is_authenticated:
     # current_user = User.objects.get(id=request.user.id)
     form = SignupForm(request.POST)
-    print(form)
+    if form.is_valid():
+        form.save()
+    else:
+        form = SignupForm()
+    
     return render(
         request,
         'user_profile/update_user_profile.html',
