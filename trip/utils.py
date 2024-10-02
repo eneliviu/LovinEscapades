@@ -20,9 +20,11 @@ def get_coordinates(location, attempt=1, max_attempts=5):
     '''
     geocoder = geocoders.Nominatim(user_agent='trip')
     try:
-        location = geocoder.geocode(location, exactly_one=True, language='en')
+        get_location = geocoder.geocode(location, exactly_one=True,
+                                        language='en')
+        # print("Address 1:",location.latitude, location.longitude)
         if location:
-            return location.latitude, location.longitude
+            return get_location.latitude, get_location.longitude
         else:
             raise ValueError("Could not geocode the location")
     except GeocoderTimedOut:

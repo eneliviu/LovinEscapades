@@ -70,7 +70,6 @@ class AddTripForm(forms.ModelForm):
         # `start_date__lte=end_date`: trips starts on/before new trip ends.
         # `end_date__gte=start_date`: trips ends on/after new trip starts.
         if self.user:
-            print(self.user)
             collide_trips = Trip.objects.filter(user=self.user).filter(
                 Q(start_date__lte=start_date,
                   end_date__gte=end_date) |

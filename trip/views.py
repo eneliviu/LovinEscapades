@@ -21,7 +21,7 @@ def landing_page(request):
     return render(request,
                   'trip/landing_page.html',
                   {'trips': trips})
-            
+
 
 def _trip_stats(trips):
     """
@@ -67,7 +67,7 @@ def handle_get_request(request):
     return render(request, "trip/user_page.html", context)
 
 
-@login_required
+# @login_required
 def handle_post_request(request):
     add_trip_form = AddTripForm(request.POST, 
                                 user=request.user)
@@ -202,19 +202,12 @@ def trip_edit(request, trip_id):
 
 def delete_trip(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id, user=request.user)
-
     if trip.user == request.user:
         trip.delete()
         messages.success(request, 'Trip deleted successfully.')
         return redirect('user')
-
     return HttpResponseRedirect(reverse('user'))
 
-    # return render(
-    #     request,
-    #     'trip/confirm_delete.html',
-    #     {'trip': trip}
-    #     )
 
 # def custom_404_view(request, exception):
 #     ''' 

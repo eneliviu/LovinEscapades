@@ -3,7 +3,7 @@ console.log('Hello')
 
 const editButtons = document.getElementsByClassName("btn-edit");
 const tripText = document.getElementById("id_body");
-const tripForm = document.getElementById("tripForm");
+const tripForm = document.getElementById("addTripModal");
 const submitButton = document.getElementById("submitButton");
 
 /*
