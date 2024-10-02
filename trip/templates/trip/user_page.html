@@ -20,7 +20,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-md-3">
-                    <div class="card text-center">
+                    <div class="card text-center mb-1">
                         <div class="card-body">
                             <h5 class="card-title">Total Trips</h5>
                             <p class="card-text display-4">{{ trips.count | default:0 }}</p>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card text-center">
+                    <div class="card text-center mb-1">
                         <div class="card-body">
                             <h5 class="card-title">Comments</h5>
                             <p class="card-text display-4">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card text-center">
+                    <div class="card text-center mb-1">
                         <div class="card-body">
                             <h5 class="card-title">Photos</h5>
                             <p class="card-text display-4">{{ images_count }}</p>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card text-center">
+                    <div class="card text-center mb-1">
                         <div class="card-body">
                             <h5 class="card-title">Likes</h5>
                             <p class="card-text display-4">{{ images_count }}</p>
@@ -56,10 +56,9 @@
             </div>
         </div>
 
-
         <!-- Button to trigger modal -->
-        <div class="container text-center mt-1">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTripModal">
+        <div class="container text-center">
+            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addTripModal">
                 Add Trip
             </button>
         </div>
@@ -89,62 +88,51 @@
         </div>
 
         <!-- Recent Trips Section 
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <div class="list-group">
-                <h3>View trips</h3>
-                {% for trip in trips %}
-                <div class="container d-flex justify-content-around mb-3">
-
-                    <a href="#" class="list-group-item list-group-item-action mb-3 " data-bs-toggle="modal"
-                        data-bs-target="#tripModal{{ trip.id }}">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">{{ trip.title }}</h5>
-                            <small>{{ trip.created_on | timesince }} ago</small>
-                        </div>
-                        <p class="mb-1">{{ trip.description }}</p>
-
-                        <small>
-                            {% with total=trip.images.count %}
-                            {{ total }} photo{{ total|pluralize }} /
-                            {% endwith %}
-
-                            {% with total=trip.comments.count %}
-                            {{ total }} comment{{ total|pluralize }}
-                            {% endwith %}
-                        </small>
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                {% if trip.trip_category == 'Leisure' %}
-                                <span class="badge bg-primary">Leisure</span>
-                                {% elif trip.trip_category == 'Business' %}
-                                <span class="badge bg-primary">Business</span>
-                                {% elif trip.trip_category == 'Adventure' %}
-                                <span class="badge bg-primary">Adventure</span>
-                                {% elif trip.trip_category == 'Family' %}
-                                <span class="badge bg-primary">Family</span>
-                                {% else %}
-                                <span class="badge bg-primary">{{ trip.trip_category }}</span>
-                                {% endif %}
-                            </div>
-                            <div>
-                                {% if trip.trip_status == 'Planned' %}
-                                <span class="badge bg-secondary">Planned</span>
-                                {% elif trip.trip_status == 'Ongoing' %}
-                                <span class="badge bg-danger">Ongoing</span>
-                                {% else %}
-                                <span class="badge bg-success">Completed</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-                {% endfor %}
+        <a href="#" class="list-group-item list-group-item-action mb-3 " data-bs-toggle="modal"
+            data-bs-target="#tripModal{{ trip.id }}">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ trip.title }}</h5>
+                <small>{{ trip.created_on | timesince }} ago</small>
             </div>
-        </div>
-    </div>
+            <p class="mb-1">{{ trip.description }}</p>
+
+            <small>
+                {% with total=trip.images.count %}
+                {{ total }} photo{{ total|pluralize }} /
+                {% endwith %}
+
+                {% with total=trip.comments.count %}
+                {{ total }} comment{{ total|pluralize }}
+                {% endwith %}
+            </small>
+
+            <div class="d-flex justify-content-between">
+                <div>
+                    {% if trip.trip_category == 'Leisure' %}
+                    <span class="badge bg-primary">Leisure</span>
+                    {% elif trip.trip_category == 'Business' %}
+                    <span class="badge bg-primary">Business</span>
+                    {% elif trip.trip_category == 'Adventure' %}
+                    <span class="badge bg-primary">Adventure</span>
+                    {% elif trip.trip_category == 'Family' %}
+                    <span class="badge bg-primary">Family</span>
+                    {% else %}
+                    <span class="badge bg-primary">{{ trip.trip_category }}</span>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if trip.trip_status == 'Planned' %}
+                    <span class="badge bg-secondary">Planned</span>
+                    {% elif trip.trip_status == 'Ongoing' %}
+                    <span class="badge bg-danger">Ongoing</span>
+                    {% else %}
+                    <span class="badge bg-success">Completed</span>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+
+                
     -->
         <!-- Trip Entries Column -->
         <div class="col-12 mt-3 left">
@@ -152,24 +140,41 @@
 
                 {% for trip in trips %}
 
-                <div class="col-md-4 d-flex flex-column mb-4">
+                <div class="col-lg-6 d-flex flex-column mb-4">
                     <div class="card my-1 h-100">
                         <div class="card-header d-flex flex-row justify-content-between align-items-center">
                             <div>
                                 {{ trip.place }}, {{ trip.country }} <span class="fw-bold red-o"> | </span>
                                 <span class="fw-light">{{ trip.trip_category }}</span>
                             </div>
-                            <span class="badge bg-primary">{{ trip.trip_status }}</span>
+                            <!-- <span class="badge c-badge bg-primary">{{ trip.trip_status }}</span>-->
+
+                            {% if trip.trip_status == 'Planned' %}
+                                <span class="badge c-badge bg-info-subtle  text-muted">Planned</span>
+                            {% elif trip.trip_status == 'Ongoing' %}
+                                <span class="badge c-badge bg-info-subtle text-muted">Ongoing</span>
+                            {% else %}
+                                <span class="badge c-badge bg-info-subtle text-muted">Completed</span>
+                            {% endif %}
+
                         </div>
 
                         <div class="card-body">
                             <div>
                                 <h5 class="card-title">{{ trip.title }}</h5>
-                                <p class="card-text">{{ trip.description }} Something here</p>
-                         
+                                <!-- <p class="card-text">{{ trip.description }} Something here</p> -->
+                                <div class="d-flex flex-column align-items-center">
+                                    <!-- <div class="badge bg-success w-50">{{ trip.trip_category }}</div> -->
+                                    <div class="card-text text-muted">From: {{ trip.start_date }}
+                                        <span class="fw-bold red-o"> | </span>
+                                        To: {{ trip.end_date }}
+                                    </div>
+
+                                </div>
                             </div>
-                            <div class="m-2">
+                            <div class="mt-2 text-center">
                                 <a type="button" href="#" class="btn btn-edit btn-sm float-start">Edit</a>
+                                <a href="#" class="btn btn-more btn-sm">More...</a>
                                 <a href="#" class="btn btn-delete btn-sm float-end">Delete</a>
                             </div>
                         </div>
@@ -181,27 +186,30 @@
                     </div>
                 </div>
 
-                {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                {% if forloop.counter|divisibleby:4 and not forloop.last %}
             </div>
             <div class="row">
                 {% endif %}
                 {% endfor %}
-
             </div>
         </div>
     </div>
 
 
 
+    {% if trips.has_other_pages %}
+    <nav aria-label="Page navigation conatiner">
+        <ul class="pagination justify-content-center">
+            {% if trips.has_previous %}
+            <li><a href="?page={{ trips.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+            {% endif %} {% if trips.has_next %}
+            <li><a href="?page={{ trips.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+            {% endif %}
+        </ul>
 
+    </nav>
 
-
-
-
-
-
-
-
+    {% endif %}
 
     <!-- Modals for Recent Trips -->
     {% for trip in trips %}
@@ -311,8 +319,8 @@
             </div>
         </div>
     </div>
-
     {% endfor %}
+
 </div>
 
 <!--  User feedback for form completion -->
@@ -382,7 +390,5 @@
         });
     });
 </script>
-
-
 
 {% endblock %}

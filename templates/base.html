@@ -103,11 +103,11 @@
                                 href="{% url 'account_logout' %}">Logout</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link {% if request.path == '/dashboard/' %}active{% endif %}"
-                                aria-current="page" href="{% url 'user' %}">My page</a>
+                            <a class="nav-link {% if request.path == '/dashboard/user' %}active{% endif %}"
+                                aria-current="page" href="{% url 'user' %}">Dashboard</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link {% if request.path == '/dashboard/shared_gallery' %}active{% endif %}"
+                            <a class="nav-link {% if request.path == '/dashboard/gallery' %}active{% endif %}"
                                 aria-current="page" href="{% url 'gallery' %}"> Gallery </a>
                         </li>
                         {% else %}
@@ -125,12 +125,6 @@
                             <a class="nav-link {% if request.path == '/dashboard/contact_us' %}active{% endif %}"
                                 aria-current="page" href="{% url 'contact' %}"> Contact Us </a>
                         </li>
-
-                        <!-- 
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" href="{% url 'account_reset_password' %}">Reset Password</a>
-                        </li>
-                        -->
 
                         {% if user.is_authenticated %}
                         <li class="nav-item mx-3 ms-lg-auto ">

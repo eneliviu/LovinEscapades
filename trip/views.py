@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 # from django.core import serializers
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import (Trip, Comment, Note, Image)
 from .forms import AddTripForm, TripSelectionForm
 
@@ -15,8 +16,8 @@ def landing_page(request):
     '''
 
     # Serialization require a list of objects:
-    trips = list(Trip.objects.filter(shared='Yes').values())
-
+    trips = list(Trip.objects.filter(shared='Yes').
+                 order_by('-created_on').values())
     return render(request,
                   'trip/landing_page.html',
                   {'trips': trips})
@@ -39,9 +40,26 @@ def handle_get_request(request):
     trips = Trip.objects.filter(user=request.user).\
         prefetch_related('images', 'comments')
     comments_count, images_count = _trip_stats(trips)
+
     add_trip_form = AddTripForm()
+    
+    # Pagination:
+    # https://djangocentral.com/adding-pagination-with-django/#adding-pagination-using-function-based-views
+    # 3 trips in each page
+    paginator = Paginator(trips, 6)
+    page = request.GET.get('page')
+    try:
+        trip_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        trip_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        trip_list = paginator.page(paginator.num_pages)    
+    
     context = {
-        'trips': trips,
+        'page': page,
+        'trips': trip_list,
         'comments_count': comments_count,
         'images_count': images_count,
         'add_trip_form': add_trip_form,
@@ -49,8 +67,10 @@ def handle_get_request(request):
     return render(request, "trip/user_page.html", context)
 
 
+@login_required
 def handle_post_request(request):
-    add_trip_form = AddTripForm(request.POST)
+    add_trip_form = AddTripForm(request.POST, 
+                                user=request.user)
     
     if add_trip_form.is_valid():
         trip_form = add_trip_form.save(commit=False)
@@ -67,22 +87,21 @@ def handle_post_request(request):
         trips = Trip.objects.filter(user=request.user).\
             prefetch_related('images', 'comments')
         comments_count, images_count = _trip_stats(trips)
-        # context = {'trips': trips,
-        #            'comments_count': comments_count,
-        #            'images_count': images_count,
-        #            'add_trip_form': AddTripForm(),
-        #            }
-        # Redirect to avoid re-posting the form on refresh
         return redirect('user')
-        # return render(
-        #     request,
-        #     "trip/user_page.html",
-        #     context)
     else:
+        cleaned_errors = []
+        for field, errors in add_trip_form.errors.items():
+            for error in errors:
+                if field == '__all__':
+                    cleaned_errors.append(error)
+                else:
+                    cleaned_errors.append(f'{field.replace("_", " ").
+                                          capitalize()}: {error}')
+        
         messages.add_message(
             request,
             messages.ERROR,
-            add_trip_form.errors.as_data())
+            *cleaned_errors)  # Unpack the error list
         return redirect('user')
 
 

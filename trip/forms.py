@@ -12,10 +12,9 @@ class AddTripForm(forms.ModelForm):
     Pass the user to the form and use it in the `clean` method.
     '''
 
-    # def __init__(self, user, *args, **kwargs):
-    #     self.user = kwargs.pop('user', None)
-    #     self.request = kwargs.pop('request', None)
-    #     super().__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(AddTripForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = Trip
@@ -69,28 +68,45 @@ class AddTripForm(forms.ModelForm):
             raise ValidationError(errMsg)
 
         # Initialize overlapping_trips to an empty queryset
-        collide_trips = Trip.objects.none()
-
-        # This query checks:
-        # `start_date__lte=end_date`: trips starts on/before new trip ends.
-        # `end_date__gte=start_date`: trips ends on/after new trip starts.
-        
+        # collide_trips = Trip.objects.none()
         collide_trips = Trip.objects.filter(
                                     Q(start_date__lte=start_date,
                                         end_date__gte=end_date) |
                                     Q(start_date__lte=end_date,
                                         end_date__gte=start_date)
                                             )
-        collide_trips = collide_trips.exclude(trip_status__in=['Completed',
-                                                               'Ongoing'])
-        collide_trips = collide_trips.exclude(id=self.instance.id
-                                              if self.instance
-                                              else None)
-        if collide_trips.exists():
-            errMsg = 'These dates overlap with another trip.'
-            raise ValidationError(errMsg)
+        # collide_trips = collide_trips.exclude(trip_status__in=['Completed',
+        #                                                        'Ongoing'])
+        # collide_trips = collide_trips.exclude(id=self.instance.id
+        #                                       if self.instance
+        #                                       else None)
 
-        super().clean(*args, **kwargs)
+        # Check date overlaps for trips of the current user
+        # `start_date__lte=end_date`: trips starts on/before new trip ends.
+        # `end_date__gte=start_date`: trips ends on/after new trip starts.
+        if self.user:
+            print(self.user)
+            collide_trips = Trip.objects.filter(user=self.user).filter(
+                Q(start_date__lte=start_date,
+                  end_date__gte=end_date) |
+                Q(start_date__lte=end_date,
+                  end_date__gte=start_date)
+            )
+        
+            # Exclude completed trips and the current instance (if it exists)
+            collide_trips = collide_trips.exclude(
+                    # Q(trip_status__in=['Completed', 'Ongoing']) |
+                    Q(id=self.instance.id if self.instance else None)
+                )
+            print(collide_trips)
+
+            if collide_trips.exists():
+                errMsg = 'These dates overlap with another trip.'
+                raise ValidationError(errMsg)
+
+        # super().clean(*args, **kwargs)
+
+        return cleaned_data
 
 
 class TripSelectionForm(forms.ModelForm):
