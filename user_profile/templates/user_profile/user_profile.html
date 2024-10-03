@@ -15,52 +15,29 @@
 <!-- Content Goes here -->
 
 
-<div class="col-md-12 card mb-2 mt-2">
-    <div class="card-body">
-        <h5>Submit your Testimonial</h5>
-        <form method="POST">
-            {% csrf_token %}
-            {{ testimonial_form | crispy }}
-            <button type="submit" class="btn btn-signup float-end">
-                Submit
-            </button>
-        </form>
+<section id="map-section" class="row col-12 mb-3" aria-labelledby="leaflet map-section">
+    <h2 class="visually-hidden">Testimonial form</h2>
+    <div class="row container-fluid">
+        
+        <div class="row testimonial-card p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+            <h5>Submit your Testimonial</h5>
+            <div class="col-md-12 card mb-2 mt-2">
+               
+                <div class="card-body">
+                   
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ testimonial_form | crispy }}
+                        <button type="submit" class="btn btn-signup float-end">
+                            Submit
+                        </button>
+                    </form>
 
-    </div>
-</div>
+                </div>
+            </div>
 
-
-<a class="btn btn-signup" aria-current="page" href="{%  url 'update_profile' %}">
-    Update profile
-</a>
-
-<h1>Submit a Testimonial</h1>
-<form method="POST" style="margin-top: 1.2em;">
-    {% csrf_token %}
-    {{ form | crispy }}
-    <button type="submit">Submit</button>
-</form>
-
-<form method="post"></form>
-    {% csrf_token %}
-    {{ form | crispy }}
-
-    {% if form.errors %}
-        <div class="form-errors">
-            <ul>
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <li>{{ field.label }}: {{ error }}</li>
-                    {% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
         </div>
-    {% endif %}
-
-    <button type="submit">Submit</button>
-</form>
+    </div>
+</section>
 
 {% endblock %}

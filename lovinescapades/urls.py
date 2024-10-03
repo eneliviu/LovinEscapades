@@ -25,13 +25,11 @@ urlpatterns = [
     path('admin', admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("user/", include('user_profile.urls'), name='profile'),
-    path("user/testimonial/", include('user_profile.urls'), name='testimonial'),
-    # path("", include('user_profile.urls'), name='update_profile'),
-    
+    path("user/testimonial/", include('user_profile.urls'),
+         name='testimonial'),
     path("", include('trip.urls'), name='home'),
     path("", include('trip.urls'), name='user'),
-    path('', include('trip.urls'),
-         name='delete_trip'),    
+    path('', include('trip.urls'), name='delete_trip'),    
     path("", include('trip.urls'), name='contact'),
     path("", include('trip.urls'), name='gallery'),
  

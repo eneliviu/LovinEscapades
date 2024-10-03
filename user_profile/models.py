@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.dispatch import receiver
 from cloudinary.models import CloudinaryField
+# from trip.models import Trip
 
 
 # Create your models here.
@@ -22,7 +22,9 @@ class Testimonial(models.Model):
     ''' 
     Stores a single testimonial text
     '''
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE, 
+                             related_name='testimonials')
     author_name = models.CharField(max_length=50, default="Anonymous")
     user_info = models.CharField(max_length=50, default="Enthusiast user")
     body = models.TextField(blank=True)

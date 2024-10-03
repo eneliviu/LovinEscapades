@@ -12,6 +12,10 @@ class TripFilter(django_filters.FilterSet):
     #     lookup_expr='exact',
     #     widget=forms.CheckboxInput,
     # )
+    # place = CharFilter(label='City/Location')
+    # country = CharFilter(label='Country')
+    # trip_category = CharFilter(label='Category')
+    # trip_status = CharFilter(label='Status')
 
     class Meta:
         model = Trip
@@ -19,6 +23,7 @@ class TripFilter(django_filters.FilterSet):
                   'country': ['icontains'],
                   'trip_category': ['exact'],
                   'trip_status': ['exact'],
-                  'shared': ['exact'],
+                  # 'shared': ['exact'],
                   # 'start_date', 'end_date',
                   }
+

@@ -8,7 +8,6 @@ from allauth.account.forms import SignupForm
 from trip.models import Trip
 from .models import Testimonial
 from .forms import TestimonialForm
-from .filters import TripFilter
 
 
 # Create your views here.

@@ -7,7 +7,8 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import (Trip, Comment, Note, Image)
-from .forms import AddTripForm, TripSelectionForm
+from .forms import AddTripForm
+from .filters import TripFilter
 from user_profile.models import Testimonial
 
 
@@ -19,13 +20,33 @@ def landing_page(request):
     # Serialization require a list of objects:
     trips = list(Trip.objects.filter(shared='Yes').
                  order_by('-created_on').values())
-    
     # Fetch testimonials from the database
     testimonials = Testimonial.objects.all()
+
+    trip_filter = TripFilter(request.GET,
+                             queryset=Trip.objects.filter(shared='Yes'))
+
+    if trip_filter.qs.exists():
+        trips = list(trip_filter.qs.values())
+        context = {'trips': trips,
+                   'testimonials': testimonials,
+                   'trip_filter_form': trip_filter.form,
+                   }
+    else:
+        messages.add_message(
+                request,
+                messages.ERROR,
+                'No matches were found'
+            )
+        trip_filter = TripFilter(request.GET)
+        context = {'trips': trips,
+                   'testimonials': testimonials,
+                   'trip_filter_form': trip_filter.form,
+                   }
+
     return render(request,
                   'trip/landing_page.html',
-                  {'trips': trips,
-                   'testimonials': testimonials}
+                  context=context,
                   )
 
 
@@ -44,9 +65,11 @@ def _trip_stats(trips):
 
 def handle_get_request(request):
     trips = Trip.objects.filter(user=request.user).\
-        prefetch_related('images', 'comments')
+            prefetch_related('images', 'comments')
     comments_count, images_count = _trip_stats(trips)
-
+    
+    user = request.user
+    testimonials_count = user.testimonials.count()
     add_trip_form = AddTripForm()
     
     # Pagination:
@@ -67,13 +90,14 @@ def handle_get_request(request):
         'page': page,
         'trips': trip_list,
         'comments_count': comments_count,
+        'testimonials_count': testimonials_count,
         'images_count': images_count,
         'add_trip_form': add_trip_form,
     }
     return render(request, "trip/user_page.html", context)
 
 
-# @login_required
+@login_required
 def handle_post_request(request):
     add_trip_form = AddTripForm(request.POST, 
                                 user=request.user)
@@ -120,30 +144,6 @@ def user_page(request):
     elif request.method == 'POST':
         return handle_post_request(request)
 
-
-def trip_filters(request):
-    trips = Trip.objects.filter(user=request.user)
-    form = TripSelectionForm()
-    
-    if request.method == 'POST':
-        form = TripSelectionForm(request.POST)
-        if form.is_valid():
-            trip_status = form.cleaned_data['trip_status']
-            trip_category = form.cleaned_data['trip_category']
-            
-            if trip_status:
-                trips = trips.filter(trip_status=trip_status)
-            if trip_category:
-                trips = trips.filter(trip_category=trip_category)
-    context = {
-        'form': form,
-        'trips': trips,
-    }
-
-    return render(request,
-                  'trip/user_profile.html',
-                  context)
-   
 
 # def user_registration(request):
 #     ''' 
