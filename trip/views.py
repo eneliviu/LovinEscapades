@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import (Trip, Comment, Note, Image)
 from .forms import AddTripForm, TripSelectionForm
+from user_profile.models import Testimonial
 
 
 def landing_page(request):
@@ -18,9 +19,14 @@ def landing_page(request):
     # Serialization require a list of objects:
     trips = list(Trip.objects.filter(shared='Yes').
                  order_by('-created_on').values())
+    
+    # Fetch testimonials from the database
+    testimonials = Testimonial.objects.all()
     return render(request,
                   'trip/landing_page.html',
-                  {'trips': trips})
+                  {'trips': trips,
+                   'testimonials': testimonials}
+                  )
 
 
 def _trip_stats(trips):

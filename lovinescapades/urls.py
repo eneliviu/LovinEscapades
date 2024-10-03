@@ -24,9 +24,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin', admin.site.urls),
     path("accounts/", include("allauth.urls")),
-    path("dashboard/user/profile/", include('user_profile.urls'), name='profile'),
-    path("", include('user_profile.urls'), name='testimonial'),
-    path("", include('user_profile.urls'), name='update_profile'),
+    path("user/", include('user_profile.urls'), name='profile'),
+    path("user/testimonial/", include('user_profile.urls'), name='testimonial'),
+    # path("", include('user_profile.urls'), name='update_profile'),
     
     path("", include('trip.urls'), name='home'),
     path("", include('trip.urls'), name='user'),
@@ -36,3 +36,4 @@ urlpatterns = [
     path("", include('trip.urls'), name='gallery'),
  
 ]
+

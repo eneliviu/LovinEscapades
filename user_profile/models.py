@@ -23,11 +23,13 @@ class Testimonial(models.Model):
     Stores a single testimonial text
     '''
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    author_name = models.CharField(max_length=50, default="Anonymous")
+    user_info = models.CharField(max_length=50, default="Enthusiast user")
     body = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username}'s Testimonial"
+        return f"{self.author_name}'s testimonial"
 
 
 # class About(models.Model):

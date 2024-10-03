@@ -25,6 +25,7 @@ for (let button of editButtons) {
         submitButton.innerText = "Update";
         noteForm.setAttribute("action", `edit_note/${tripId}`);
     });
+
 }
 
 /* --------------------------------------------------------------------------*/
