@@ -63,12 +63,14 @@ def _trip_stats(trips):
     return comments_count, images_count
 
 
+@login_required
 def handle_get_request(request):
     trips = Trip.objects.filter(user=request.user).\
             prefetch_related('images', 'comments')
     comments_count, images_count = _trip_stats(trips)
-    
     user = request.user
+    print(user)
+
     testimonials_count = user.testimonials.count()
     add_trip_form = AddTripForm()
     
