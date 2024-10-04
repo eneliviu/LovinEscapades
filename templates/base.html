@@ -103,11 +103,11 @@
                                 href="{% url 'account_logout' %}">Logout</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link {% if request.path == '/dashboard/user' %}active{% endif %}"
+                            <a class="nav-link {% if request.path == '/user/' %}active{% endif %}"
                                 aria-current="page" href="{% url 'user' %}">Dashboard</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link {% if request.path == '/dashboard/gallery' %}active{% endif %}"
+                            <a class="nav-link {% if request.path == '/gallery/' %}active{% endif %}"
                                 aria-current="page" href="{% url 'gallery' %}"> Gallery </a>
                         </li>
                         {% else %}
@@ -122,13 +122,13 @@
                         {% endif %}
 
                         <li class="nav-item mx-3">
-                            <a class="nav-link {% if request.path == '/dashboard/contact_us' %}active{% endif %}"
+                            <a class="nav-link {% if request.path == '/contact/' %}active{% endif %}"
                                 aria-current="page" href="{% url 'contact' %}"> Contact Us </a>
                         </li>
 
                         {% if user.is_authenticated %}
                         <li class="nav-item mx-3 ms-lg-auto ">
-                            <a class="nav-link text-decoration-none {% if request.path == '/dashboard/user/profile/' %}active{% endif %}"
+                            <a class="nav-link text-decoration-none {% if request.path == '/profile/' %}active{% endif %}"
                                 aria-current="page" href="{% url 'profile' %}">
                                 My profile
                                 <i class="bi bi-person-circle ms-2"></i>

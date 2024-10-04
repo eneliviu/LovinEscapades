@@ -285,10 +285,10 @@ def edit_trip(request, trip_id):
         #     )
 
 
+@login_required
 def delete_trip(request, trip_id):
     qs = Trip.objects.filter(user=request.user)
     trip = get_object_or_404(qs, id=trip_id)
-    
     if trip:
         trip.delete()
         messages.add_message(
@@ -300,10 +300,10 @@ def delete_trip(request, trip_id):
         messages.add_message(
             request,
             messages.ERROR,
-            'The rrecord cannot be deleted.'
+            'The record cannot be deleted.'
         )
-
     return redirect('user')
+
 
 
 # def custom_404_view(request, exception):

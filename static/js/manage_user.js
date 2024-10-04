@@ -1,7 +1,8 @@
-const editButtons = document.getElementsByClassName("btn-edit");
-const tripText = document.getElementById("id_body");
-const tripForm = document.getElementById("editTripModal");
-const submitButton = document.getElementById("editButton");
+
+var editButtons = document.getElementsByClassName("btn-edit");
+var tripText = document.getElementById("id_body");
+var tripForm = document.getElementById("editTripModal");
+var submitButton = document.getElementById("editButton");
 
 /* --------------------------------------------------------------------------*/
 /* ----------------------  EDIT  ------------------------------------------*/
@@ -17,15 +18,15 @@ const submitButton = document.getElementById("editButton");
  * - Sets the form's action attribute to the `edit_note/{noteId}` endpoint.
  */
 
-const editConfirm = document.getElementById("deleteConfirm");
-for (let button of editButtons) {
+
+var editConfirm = document.getElementById("deleteConfirm");
+for (var button of editButtons) {
     button.addEventListener("click", (e) => {
-        let tripId = e.target.getAttribute("data-trip_id");
-        //let tripContent = document.getElementById(`trip${tripId}`).innerText;
+        var postId = e.target.getAttribute("data-posts_id");
+        //var tripContent = document.getElementById(`trip${tripId}`).innerText;
         //tripText.value = tripContent;
-        editConfirm.href = `user/edit_trip/${tripId}`;
+        editConfirm.href = `user/profile/${postId}`;
         submitButton.innerText = "Update";
-        //noteForm.setAttribute("action", `edit_note/${tripId}`);
         editModal.show();
     });
 
@@ -51,14 +52,16 @@ for (let button of editButtons) {
  */
 
 
-const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-const deleteButtons = document.getElementsByClassName("btn-delete");
-const deleteConfirm = document.getElementById("deleteConfirm");
+//var deleteModal = new bootstrap.Modal(document.getElementById("deleteModal2"));
+var deleteButtons = document.getElementsByClassName("btn-delete");
+var deleteConfirm = document.getElementById("deleteConfirm");
 
-for (let button of deleteButtons) {
+for (var button of deleteButtons) {
     button.addEventListener("click", (e) => {
-        let tripId = e.target.getAttribute("data-trip_id");
-        deleteConfirm.href = `/delete_trip/${tripId}`;
-        deleteModal.show();
+        var postId = e.target.getAttribute("data-post_id");
+        console.log(postId)
+        deleteConfirm.href = `user/profile/${postId}`;
+        console.log('OK')
+        //deleteModal.show();
     });
 }

@@ -6,14 +6,14 @@
 <!-- Content Goes here -->
 
 
-<div class="container-fluid d-flex flex-column">
+<div class="container-fluid d-flex flex-column text-center">
 
     <!-- Hero Section -->
     <section id='hero-section' class="row container-fluid my-4 col-12" aria-labelledby="hero-section">
         <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg flex-lg-row-reverse">
             <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-                <img class="rounded-lg-3" src="{% static 'images/leandro-barreto-nomAp6_KVXU-unsplash.jpg' %}"
-                    alt="Map image with pinned locations" width="720">
+                <img class="border c-img" alt="Map image with pinned locations"
+                    src="{% static 'images/leandro-barreto-nomAp6_KVXU-unsplash.jpg' %}">
             </div>
             <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
                 <h1 class="display-4 fw-bold lh-1 text-body-emphasis">
@@ -44,7 +44,7 @@
 
     <!-- Testimonials Section -->
     {% if testimonials %}
-    <section id="carousel-testimonials" class="row container-fluid col-12" aria-labelledby="testimonials-title">
+    <section id="carousel-testimonials" class="row container col-12 bg-dark" aria-labelledby="testimonials-title">
         <h2 class="container col-12 text-center mt-1" id="testimonial-header">What our users say </h2>
         <h3 id="testimonials-title" class="visually-hidden">Testimonials</h3>
         <div id="testimonials" class="row carousel slide" data-bs-ride="carousel">
@@ -71,7 +71,7 @@
 
 
     <!-- Map section -->
-    <section id="map-section" class="row col-12 mb-3 mt-1" aria-labelledby="leaflet map-section">
+    <section id="map-section" class="row col-12 mb-3 mt-1 bg-dark" aria-labelledby="leaflet map-section">
         <div class="row container-fluid h-100">
             <h2 id="map-title" class="text-center">Explore the World with Our Interactive Map</h2>
             <div class="row p-4 testimonial-card align-items-center">

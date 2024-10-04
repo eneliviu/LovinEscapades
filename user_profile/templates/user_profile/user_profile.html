@@ -9,6 +9,8 @@
 <section id="map-section" class="row col-12 my-5" aria-labelledby="leaflet map-section">
     <div class="row container-fluid h-100">
 
+        <!-- -->
+        
         <div class="row p-4 testimonial-card align-items-center">
             <div class="col-lg-4 ">
                 <h2 class="visually-hidden">Testimonial form</h2>
@@ -24,16 +26,66 @@
 
             </div>
 
-            <div class="col-lg-8 d-flex flex-columns h-100">
-                <div class="container testimonial-card">
-                    <div id="map" class="c_map mx-auto h-100"></div>
+
+            <div class="col-lg-8 h-100">
+                <div class="row col-6 container-fluid w-100 testimonial-card">
+                    <div id="posts" class="mx-auto h-100"></div>
+                    {% if posts %}
+                    <h5>Your testimonials</h5>
+                        {% for post in posts %}
+                        <div class="testimonial-card d-flex align-items-center">
+
+                            <div class="container-fluid d-flex text-muted">
+                                {{ post.body }}
+                            </div>
+
+                            <div class="container">
+                                <a href="#" class="btn btn-edit btn-sm float-end m-2" data-post_id="{{ post.id }}"
+                                    type="submit" method="POST">
+                                    Edit
+                                </a>
+
+                                <a href="#" class="btn btn-delete btn-sm float-end m-2" data-post_id="{{ post.id }}"
+                                    type="submit" method="POST">
+                                    Delete
+                                </a>
+                            </div>
+
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
-
+        
 
         </div>
-
+   
     </div>
 </section>
+
+<!-- Delete confirmation modal --> 
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete comment?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your comment? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% block extras %}
+<script src="{% static 'js/manage_user.js' %}" type="text/javascript"></script>
+{% endblock %}
+
 
 {% endblock %}

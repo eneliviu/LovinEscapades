@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 # Connect the settings.py file to the env.py file:
 import dj_database_url
 import mimetypes
@@ -123,9 +124,14 @@ WSGI_APPLICATION = 'lovinescapades.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    'default': dj_database_url.parse(
+        os.environ.get("DATABASE_URL")
+    )
 }
+if 'test' in sys.argv:
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 
 CSRF_TRUSTED_ORIGINS = [

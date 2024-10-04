@@ -7,27 +7,27 @@ from . import views as trip_views
 
 urlpatterns = [
     path(
-        'dashboard/user',
+        'user/',
         trip_views.user_page,
         name='user'
     ),
     path(
-        'dashboard/gallery',
+        'gallery/',
         trip_views.gallery,
         name='gallery'
     ),
     path(
-        'dashboard/contact_us',
+        'contact/',
         trip_views.contact,
         name='contact'
     ),
     path(
-        'dashboard/user/delete_trip/<int:trip_id>',
+        'delete_trip/<int:trip_id>',
         trip_views.delete_trip,
         name='delete_trip'
     ),
     path(
-        'dashboard/user/edit_trip/<int:pk>',
+        'edit_trip/<int:pk>',
         trip_views.edit_trip,
         name='edit_trip'
     ),

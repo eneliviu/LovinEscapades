@@ -216,6 +216,20 @@ footer a {
     z-index: 9999 ! important;  /* Ensure the modal stays on top */
 }
 
-#carousel-testimonials:has(.testimonial-card:empty) {
-    display: none;
-  }
+
+
+@media (min-width: 992px) {
+    .c-img {
+      width: 720px; 
+      height: auto;
+    }
+}
+
+
+@media (max-width: 991px) {
+    .c-img {
+      width: 100%; 
+      height: auto;
+    }
+}
+

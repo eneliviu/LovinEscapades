@@ -5,40 +5,18 @@ from django.contrib import messages
 # from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from allauth.account.forms import SignupForm
-from trip.models import Trip
 from .models import Testimonial
 from .forms import TestimonialForm
 
 
 # Create your views here.
+@login_required
 def user_profile(request):
     '''
     User profile page
     '''
-    trip_filter = TripFilter(request.GET,
-                             queryset=Trip.objects.filter(user=request.user))
-    if trip_filter.qs.exists():
-        context = {
-            'trip_filter_form': trip_filter.form,
-            'trips': trip_filter.qs,
-        }
-    else:
-        messages.add_message(
-                request,
-                messages.ERROR,
-                'No matches were found'
-            )
-        context = {'trip_filter_form': trip_filter.form}
-        # return redirect('profile')
-    return render(request,
-                  'user_profile/user_profile.html',
-                  context=context)
-
-
-# ensure that only logged-in users can submit testimonials
-@login_required
-def submit_testimonial(request):
-
+    posts = Testimonial.objects.all()
+    
     if request.method == 'GET':
         form = TestimonialForm()
     
@@ -56,12 +34,83 @@ def submit_testimonial(request):
             )
         else:
             form = TestimonialForm()
-        
+
     return render(
                 request,
                 'user_profile/user_profile.html',
-                context={'testimonial_form': form},
-                )
+                context={
+                    'testimonial_form': form,
+                    'posts': posts
+                    }
+            )
+
+
+
+
+@login_required
+def user_posts(request):
+    posts = Testimonial.objects.all()
+    return render(
+        request,
+        'user_profile/user_profile.html',
+        context={
+            'posts': posts,
+        }
+
+    )
+
+
+# ensure that only logged-in users can submit testimonials
+@login_required
+def submit_testimonial(request):
+    posts = Testimonial.objects.all()
+    if request.method == 'GET':
+        form = TestimonialForm()
+    
+    if request.method == 'POST':
+        form = TestimonialForm(request.POST)
+        if form.is_valid():
+            testimonial = form.save(commit=False)
+            testimonial.user = request.user
+            testimonial.save()
+            form = TestimonialForm()
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                'Testimonial submitted succesfully and waiting for approval'
+            )
+        else:
+            form = TestimonialForm()
+
+    return render(
+                request,
+                'user_profile/user_profile.html',
+                context={
+                    'testimonial_form': form,
+                    'posts': posts
+                    }
+            )
+
+
+@login_required
+def delete_post(request, post_id):
+    qs = Testimonial.objects.filter(user=request.user)
+    post = get_object_or_404(qs, id=post_id)
+    
+    if post:
+        post.delete()
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            'Post deleted successfully.'
+        )
+    else:
+        messages.add_message(
+            request,
+            messages.ERROR,
+            'The record cannot be deleted.'
+        )
+    return redirect('profile')
 
 
 def update_profile(request):
