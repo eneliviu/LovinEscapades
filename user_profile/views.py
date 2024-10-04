@@ -42,9 +42,6 @@ def submit_testimonial(request):
     if request.method == 'GET':
         form = TestimonialForm()
     
-    testimonials = Testimonial.objects.all()
-    testimonials.exists()
-
     if request.method == 'POST':
         form = TestimonialForm(request.POST)
         if form.is_valid():
@@ -55,7 +52,7 @@ def submit_testimonial(request):
             messages.add_message(
                 request,
                 messages.SUCCESS,
-                'Testimonial submitted succsesfully'
+                'Testimonial submitted succesfully and waiting for approval'
             )
         else:
             form = TestimonialForm()

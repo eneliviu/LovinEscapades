@@ -215,3 +215,7 @@ footer a {
 .modal {
     z-index: 9999 ! important;  /* Ensure the modal stays on top */
 }
+
+#carousel-testimonials:has(.testimonial-card:empty) {
+    display: none;
+  }

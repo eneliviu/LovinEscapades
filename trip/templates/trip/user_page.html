@@ -79,6 +79,31 @@
             </div>
         </div>
 
+        <!-- Edit Trip Form Modal -->
+        <div class="modal fade" id="editTripModal" tabindex="-1" aria-labelledby="editTripModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12 card mb-2 mt-2">
+                            <div class="card-body">
+                                <form id="editTripForm" method="POST" style="margin-top: 1.2em;">
+                                    {% csrf_token %}
+                                    
+                                    {{ edit_trip_form | crispy }}
+                                    <button id="submitButton" type="submit" class="btn btn-signup float-end">
+                                        Submit
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Trip Entries Column -->
         <div class="col-12 mt-3 left">
             <div class="row">
@@ -95,11 +120,11 @@
                             <!-- <span class="badge c-badge bg-primary">{{ trip.trip_status }}</span>-->
 
                             {% if trip.trip_status == 'Planned' %}
-                            <span class="badge c-badge bg-info-subtle  text-muted">Planned</span>
+                                <span class="badge c-badge bg-info-subtle  text-muted">Planned</span>
                             {% elif trip.trip_status == 'Ongoing' %}
-                            <span class="badge c-badge bg-info-subtle text-muted">Ongoing</span>
+                                <span class="badge c-badge bg-info-subtle text-muted">Ongoing</span>
                             {% else %}
-                            <span class="badge c-badge bg-info-subtle text-muted">Completed</span>
+                                <span class="badge c-badge bg-info-subtle text-muted">Completed</span>
                             {% endif %}
 
                         </div>
@@ -114,11 +139,21 @@
                                     </div>
                                 </div>
                             </div>
+                           
                             <div class="mt-2 text-center">
-                                <a type="button" href="#" class="btn btn-edit btn-sm float-start">Edit</a>
-                                <a type="button" href="#" class="btn btn-more btn-sm">More...</a>
-                                <a href="#" class="btn btn-delete btn-sm float-end"
-                                    data-trip_id="{{ trip.id }}">Delete</a>
+                                <a type="button" class="btn btn-edit btn-sm float-start" data-bs-toggle="modal" data-bs-target="#editTripModal"
+                                    href="{% url 'edit_trip' trip.id %}">
+                                    Edit
+                                </a>
+                                
+                                <a type="button" href="#" class="btn btn-more btn-sm">
+                                    More...
+                                </a>
+                                
+                                <a href="#" class="btn btn-delete btn-sm float-end" data-trip_id="{{ trip.id }}" type="submit" method="POST">
+                                    Delete
+                                </a>
+
                             </div>
                         </div>
 
@@ -279,6 +314,8 @@
             </div>
         </div>
     </div>
+
+    
 
 
 </div>

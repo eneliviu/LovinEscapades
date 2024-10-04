@@ -41,13 +41,16 @@
         </div>
     </section>
 
+
     <!-- Testimonials Section -->
+    {% if testimonials %}
     <section id="carousel-testimonials" class="row container-fluid col-12" aria-labelledby="testimonials-title">
-        <h2 class="container col-12 text-center mt-1">What our users say </h2>
+        <h2 class="container col-12 text-center mt-1" id="testimonial-header">What our users say </h2>
         <h3 id="testimonials-title" class="visually-hidden">Testimonials</h3>
         <div id="testimonials" class="row carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 {% for testimonial in testimonials %}
+                
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
                     <div class="testimonial-card text-center">
                         <h5 class="testimonial-text">"{{ testimonial.body }}"</h5>
@@ -64,10 +67,11 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
 
     <!-- Map section -->
-    <section id="map-section" class="row col-12 mb-3" aria-labelledby="leaflet map-section">
+    <section id="map-section" class="row col-12 mb-3 mt-1" aria-labelledby="leaflet map-section">
         <div class="row container-fluid h-100">
             <h2 id="map-title" class="text-center">Explore the World with Our Interactive Map</h2>
             <div class="row p-4 testimonial-card align-items-center">

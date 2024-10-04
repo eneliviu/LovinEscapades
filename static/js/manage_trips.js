@@ -1,11 +1,7 @@
 
-console.log('Hello')
-
-const editButtons = document.getElementsByClassName("btn-edit");
-const tripText = document.getElementById("id_body");
-const tripForm = document.getElementById("addTripModal");
-const submitButton = document.getElementById("submitButton");
-
+/* --------------------------------------------------------------------------*/
+/* ----------------------  EDIT  ------------------------------------------*/
+/* --------------------------------------------------------------------------*/
 /*
  * Initializes edit functionality for the provided edit buttons.
  * 
@@ -16,25 +12,33 @@ const submitButton = document.getElementById("submitButton");
  * - Updates the submit button's text to "Update".
  * - Sets the form's action attribute to the `edit_note/{noteId}` endpoint.
  */
+const editButtons = document.getElementsByClassName("btn-edit");
+const tripText = document.getElementById("id_body");
+const tripForm = document.getElementById("editTripModal");
+const submitButton = document.getElementById("editButton");
 
+const editConfirm = document.getElementById("deleteConfirm");
 for (let button of editButtons) {
     button.addEventListener("click", (e) => {
         let tripId = e.target.getAttribute("data-trip_id");
-        let tripContent = document.getElementById(`trip${tripId}`).innerText;
-        tripText.value = tripContent;
+        //let tripContent = document.getElementById(`trip${tripId}`).innerText;
+        //tripText.value = tripContent;
+        editConfirm.href = `user/edit_trip/${tripId}`;
         submitButton.innerText = "Update";
-        noteForm.setAttribute("action", `edit_note/${tripId}`);
+        //noteForm.setAttribute("action", `edit_note/${tripId}`);
+        editModal.show();
     });
 
 }
 
+
+// OPEN FORM 
+
+
+
 /* --------------------------------------------------------------------------*/
-
-const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-const deleteButtons = document.getElementsByClassName("btn-delete");
-const deleteConfirm = document.getElementById("deleteConfirm");
-
-
+/* ----------------------  DELETE  ------------------------------------------*/
+/* --------------------------------------------------------------------------*/
 /*
  * Initializes deletion functionality for the provided delete buttons.
  * 
@@ -45,6 +49,10 @@ const deleteConfirm = document.getElementById("deleteConfirm");
  * - Displays a confirmation modal (`deleteModal`) to prompt 
  * the user for confirmation before deletion.
  */
+const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
+const deleteButtons = document.getElementsByClassName("btn-delete");
+const deleteConfirm = document.getElementById("deleteConfirm");
+
 for (let button of deleteButtons) {
     button.addEventListener("click", (e) => {
         let tripId = e.target.getAttribute("data-trip_id");

@@ -1,13 +1,11 @@
-from django.shortcuts import (render, redirect,
-                              get_object_or_404, reverse)
-from django.views import generic
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
-# from django.core import serializers
+from django.views.decorators.http import require_POST, require_GET
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from .models import (Trip, Comment, Note, Image)
-from .forms import AddTripForm
+from .models import Trip, Image
+from .forms import AddTripForm, EditTripForm
 from .filters import TripFilter
 from user_profile.models import Testimonial
 
@@ -20,34 +18,44 @@ def landing_page(request):
     # Serialization require a list of objects:
     trips = list(Trip.objects.filter(shared='Yes').
                  order_by('-created_on').values())
+    
     # Fetch testimonials from the database
-    testimonials = Testimonial.objects.all()
-
+    testimonials = Testimonial.objects.filter(approved=True)
     trip_filter = TripFilter(request.GET,
                              queryset=Trip.objects.filter(shared='Yes'))
 
     if trip_filter.qs.exists():
         trips = list(trip_filter.qs.values())
-        context = {'trips': trips,
-                   'testimonials': testimonials,
-                   'trip_filter_form': trip_filter.form,
-                   }
+        context = {
+            'trips': trips,
+            'testimonials': testimonials,
+            'trip_filter_form': trip_filter.form,
+        }
     else:
-        messages.add_message(
+        if len(trips) == 0:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                'No trips are posted'
+            )
+        else:
+            messages.add_message(
                 request,
                 messages.ERROR,
                 'No matches were found'
             )
         trip_filter = TripFilter(request.GET)
-        context = {'trips': trips,
-                   'testimonials': testimonials,
-                   'trip_filter_form': trip_filter.form,
-                   }
+        context = {
+            'trips': trips,
+            'testimonials': testimonials,
+            'trip_filter_form': trip_filter.form,
+        }
 
-    return render(request,
-                  'trip/landing_page.html',
-                  context=context,
-                  )
+    return render(
+        request,
+        'trip/landing_page.html',
+        context=context,
+    )
 
 
 def _trip_stats(trips):
@@ -69,10 +77,11 @@ def handle_get_request(request):
             prefetch_related('images', 'comments')
     comments_count, images_count = _trip_stats(trips)
     user = request.user
-    print(user)
 
-    testimonials_count = user.testimonials.count()
+    testimonials_count = user.testimonials.filter(approved=True).count()
+    
     add_trip_form = AddTripForm()
+    # edit_trip_form = EditTripForm(instance=trips.get(pk=request.user))
     
     # Pagination:
     # https://djangocentral.com/adding-pagination-with-django/#adding-pagination-using-function-based-views
@@ -95,31 +104,30 @@ def handle_get_request(request):
         'testimonials_count': testimonials_count,
         'images_count': images_count,
         'add_trip_form': add_trip_form,
+        # 'edit_trip_form': edit_trip_form,
     }
     return render(request, "trip/user_page.html", context)
 
 
-@login_required
-def handle_post_request(request):
-    add_trip_form = AddTripForm(request.POST, 
-                                user=request.user)
-    
+def _add_trip_form(request):
+    '''
+    Handle form for creating new trips
+    '''
+    add_trip_form = AddTripForm(request.POST, user=request.user)
     if add_trip_form.is_valid():
         trip_form = add_trip_form.save(commit=False)
         trip_form.user = request.user
         trip_form.save()  # Save the trip instance
-        
         messages.add_message(
             request,
             messages.SUCCESS,
             f'New trip to {trip_form.place}, {trip_form.country} added'
         )
-
         # Reload trips and recalculate stats after saving:
         trips = Trip.objects.filter(user=request.user).\
             prefetch_related('images', 'comments')
         comments_count, images_count = _trip_stats(trips)
-        return redirect('user')
+        # return redirect('user')
     else:
         cleaned_errors = []
         for field, errors in add_trip_form.errors.items():
@@ -129,12 +137,81 @@ def handle_post_request(request):
                 else:
                     cleaned_errors.append(f'{field.replace("_", " ").
                                           capitalize()}: {error}')
-        
         messages.add_message(
-            request,
-            messages.ERROR,
-            *cleaned_errors)  # Unpack the error list
-        return redirect('user')
+                request,
+                messages.ERROR,
+                *cleaned_errors)  # Unpack the error list
+        # return redirect('user')
+
+
+def _edit_trip_form(request, trip_id):
+    """
+    Display an individual trip for edit.
+
+    **Context**
+
+    ``trip``
+        An instance of :model:`trip.Trip`.
+    ``note``
+        A note related to the trip.
+    ``note_form``
+        An instance of :form:`trip.NoteForm`
+    """
+
+    qs = Trip.objects.filter(request.POST, user=request.user)
+    instance = get_object_or_404(qs, pk=trip_id)
+
+    if request.method == "POST":
+        form = EditTripForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                'Trip updated successfully!'
+            )
+        else:
+            # Pre-populates form with existing trip data
+            form = EditTripForm(instance=instance)
+
+
+
+@login_required
+def handle_post_request(request):
+    _add_trip_form(request)
+    
+    return redirect('user')
+    # return HttpResponseRedirect(reverse('user'))
+    # add_trip_form = AddTripForm(request.POST, user=request.user)
+    # if add_trip_form.is_valid():
+    #     trip_form = add_trip_form.save(commit=False)
+    #     trip_form.user = request.user
+    #     trip_form.save()  # Save the trip instance
+        
+    #     messages.add_message(
+    #         request,
+    #         messages.SUCCESS,
+    #         f'New trip to {trip_form.place}, {trip_form.country} added'
+    #     )
+    #     # Reload trips and recalculate stats after saving:
+    #     trips = Trip.objects.filter(user=request.user).\
+    #         prefetch_related('images', 'comments')
+    #     comments_count, images_count = _trip_stats(trips)
+    #     return redirect('user')
+    # else:
+    #     cleaned_errors = []
+    #     for field, errors in add_trip_form.errors.items():
+    #         for error in errors:
+    #             if field == '__all__':
+    #                 cleaned_errors.append(error)
+    #             else:
+    #                 cleaned_errors.append(f'{field.replace("_", " ").
+    #                                       capitalize()}: {error}')
+    #     messages.add_message(
+    #         request,
+    #         messages.ERROR,
+    #         *cleaned_errors)  # Unpack the error list
+    #     return redirect('user')
 
 
 def user_page(request):
@@ -169,7 +246,7 @@ def contact(request):
     return render(request, 'trip/contact_us.html', {})
 
 
-def trip_edit(request, trip_id):
+def edit_trip(request, trip_id):
     """
     Display an individual trip for edit.
 
@@ -183,38 +260,50 @@ def trip_edit(request, trip_id):
         An instance of :form:`trip.NoteForm`
     """
 
-    if request.method == "POST":
+    qs = Trip.objects.filter(user=request.user)
+    instance = get_object_or_404(qs, pk=trip_id)
+    
+    # print(request.POST)
+    # form = AddTripForm(request.POST)
+    # if form.is_valid():
+    #     form.save()
+    #     messages.add_message(
+    #         request,
+    #         messages.SUCCESS,
+    #         'Trip updated successfully!'
+    #     )
+    #     return redirect('success_page')
+    # else:
+    #     # Pre-populates form with existing trip data
+    #     form = EditTripForm(instance=instance)
 
-        queryset = Trip.objects.filter(user=request.user)
-        post = get_object_or_404(queryset)
-        note = get_object_or_404(Comment, pk=trip_id)
-        note_form = NoteForm(data=request.POST, instance=note)
-
-        if note_form.is_valid():
-            note = note_form.save(commit=False)
-            note.post = post
-            note.approved = False
-            note.save()
-            messages.add_message(
-                request,
-                messages.SUCCESS,
-                'Trip Note Updated!')
-        else:
-            messages.add_message(
-                request,
-                messages.ERROR,
-                'Error updating trip note!')
-
-    return HttpResponseRedirect(reverse('post_detail'))
+    return HttpResponseRedirect(reverse('user'))
+        # return render(
+        #         request,
+        #         "trip/user_page.html",
+        #         context={'edit_trip_form': form}
+        #     )
 
 
 def delete_trip(request, trip_id):
-    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
-    if trip.user == request.user:
+    qs = Trip.objects.filter(user=request.user)
+    trip = get_object_or_404(qs, id=trip_id)
+    
+    if trip:
         trip.delete()
-        messages.success(request, 'Trip deleted successfully.')
-        return redirect('user')
-    return HttpResponseRedirect(reverse('user'))
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            'Trip deleted successfully.'
+        )
+    else:
+        messages.add_message(
+            request,
+            messages.ERROR,
+            'The rrecord cannot be deleted.'
+        )
+
+    return redirect('user')
 
 
 # def custom_404_view(request, exception):

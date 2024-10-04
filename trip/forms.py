@@ -81,33 +81,14 @@ class AddTripForm(forms.ModelForm):
                     # Q(trip_status__in=['Completed', 'Ongoing']) |
                     Q(id=self.instance.id if self.instance else None)
                 )
-            print(collide_trips)
-
             if collide_trips.exists():
                 errMsg = 'These dates overlap with another trip.'
                 raise ValidationError(errMsg)
 
-        # super().clean(*args, **kwargs)
+        super().clean(*args, **kwargs)
+        # return cleaned_data
 
-        return cleaned_data
 
-
-class TripSelectionForm(forms.ModelForm):
-
-    class Meta:
-        model = Trip
-        fields = ('trip_status', 'trip_category',)
-
-    # TRIP_STATUS = (("Completed", 'COMPLETED'),
-    #                ("Ongoing", "ONGOING"),
-    #                ("Planned", 'PLANNED'))
-
-    # TRIP_CATEGORY = (('Leisure', 'LEISURE'),
-    #                  ('Business', 'BUSINESS'),
-    #                  ('Adventure', 'ADVENTURE'),
-    #                  ('Family', 'FAMILY'),
-    #                  ('Romantic', 'ROMANTIC'))
-    
-    # trip_status = forms.ChoiceField(choices=TRIP_STATUS, required=True)
-    # trip_category = forms.ChoiceField(choices=TRIP_CATEGORY, required=True)
-
+class EditTripForm(AddTripForm):
+    class Meta(AddTripForm):
+        fields = '__all__'

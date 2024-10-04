@@ -27,8 +27,9 @@ class Testimonial(models.Model):
                              related_name='testimonials')
     author_name = models.CharField(max_length=50, default="Anonymous")
     user_info = models.CharField(max_length=50, default="Enthusiast user")
-    body = models.TextField(blank=True)
+    body = models.TextField(blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.author_name}'s testimonial"
