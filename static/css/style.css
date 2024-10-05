@@ -121,6 +121,11 @@ main {
     /*z-index: 1!important;   Lower z-index to ensure it stays below the navbar */
 }
 
+.carousel-item img {
+    width: 100%;  
+    height: 500px; 
+    object-fit: cover; 
+}
 
 .c_map{
     width: 100%;

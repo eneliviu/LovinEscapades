@@ -34,3 +34,5 @@ def get_coordinates(location, attempt=1, max_attempts=5):
                                    attempt=attempt+1,
                                    max_attempts=max_attempts)
         raise GeocoderTimedOut("Max attempts exceeded")
+
+

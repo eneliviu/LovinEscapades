@@ -10,93 +10,90 @@ from .forms import TestimonialForm
 
 
 # Create your views here.
-@login_required
-def user_profile(request):
-    '''
-    User profile page
-    '''
-    posts = Testimonial.objects.all()
-    
-    if request.method == 'GET':
-        form = TestimonialForm()
-    
-    if request.method == 'POST':
-        form = TestimonialForm(request.POST)
-        if form.is_valid():
-            testimonial = form.save(commit=False)
-            testimonial.user = request.user
-            testimonial.save()
-            form = TestimonialForm()
-            messages.add_message(
-                request,
-                messages.SUCCESS,
-                'Testimonial submitted succesfully and waiting for approval'
-            )
-        else:
-            form = TestimonialForm()
 
-    return render(
-                request,
-                'user_profile/user_profile.html',
-                context={
-                    'testimonial_form': form,
-                    'posts': posts
-                    }
-            )
-
-
-
-
-@login_required
-def user_posts(request):
-    posts = Testimonial.objects.all()
-    return render(
-        request,
-        'user_profile/user_profile.html',
-        context={
-            'posts': posts,
+def handle_get_request(request):
+    posts = Testimonial.objects.filter(user=request.user)
+    testimonial_form = TestimonialForm()
+    context = {
+            'testimonial_form': testimonial_form,
+            'posts': posts
         }
-
+    return render(
+        request, 
+        "user_profile/user_profile.html",
+        context
     )
 
 
-# ensure that only logged-in users can submit testimonials
-@login_required
-def submit_testimonial(request):
-    posts = Testimonial.objects.all()
-    if request.method == 'GET':
-        form = TestimonialForm()
-    
-    if request.method == 'POST':
-        form = TestimonialForm(request.POST)
-        if form.is_valid():
-            testimonial = form.save(commit=False)
-            testimonial.user = request.user
-            testimonial.save()
-            form = TestimonialForm()
-            messages.add_message(
+def _add_posts_form(request):
+    '''
+    Handle form for posting new posts
+    '''
+    posts_form = TestimonialForm(request.POST)
+    if posts_form.is_valid():
+        testimonial = posts_form.save(commit=False)
+        testimonial.user = request.user
+        testimonial.save()
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            'Testimonial submitted succesfully and waiting for approval'
+        )
+    else:
+        cleaned_errors = []
+        for field, errors in posts_form.errors.items():
+            for error in errors:
+                if field == '__all__':
+                    cleaned_errors.append(error)
+                else:
+                    cleaned_errors.append(f'{field.replace("_", " ").
+                                          capitalize()}: {error}')
+        messages.add_message(
                 request,
-                messages.SUCCESS,
-                'Testimonial submitted succesfully and waiting for approval'
-            )
-        else:
-            form = TestimonialForm()
+                messages.ERROR,
+                *cleaned_errors)
 
-    return render(
-                request,
-                'user_profile/user_profile.html',
-                context={
-                    'testimonial_form': form,
-                    'posts': posts
-                    }
-            )
+
+def handle_post_request(request):
+    _add_posts_form(request)
+    return redirect('profile')
+
+
+@login_required
+def user_profile(request):
+    """
+    View for Dashboard
+    """
+    if request.method == 'GET':
+        return handle_get_request(request)
+    elif request.method == 'POST':
+        return handle_post_request(request)
+
+
+
+# def user_profile(request):
+#     '''
+#     User profile page
+#     '''
+
+#     posts = Testimonial.objects.filter(user=request.user)
+#     return render(
+#                 request,
+#                 'user_profile/user_profile.html',
+#                 context={
+#                     'testimonial_form': TestimonialForm(),
+#                     'posts': posts
+#                     }
+#             )
 
 
 @login_required
 def delete_post(request, post_id):
+    '''
+    same as in trip,views - make one function in utils.py
+    '''
     qs = Testimonial.objects.filter(user=request.user)
     post = get_object_or_404(qs, id=post_id)
-    
     if post:
         post.delete()
         messages.add_message(
@@ -130,15 +127,16 @@ def update_profile(request):
         }
     )    
     
-    # return render(
-    #     request,
-    #     'user_profile/update_user_profile.html',
-    #     {}
-    # )
-    # else:
-    #     messages.add_message(
-    #             request,
-    #             messages.ERROR,
-    #             'You must be logged in'
-    #         )
-    #     return redirect('profile')
+
+# @login_required
+# def user_posts(request):
+#     posts = Testimonial.objects.all()
+#     return render(
+#         request,
+#         'user_profile/user_profile.html',
+#         context={
+#             'posts': posts,
+#         }
+
+#     )
+

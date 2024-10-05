@@ -5,5 +5,15 @@ from . import views as user_profile_views
 # as your view function or vice-versa.
 
 urlpatterns = [
-    path('', user_profile_views.user_profile, name='profile'),
+    path(
+        '',
+        user_profile_views.user_profile,
+        name='profile'
+    ),
+    path(
+        'delete_post/<int:post_id>/',
+        user_profile_views.delete_post,
+        name='delete_testimonial'
+    ),
 ]
+

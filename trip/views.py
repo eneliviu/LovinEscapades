@@ -1,13 +1,15 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST, require_GET
 from django.contrib import messages
-from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from .models import Trip, Image
-from .forms import AddTripForm, EditTripForm
-from .filters import TripFilter
 from user_profile.models import Testimonial
+
+from .models import Trip
+from .forms import AddTripForm, EditTripForm, UploadImageForm
+from .filters import TripFilter
+
+from cloudinary.forms import cl_init_js_callbacks 
+from django.http import HttpResponse
 
 
 def landing_page(request):
@@ -44,7 +46,7 @@ def landing_page(request):
                 messages.ERROR,
                 'No matches were found'
             )
-        trip_filter = TripFilter(request.GET)
+        trip_filter = TripFilter()
         context = {
             'trips': trips,
             'testimonials': testimonials,
@@ -56,6 +58,7 @@ def landing_page(request):
         'trip/landing_page.html',
         context=context,
     )
+
 
 
 def _trip_stats(trips):
@@ -77,9 +80,7 @@ def handle_get_request(request):
             prefetch_related('images', 'comments')
     comments_count, images_count = _trip_stats(trips)
     user = request.user
-
     testimonials_count = user.testimonials.filter(approved=True).count()
-    
     add_trip_form = AddTripForm()
     # edit_trip_form = EditTripForm(instance=trips.get(pk=request.user))
     
@@ -127,7 +128,6 @@ def _add_trip_form(request):
         trips = Trip.objects.filter(user=request.user).\
             prefetch_related('images', 'comments')
         comments_count, images_count = _trip_stats(trips)
-        # return redirect('user')
     else:
         cleaned_errors = []
         for field, errors in add_trip_form.errors.items():
@@ -246,7 +246,8 @@ def contact(request):
     return render(request, 'trip/contact_us.html', {})
 
 
-def edit_trip(request, trip_id):
+@login_required
+def edit_trip_page(request, trip_id):
     """
     Display an individual trip for edit.
 
@@ -258,32 +259,32 @@ def edit_trip(request, trip_id):
         A note related to the trip.
     ``note_form``
         An instance of :form:`trip.NoteForm`
-    """
-
-    qs = Trip.objects.filter(user=request.user)
-    instance = get_object_or_404(qs, pk=trip_id)
     
-    # print(request.POST)
-    # form = AddTripForm(request.POST)
-    # if form.is_valid():
-    #     form.save()
-    #     messages.add_message(
-    #         request,
-    #         messages.SUCCESS,
-    #         'Trip updated successfully!'
-    #     )
-    #     return redirect('success_page')
-    # else:
-    #     # Pre-populates form with existing trip data
-    #     form = EditTripForm(instance=instance)
+    https://cloudinary.com/documentation/django_image_and_video_upload#django_forms_and_models_workflow
 
-    return HttpResponseRedirect(reverse('user'))
-        # return render(
-        #         request,
-        #         "trip/user_page.html",
-        #         context={'edit_trip_form': form}
-        #     )
-
+    """
+    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
+    images = trip.images.all()
+    if request.method == 'POST':
+        image_form = UploadImageForm(request.POST, request.FILES)
+        if image_form.is_valid():
+            image = image_form.save(commit=False)
+            image.trip = trip
+            image.save()
+            return redirect('edit_page', trip_id=trip.id)
+    else:
+        image_form = UploadImageForm()
+ 
+    return render(
+        request,
+        'trip/edit_trip.html',
+        context={
+            'form_data': EditTripForm(instance=trip),
+            'images': images,
+            'trips': trip,
+            'image_form': image_form,
+        }
+    )
 
 @login_required
 def delete_trip(request, trip_id):
@@ -305,9 +306,13 @@ def delete_trip(request, trip_id):
     return redirect('user')
 
 
-
-# def custom_404_view(request, exception):
-#     ''' 
-#     Render 404 Error page
-#     '''
-#     return render(request, '404.html', {}, status=404)
+def custom_404_view(request, exception):
+    ''' 
+    Render 404 Error page
+    '''
+    return render(
+        request,
+        '404.html',
+        {},
+        status=404
+    )

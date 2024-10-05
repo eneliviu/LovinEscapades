@@ -44,7 +44,7 @@
 
     <!-- Testimonials Section -->
     {% if testimonials %}
-    <section id="carousel-testimonials" class="row container col-12 bg-dark" aria-labelledby="testimonials-title">
+    <section id="carousel-testimonials" class="row container col-12" aria-labelledby="testimonials-title">
         <h2 class="container col-12 text-center mt-1" id="testimonial-header">What our users say </h2>
         <h3 id="testimonials-title" class="visually-hidden">Testimonials</h3>
         <div id="testimonials" class="row carousel slide" data-bs-ride="carousel">
@@ -78,7 +78,7 @@
                 <div class="col-lg-4 ">
                     <h2 class="visually-hidden">Map filter</h2>
                     <!-- Button to trigger modal -->
-                    <form id="tripSelectionForm" method="FET" style="margin-top: 1.2em;">
+                    <form id="tripSelectionForm" style="margin-top: 1.2em;">
                         {% csrf_token %}
                         {{ trip_filter_form | crispy }}
                         <button id="submitButton" type="submit" class="btn btn-signup float-center">

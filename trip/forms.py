@@ -2,7 +2,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.db.models import Q
-from .models import Trip
+from cloudinary.forms import CloudinaryFileField      
+from .models import Trip, Image
 
 
 class AddTripForm(forms.ModelForm):
@@ -91,4 +92,32 @@ class AddTripForm(forms.ModelForm):
 
 class EditTripForm(AddTripForm):
     class Meta(AddTripForm):
-        fields = '__all__'
+        model = Trip
+        exclude = ('user',  'status',)
+
+
+# class UploadImageForm(forms.ModelForm):
+#     class Meta:
+#         model = Image
+#         fields = ['image', 'title', 'description']
+
+
+class UploadImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['image', 'title', 'description']
+
+    # image = CloudinaryFileField(
+    #     # attrs={'style': "margin-top: 30px"},
+    #     options={ 
+    #         'tags': "directly_uploaded",
+    #         'crop': 'limit', 'width': 500, 'height': 500,
+    #         'eager': [
+    #             {
+    #                 'crop': 'fill',
+    #                 'width': 150,
+    #                 'height': 100
+    #             }
+    #         ]
+    #     }
+    # )

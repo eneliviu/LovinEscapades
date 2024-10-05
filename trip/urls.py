@@ -27,9 +27,9 @@ urlpatterns = [
         name='delete_trip'
     ),
     path(
-        'edit_trip/<int:pk>',
-        trip_views.edit_trip,
-        name='edit_trip'
+        'edit_trip_page/<int:trip_id>',
+        trip_views.edit_trip_page,
+        name='edit_page'
     ),
     path(
         '',
@@ -37,4 +37,5 @@ urlpatterns = [
         name='home'
     ),
     # path('', trip_views.custom_404_view, name='404_page'), <str:username>
+    #  path('trip/<int:trip_id>/images/', views.trip_images, name='trip_images'),
 ]

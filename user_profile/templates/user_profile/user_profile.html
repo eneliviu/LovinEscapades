@@ -4,79 +4,108 @@
 
 {% block content %}
 
-<!-- Content Goes here -->
 <!-- User Profile section -->
 <section id="map-section" class="row col-12 my-5" aria-labelledby="leaflet map-section">
     <div class="row container-fluid h-100">
 
-        <!-- -->
-        
-        <div class="row p-4 testimonial-card align-items-center">
-            <div class="col-lg-4 ">
-                <h2 class="visually-hidden">Testimonial form</h2>
-                <!-- Button to trigger modal -->
-                <h5>Submit your Testimonial</h5>
-                <form id="tripSelectionForm" method="POST" style="margin-top: 1.2em;">
-                    {% csrf_token %}
-                    {{ testimonial_form | crispy }}
-                    <button id="submitButton" type="submit" class="btn btn-signup float-center">
-                        Submit
+        <!--Submit testimonial-->
+        <div class="col-lg-4 testimonial-card m-3 h-100">
+            <div class="d-flex flex-column ">
+                <!-- Button to trigger add testimonial modal -->
+                <div class="container text-center">
+                    <button type="button" class="btn btn-primary btn-lg w-50 my-2" data-bs-toggle="modal"
+                        data-bs-target="#addTestimonialModal">
+                        Add Testimonial
                     </button>
-                </form>
-
-            </div>
-
-
-            <div class="col-lg-8 h-100">
-                <div class="row col-6 container-fluid w-100 testimonial-card">
-                    <div id="posts" class="mx-auto h-100"></div>
-                    {% if posts %}
-                    <h5>Your testimonials</h5>
-                        {% for post in posts %}
-                        <div class="testimonial-card d-flex align-items-center">
-
-                            <div class="container-fluid d-flex text-muted">
-                                {{ post.body }}
-                            </div>
-
-                            <div class="container">
-                                <a href="#" class="btn btn-edit btn-sm float-end m-2" data-post_id="{{ post.id }}"
-                                    type="submit" method="POST">
-                                    Edit
-                                </a>
-
-                                <a href="#" class="btn btn-delete btn-sm float-end m-2" data-post_id="{{ post.id }}"
-                                    type="submit" method="POST">
-                                    Delete
-                                </a>
-                            </div>
-
-                        </div>
-                        {% endfor %}
-                    {% endif %}
+                </div>
+                <div class="container text-center">
+                    <button type="button" class="btn btn-edit btn-lg w-50 my-2" data-bs-toggle="modal"
+                        data-bs-target="#EditProfileModal">
+                        Edit profile
+                    </button>
                 </div>
             </div>
-        
+
+            <!-- Add Testimonial Form Modal -->
+            <h2 class="visually-hidden">Testimonial form</h2>
+            <div class="modal fade" id="addTestimonialModal" tabindex="-1" aria-labelledby="addTestimonialModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12 card mb-2 mt-2">
+                                <div class="card-body">
+                                    <form id="addTestimonialForm" method="POST" style="margin-top: 1.2em;">
+                                        {% csrf_token %}
+                                        {{ testimonial_form | crispy }}
+                                        <button id="submitButton" type="submit" class="btn btn-signup float-end">
+                                            Submit
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
-   
+
+
+        <!-- Testimonnials list -->
+        {% if posts %}
+        <div class="col-lg-7 h-100 testimonial-card m-3">
+            <div class="row col-6 container-fluid w-100 ">
+                <div id="posts" class="mx-auto h-100"></div>
+
+                <h5>Your testimonials</h5>
+                {% for post in posts %}
+                <div class="testimonial-card d-flex align-items-center">
+
+                    <div class="container-fluid d-flex text-muted">
+                        {{ post.body }}
+                    </div>
+
+                    <div class="container">
+                        <a href="#" class="btn btn-edit btn-sm float-end m-2" data-post_id="{{ post.id }}" type="submit"
+                            method="POST">
+                            Edit
+                        </a>
+
+                        <a href="#" class="btn btn-delete btn-sm float-end m-2" data-post_id="{{ post.id }}"
+                            type="submit" method="POST">
+                            Delete
+                        </a>
+                    </div>
+
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        {% endif %}
+
+
     </div>
 </section>
 
-<!-- Delete confirmation modal --> 
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteModal2" tabindex="-1" aria-labelledby="deleteModalLabel2" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Delete comment?</h5>
+                <h5 class="modal-title" id="deleteModalLabel2">Delete testimonial?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete your comment? This action cannot be undone.
+                Are you sure you want to delete your post? This action cannot be undone.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
+                <a id="deleteConfirm2" href="#" class="btn btn-danger">Delete</a>
             </div>
         </div>
     </div>
