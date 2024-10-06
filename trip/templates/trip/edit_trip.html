@@ -6,45 +6,87 @@
 {% block content %}
 <!-- Content Goes here -->
 
-<section id="map-section" class="row col-12 my-5 h-100" aria-labelledby="leaflet map-section">
+<section class="row col-12 my-5" aria-labelledby="leaflet map-section">
     <div class="row container-fluid h-100">
 
-        <div class="col-lg-4 testimonial-card m-3 h-100 text-muted">
-            <h3>Edit trip details</h3>
-            <hr>
-            {% csrf_token %}
-            {{ form_data | crispy }}
-            <button id="cancelButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                Close
-            </button>
-            <button id="submitButton" type="submit" class="btn btn-signup float-end">
-                Save
+        <!-- Button to trigger add testimonial modal -->
+        <div class="container text-center my-3 p-0">
+            <button type="button" class="btn btn-edit btn-lg w-50 my-2" data-bs-toggle="modal"
+                data-bs-target="#editTripModal">
+                Update trip
             </button>
         </div>
 
-        <div class="col-lg-7 h-100 testimonial-card m-3">
-            <div class="row col-6 container-fluid w-100 ">
-                <div id="images" class="mx-auto h-100">
-                    <h3 class="text-muted">Edit media</h3>
-                    <hr>
-                    <h5>Upload New Image</h5>
-                    <form method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ image_form | crispy }}
-                        <button type="submit" class="btn btn-primary">
-                            Upload
-                        </button>
-                    </form>
-                </div>
-            </div>
+        <div class="container text-center my-3 p-0">
+            <button type="button" class="btn btn-edit btn-lg w-50 my-2" data-bs-toggle="modal"
+                data-bs-target="#EditProfileModal">
+                Upload images
+            </button>
         </div>
 
     </div>
 
+    <!-- Edit Trip Form Modal -->
+    <div class="modal fade" id="editTripModal" tabindex="-1" aria-labelledby="editTripModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 card mb-2 mt-2">
+                        <div class="card-body">
+                            <form id="editTripForm" method="POST" style="margin-top: 1.2em;">
+                                {% csrf_token %}
+                                {{ edit_trip_form | crispy }}
+                                <button id="cancelButton" type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                                <button id="submitButton" type="submit" class="btn btn-signup float-end">
+                                    Submit
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
 </section>
 
+
+{% endblock content %}
+
+<!-- <section id="map-section" class="row col-12 my-5 h-100" aria-labelledby="leaflet map-section">
+    <div class="row container-fluid h-100">
+
+
+    <div class="col-lg-7 h-100 testimonial-card m-3">
+        <div class="row col-6 container-fluid w-100 ">
+            <div id="images" class="mx-auto h-100">
+                <h3 class="text-muted">Edit media</h3>
+                <hr>
+                <h5>Upload New Image</h5>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ image_form | crispy }}
+                    <button type="submit" class="btn btn-primary">
+                        Upload
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+</section> -->
+
 {% block extras %}
-<script src="{% static 'js/manage_trips.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/edit_trips.js' %}" type="text/javascript"></script>
 {% endblock %}
 
-{% endblock %}

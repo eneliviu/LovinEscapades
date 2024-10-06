@@ -69,8 +69,62 @@ def _trip_stats(trips):
     return comments_count, images_count
 
 
+def _add_trip_form(request):
+    '''
+    Handle form for creating new trips
+    '''
+    add_trip_form = AddTripForm(request.POST, user=request.user)
+    if add_trip_form.is_valid():
+        trip_form = add_trip_form.save(commit=False)
+        trip_form.user = request.user
+        trip_form.save()  # Save the trip instance
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            f'New trip to {trip_form.place}, {trip_form.country} added'
+        )
+        # Reload trips and recalculate stats after saving:
+        trips = Trip.objects.filter(user=request.user).\
+            prefetch_related('images', 'comments')
+        comments_count, images_count = _trip_stats(trips)
+    else:
+        cleaned_errors = []
+        for field, errors in add_trip_form.errors.items():
+            for error in errors:
+                if field == '__all__':
+                    cleaned_errors.append(error)
+                else:
+                    cleaned_errors.append(f'{field.replace("_", " ").
+                                          capitalize()}: {error}')
+        messages.add_message(
+                request,
+                messages.ERROR,
+                *cleaned_errors)  # Unpack the error list
+
+
+
 @login_required
-def handle_get_request(request):
+def delete_trip(request, trip_id):
+    qs = Trip.objects.filter(user=request.user)
+    trip = get_object_or_404(qs, id=trip_id)
+    if trip:
+        trip.delete()
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            'Trip deleted successfully.'
+        )
+    else:
+        messages.add_message(
+            request,
+            messages.ERROR,
+            'The record cannot be deleted.'
+        )
+    return redirect('user')
+
+
+@login_required
+def handle_get_request_user_page(request):
     trips = Trip.objects.filter(user=request.user).\
             prefetch_related('images', 'comments')
     comments_count, images_count = _trip_stats(trips)
@@ -105,107 +159,10 @@ def handle_get_request(request):
     return render(request, "trip/user_page.html", context)
 
 
-def _add_trip_form(request):
-    '''
-    Handle form for creating new trips
-    '''
-    add_trip_form = AddTripForm(request.POST, user=request.user)
-    if add_trip_form.is_valid():
-        trip_form = add_trip_form.save(commit=False)
-        trip_form.user = request.user
-        trip_form.save()  # Save the trip instance
-        messages.add_message(
-            request,
-            messages.SUCCESS,
-            f'New trip to {trip_form.place}, {trip_form.country} added'
-        )
-        # Reload trips and recalculate stats after saving:
-        trips = Trip.objects.filter(user=request.user).\
-            prefetch_related('images', 'comments')
-        comments_count, images_count = _trip_stats(trips)
-    else:
-        cleaned_errors = []
-        for field, errors in add_trip_form.errors.items():
-            for error in errors:
-                if field == '__all__':
-                    cleaned_errors.append(error)
-                else:
-                    cleaned_errors.append(f'{field.replace("_", " ").
-                                          capitalize()}: {error}')
-        messages.add_message(
-                request,
-                messages.ERROR,
-                *cleaned_errors)  # Unpack the error list
-        # return redirect('user')
-
-
-def _edit_trip_form(request, trip_id):
-    """
-    Display an individual trip for edit.
-
-    **Context**
-
-    ``trip``
-        An instance of :model:`trip.Trip`.
-    ``note``
-        A note related to the trip.
-    ``note_form``
-        An instance of :form:`trip.NoteForm`
-    """
-
-    qs = Trip.objects.filter(request.POST, user=request.user)
-    instance = get_object_or_404(qs, pk=trip_id)
-
-    if request.method == "POST":
-        form = EditTripForm(request.POST, instance=instance)
-        if form.is_valid():
-            form.save()
-            messages.add_message(
-                request,
-                messages.SUCCESS,
-                'Trip updated successfully!'
-            )
-        else:
-            # Pre-populates form with existing trip data
-            form = EditTripForm(instance=instance)
-
-
 @login_required
-def handle_post_request(request):
+def handle_post_request_user_page(request):
     _add_trip_form(request)
-    
     return redirect('user')
-    # return HttpResponseRedirect(reverse('user'))
-    # add_trip_form = AddTripForm(request.POST, user=request.user)
-    # if add_trip_form.is_valid():
-    #     trip_form = add_trip_form.save(commit=False)
-    #     trip_form.user = request.user
-    #     trip_form.save()  # Save the trip instance
-        
-    #     messages.add_message(
-    #         request,
-    #         messages.SUCCESS,
-    #         f'New trip to {trip_form.place}, {trip_form.country} added'
-    #     )
-    #     # Reload trips and recalculate stats after saving:
-    #     trips = Trip.objects.filter(user=request.user).\
-    #         prefetch_related('images', 'comments')
-    #     comments_count, images_count = _trip_stats(trips)
-    #     return redirect('user')
-    # else:
-    #     cleaned_errors = []
-    #     for field, errors in add_trip_form.errors.items():
-    #         for error in errors:
-    #             if field == '__all__':
-    #                 cleaned_errors.append(error)
-    #             else:
-    #                 cleaned_errors.append(f'{field.replace("_", " ").
-    #                                       capitalize()}: {error}')
-    #     messages.add_message(
-    #         request,
-    #         messages.ERROR,
-    #         *cleaned_errors)  # Unpack the error list
-    #     return redirect('user')
 
 
 def user_page(request):
@@ -213,101 +170,9 @@ def user_page(request):
     View for Dashboard
     """
     if request.method == 'GET':
-        return handle_get_request(request)
+        return handle_get_request_user_page(request)
     elif request.method == 'POST':
-        return handle_post_request(request)
-
-
-def gallery(request, trip_id):
-    ''' 
-    Redirect user after registration
-    '''
-    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
-    images = trip.images.all()
-
-    return render(
-        request,
-        'trip/shared_gallery.html',
-        context={
-            'images': images,
-            'trips': trip,
-        }
-    )
-    
-
-
-def contact(request):
-    ''' 
-    Redirect user after registration
-    '''
-    
-    return render(request, 'trip/contact_us.html', {})
-
-
-@login_required
-def edit_trip_page(request, trip_id):
-    """
-    Display an individual trip for edit.
-
-    **Context**
-
-    ``trip``
-        An instance of :model:`trip.Trip`.
-    ``note``
-        A note related to the trip.
-    ``note_form``
-        An instance of :form:`trip.NoteForm`
-    
-    https://cloudinary.com/documentation/django_image_and_video_upload#django_forms_and_models_workflow
-
-    """
-    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
-    images = trip.images.all()
-    if request.method == 'POST':
-        image_form = UploadImageForm(request.POST, request.FILES)
-        if image_form.is_valid():
-            image = image_form.save(commit=False)
-            image.trip = trip
-            image.save()
-            messages.add_message(
-                request,
-                messages.SUCCESS,
-                'Image loaded successfully and added to the Gallery!'
-            )
-            return redirect('edit_page', trip_id=trip.id)
-    else:
-        image_form = UploadImageForm()
- 
-    return render(
-        request,
-        'trip/edit_trip.html',
-        context={
-            'form_data': EditTripForm(instance=trip),
-            'images': images,
-            'trips': trip,
-            'image_form': image_form,
-        }
-    )
-
-
-@login_required
-def delete_trip(request, trip_id):
-    qs = Trip.objects.filter(user=request.user)
-    trip = get_object_or_404(qs, id=trip_id)
-    if trip:
-        trip.delete()
-        messages.add_message(
-            request,
-            messages.SUCCESS,
-            'Trip deleted successfully.'
-        )
-    else:
-        messages.add_message(
-            request,
-            messages.ERROR,
-            'The record cannot be deleted.'
-        )
-    return redirect('user')
+        return handle_post_request_user_page(request)
 
 
 def custom_404_view(request, exception):
@@ -320,3 +185,118 @@ def custom_404_view(request, exception):
         {},
         status=404
     )
+
+
+# ==================================================== #
+
+
+def gallery(request, trip_id):
+    ''' 
+    Redirect user after registration
+    '''
+    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
+    images = trip.images.all()
+    return render(
+        request,
+        'trip/shared_gallery.html',
+        context={
+            'images': images,
+            'trips': trip,
+        }
+    )
+
+
+def contact(request):
+    ''' 
+    Redirect user after registration
+    '''
+    
+    return render(request, 'trip/contact_us.html', {})
+
+# ==================================================== #
+
+
+def _edit_trip_form(request, trip_id):
+    """
+    Display an individual trip for edit.
+    """
+    trip = get_object_or_404(Trip, user=request.user, id=trip_id)
+    form = EditTripForm(request.POST, instance=trip)
+    if form.is_valid():
+        form.save()
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            'Trip updated successfully!'
+        )
+    else:
+        cleaned_errors = []
+        for field, errors in form.errors.items():
+            for error in errors:
+                if field == '__all__':
+                    cleaned_errors.append(error)
+                else:
+                    cleaned_errors.append(f'{field.replace("_", " ").
+                                          capitalize()}: {error}')
+        messages.add_message(
+                request,
+                messages.ERROR,
+                *cleaned_errors)  # Unpack the error list
+        # Pre-populates form with existing trip data
+        # form = EditTripForm(instance=trip)
+
+
+def _upload_trip_images(request, trip_id):
+    trip = get_object_or_404(Trip, user=request.user, id=trip_id)
+    if request.method == 'POST':
+        image_form = UploadImageForm(request.POST, request.FILES)
+        if image_form.is_valid():
+            image = image_form.save(commit=False)
+            image.trip = trip
+            image.save()
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                'Image loaded successfully and added to the Gallery!'
+            )
+    else:
+        image_form = UploadImageForm()   
+
+
+@login_required
+def handle_get_request_edit_trip_page(request, trip_id):
+    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
+    trip_form = EditTripForm(instance=trip)
+    image_form = UploadImageForm()
+    
+    context = {
+        'image_form': image_form,
+        'edit_trip_form': trip_form,
+    }
+
+    return render(
+        request,
+        "trip/edit_trip.html",
+        context
+    )
+
+
+# @login_required
+def handle_post_request_edit_trip_page(request, trip_id):
+    _edit_trip_form(request, trip_id)
+    _upload_trip_images(request, trip_id)
+    return redirect('edit_page', trip_id=trip_id)  # back to edit page
+
+
+@login_required
+def edit_trip_page(request, trip_id):
+    """
+    View for Dashboard
+    """
+    if request.method == 'GET':
+        return handle_get_request_edit_trip_page(request, trip_id)
+    elif request.method == 'POST':
+        return handle_post_request_edit_trip_page(request, trip_id)
+
+
+

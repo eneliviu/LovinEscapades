@@ -7,7 +7,7 @@ from . import views as trip_views
 
 urlpatterns = [
     path(
-        'user/',
+        'user_page/',
         trip_views.user_page,
         name='user'
     ),
@@ -27,7 +27,7 @@ urlpatterns = [
         name='delete_trip'
     ),
     path(
-        'edit_trip_page/<int:trip_id>',
+        'user_page/edit/<int:trip_id>',
         trip_views.edit_trip_page,
         name='edit_page'
     ),
