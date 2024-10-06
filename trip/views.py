@@ -102,7 +102,6 @@ def _add_trip_form(request):
                 *cleaned_errors)  # Unpack the error list
 
 
-
 @login_required
 def delete_trip(request, trip_id):
     qs = Trip.objects.filter(user=request.user)
@@ -221,6 +220,7 @@ def _edit_trip_form(request, trip_id):
     Display an individual trip for edit.
     """
     trip = get_object_or_404(Trip, user=request.user, id=trip_id)
+    # Pre-populates form with existing trip data
     form = EditTripForm(request.POST, instance=trip)
     if form.is_valid():
         form.save()
@@ -242,8 +242,6 @@ def _edit_trip_form(request, trip_id):
                 request,
                 messages.ERROR,
                 *cleaned_errors)  # Unpack the error list
-        # Pre-populates form with existing trip data
-        # form = EditTripForm(instance=trip)
 
 
 def _upload_trip_images(request, trip_id):
@@ -252,7 +250,7 @@ def _upload_trip_images(request, trip_id):
         image_form = UploadImageForm(request.POST, request.FILES)
         if image_form.is_valid():
             image = image_form.save(commit=False)
-            image.trip = trip
+            image.trip = trip  # Foreign key
             image.save()
             messages.add_message(
                 request,
@@ -260,7 +258,7 @@ def _upload_trip_images(request, trip_id):
                 'Image loaded successfully and added to the Gallery!'
             )
     else:
-        image_form = UploadImageForm()   
+        image_form = UploadImageForm()
 
 
 @login_required
@@ -269,21 +267,19 @@ def handle_get_request_edit_trip_page(request, trip_id):
     trip_form = EditTripForm(instance=trip)
     image_form = UploadImageForm()
     
-    context = {
-        'image_form': image_form,
-        'edit_trip_form': trip_form,
-    }
-
     return render(
         request,
         "trip/edit_trip.html",
-        context
+        context={
+            'image_form': image_form,
+            'edit_trip_form': trip_form,
+        }
     )
 
 
 # @login_required
 def handle_post_request_edit_trip_page(request, trip_id):
-    _edit_trip_form(request, trip_id)
+    # _edit_trip_form(request, trip_id)
     _upload_trip_images(request, trip_id)
     return redirect('edit_page', trip_id=trip_id)  # back to edit page
 

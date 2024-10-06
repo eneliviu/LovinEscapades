@@ -105,12 +105,21 @@ class EditTripForm(AddTripForm):
 class UploadImageForm(forms.ModelForm):
     class Meta:
         model = Image
-        fields = ['title', 'description']
+        fields = ['image', 'title', 'description']
 
     def clean_image(self):
         image = self.cleaned_data.get('image')
         if not image:
-            raise forms.ValidationError("No image uploaded.\
-                Please select an valid image file to upload.")
+            raise forms.ValidationError("No image uploaded. Please select a valid image file to upload.")
+        return image
 
-    
+    # def clean(self, *args, **kwargs):
+    #     cleaned_data = super(UploadImageForm, self).clean()
+    #     image = cleaned_data.get('image')
+    #     if not image:
+    #         self.add_error(
+    #             'image',
+    #             "No image uploaded. Please upload a valid imaage file.")
+
+    #     return cleaned_data
+

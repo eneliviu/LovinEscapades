@@ -1,10 +1,9 @@
+document.addEventListener("DOMContentLoaded", () => {
+    let upload_image_form = document.getElementById("uploadImageForm");
+    let cancelButton_upload = document.getElementById("cancelButtonImage");
+    // console.log('OK')
 
-document.addEventListener("DOMContentLoaded", function () {
-    let edit_form = document.getElementById("editTripForm");
-    let cancelButton_edit = document.getElementById("cancelButtonTrip");
-    console.log('OK')
-
-    edit_form.addEventListener("submit", (e) => {
+    upload_image_form.addEventListener("submit", (e) => {
         
         // Retrieve the start and end dates
         let startDateValue = document.getElementById("id_start_date").value;
@@ -60,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // and validation on the server-side.
     });
 
-    cancelButton_edit.addEventListener('click', (e) => {
+    cancelButton_upload.addEventListener('click', (e) => {
         document.getElementById("editTripForm").reset();
     })
 
