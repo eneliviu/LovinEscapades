@@ -9,149 +9,42 @@
 <section id="map-section" class="row col-12 my-5 h-100" aria-labelledby="leaflet map-section">
     <div class="row container-fluid h-100">
 
-
         <div class="col-lg-4 testimonial-card m-3 h-100 text-muted">
-            <h3>Edit trip data</h3>
+            <h3>Edit trip details</h3>
+            <hr>
+            {% csrf_token %}
             {{ form_data | crispy }}
+            <button id="cancelButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+            </button>
             <button id="submitButton" type="submit" class="btn btn-signup float-end">
                 Save
             </button>
         </div>
 
-
         <div class="col-lg-7 h-100 testimonial-card m-3">
             <div class="row col-6 container-fluid w-100 ">
                 <div id="images" class="mx-auto h-100">
-                    <h3>Edit media</h3>
-
-
-                    <!-- Images Section with Carousel -->
-                    <div class="container mt-4">
-                        <h2>Memories from {{ trips.title }}</h2>
-                        <div id="tripCarousel" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                {% for image in images %}
-                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                    <img src="{{ image.image.url }}" alt="{{ image.title }}"
-                                        class="mx-auto d-block w-100 img-fluid border rounded" >
-                                </div>
-                                <div>
-                                    {% if image.title or image.description %}
-
-                                    <div class="carousel-caption d-none d-md-block">
-                                        {% if image.title %}
-                                        <h5>{{ image.title }}</h5>
-                                        {% endif %}
-                                        {% if image.description %}
-                                        <small>
-                                            {{ image.description }}
-                                        </small>
-                                        {% endif %}
-                                    </div>
-                                    {% endif %}
-                                </div>
-
-                                {% empty %}
-                                <div class="alert alert-warning" role="alert">
-                                    No images available for this trip.
-                                </div>
-                                {% endfor %}
-                            </div>
-
-                            <button class="carousel-control-prev" type="button" data-bs-target="#tripCarousel"
-                                data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#tripCarousel"
-                                data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                    </div>
-
+                    <h3 class="text-muted">Edit media</h3>
                     <hr>
-
-                    <h3>Upload New Image</h3>
+                    <h5>Upload New Image</h5>
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ image_form | crispy }}
-                        <button type="submit" class="btn btn-primary">Upload</button>
+                        <button type="submit" class="btn btn-primary">
+                            Upload
+                        </button>
                     </form>
                 </div>
-
-
-
-
             </div>
         </div>
-    </div>
 
     </div>
+
 </section>
 
 {% block extras %}
 <script src="{% static 'js/manage_trips.js' %}" type="text/javascript"></script>
 {% endblock %}
 
-
-
 {% endblock %}
-
-
-
-<!-- Notes  
-<div class="mb-4">
-    <div class="d-flex justify-content-between">
-        <h5>Notes</h5>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <ul class="list-group">
-                {% for note in trip.notes.all %}
-                <p class="mb-0"><span class="text-muted float-start">{{
-                        note.created_on }}</span>
-                </p>
-                <li class="list-group-item mb-3">
-                    {{ note.content | linebreaks }}
-                </li>
-                <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-primary rounded-pill btn-sm">Edit</button>
-                    <button type="button" class="btn btn-danger rounded-pill btn-sm">Delete</button>
-                </div>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="mb-4">
-    <div>
-        <button type="button" class="btn btn-primary rounded-pill btn-sm mb-2">Leave
-            a
-            comment:</button>
-    </div>
-    <ul class="list-group">
-        {% for comment in trip.comments.all %}
-        <li class="list-group-item">
-            <strong> {{ comment.user }}</strong>: {{ comment.content }}
-            <span class="text-muted float-end"><small> {{ comment.created_on
-                    }}</small></span>
-            
-            <button class="btn btn-light btn-sm like-button">
-                Like (<span id="like-count-{{ comment.id }}">{{ comment.likes
-                    }}</span>)
-            </button>
-        </li>
-
-        {% empty %}
-        <li class="list-group-item">No comments yet.</li>
-        {% endfor %}
-    </ul>
-</div>
-
--->

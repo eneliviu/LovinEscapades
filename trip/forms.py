@@ -22,7 +22,7 @@ class AddTripForm(forms.ModelForm):
         widgets = {
             'start_date': forms.widgets.DateInput(attrs={'type': 'date'}),
             'end_date': forms.widgets.DateInput(attrs={'type': 'date'}),
-            'description': forms.Textarea(attrs={'rows': 2, 'cols': 40})
+            'description': forms.Textarea(attrs={'rows': 2})
         }
         
     # Server-side validation:
@@ -91,33 +91,26 @@ class AddTripForm(forms.ModelForm):
 
 
 class EditTripForm(AddTripForm):
-    class Meta(AddTripForm):
+    ''' 
+    Extends `AddTripForm` class
+    '''
+    class Meta(AddTripForm.Meta):
         model = Trip
-        exclude = ('user',  'status',)
-
-
-# class UploadImageForm(forms.ModelForm):
-#     class Meta:
-#         model = Image
-#         fields = ['image', 'title', 'description']
+        exclude = ('user',)
+    
+    def __init__(self, *args, **kwargs):
+        super(EditTripForm, self).__init__(*args, **kwargs)
 
 
 class UploadImageForm(forms.ModelForm):
     class Meta:
         model = Image
-        fields = ['image', 'title', 'description']
+        fields = ['title', 'description']
 
-    # image = CloudinaryFileField(
-    #     # attrs={'style': "margin-top: 30px"},
-    #     options={ 
-    #         'tags': "directly_uploaded",
-    #         'crop': 'limit', 'width': 500, 'height': 500,
-    #         'eager': [
-    #             {
-    #                 'crop': 'fill',
-    #                 'width': 150,
-    #                 'height': 100
-    #             }
-    #         ]
-    #     }
-    # )
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if not image:
+            raise forms.ValidationError("No image uploaded.\
+                Please select an valid image file to upload.")
+
+    

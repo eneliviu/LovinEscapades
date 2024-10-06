@@ -75,7 +75,7 @@ class Trip(models.Model):
     end_date = models.DateField()
     created_on = models.DateTimeField(auto_now_add=True)
     trip_status = models.CharField(choices=TRIP_STATUS, default='PLANNED')
-    shared = models.CharField(max_length=5,
+    shared = models.CharField(max_length=3,
                               choices=SHARE_CHOICES,
                               default='YES')
 
@@ -168,16 +168,17 @@ class Image(models.Model):
                              on_delete=models.CASCADE,
                              related_name='images')
     # image = models.ImageField(upload_to='trip_images/')
-    title = models.CharField(max_length=100, blank=True, null=True)
-    image = CloudinaryField('image', default='placeholder')
+    title = models.CharField(max_length=50, blank=False)
+    image = CloudinaryField('image', default=None, blank=False)
     
-    # Optional field,stored as an empty string if left blank
-    description = models.TextField(blank=True)
+    description = models.CharField(max_length=100, blank=False)
+    shared = models.BooleanField(default=True)
 
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Image for {self.trip.title} uploaded at {self.uploaded_at}'
+        return f'Photo for {self.trip.title}, {self.trip.place},\
+                 {self.trip.country}'
 
     class Meta:
         ordering = ["-uploaded_at"]

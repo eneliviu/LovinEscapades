@@ -56,8 +56,11 @@
 
 
         <!-- Testimonnials list -->
-        {% if posts %}
+
+       
         <div class="col-lg-7 h-100 testimonial-card m-3">
+            {% if posts %}
+
             <div class="row col-6 container-fluid w-100 ">
                 <div id="posts" class="mx-auto h-100"></div>
 
@@ -85,8 +88,18 @@
                 {% endfor %}
 
             </div>
+            {% else %}
+            <div class="alert alert-warning" role="alert">
+                No testimonials have been posted.
+            </div>
+            {% endif %}
+
         </div>
-        {% endif %}
+       
+        
+
+
+
 
 
     </div>

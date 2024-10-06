@@ -3,13 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from user_profile.models import Testimonial
-
 from .models import Trip
 from .forms import AddTripForm, EditTripForm, UploadImageForm
 from .filters import TripFilter
-
-from cloudinary.forms import cl_init_js_callbacks 
-from django.http import HttpResponse
 
 
 def landing_page(request):
@@ -58,7 +54,6 @@ def landing_page(request):
         'trip/landing_page.html',
         context=context,
     )
-
 
 
 def _trip_stats(trips):
@@ -175,7 +170,6 @@ def _edit_trip_form(request, trip_id):
             form = EditTripForm(instance=instance)
 
 
-
 @login_required
 def handle_post_request(request):
     _add_trip_form(request)
@@ -224,18 +218,22 @@ def user_page(request):
         return handle_post_request(request)
 
 
-# def user_registration(request):
-#     ''' 
-#     Redirect user after registration
-#     '''
-#     return render(request, 'trip/user_profile.html', {})
-
-
-def gallery(request):
+def gallery(request, trip_id):
     ''' 
     Redirect user after registration
     '''
-    return render(request, 'trip/shared_gallery.html', {})
+    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
+    images = trip.images.all()
+
+    return render(
+        request,
+        'trip/shared_gallery.html',
+        context={
+            'images': images,
+            'trips': trip,
+        }
+    )
+    
 
 
 def contact(request):
@@ -271,6 +269,11 @@ def edit_trip_page(request, trip_id):
             image = image_form.save(commit=False)
             image.trip = trip
             image.save()
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                'Image loaded successfully and added to the Gallery!'
+            )
             return redirect('edit_page', trip_id=trip.id)
     else:
         image_form = UploadImageForm()
@@ -285,6 +288,7 @@ def edit_trip_page(request, trip_id):
             'image_form': image_form,
         }
     )
+
 
 @login_required
 def delete_trip(request, trip_id):
