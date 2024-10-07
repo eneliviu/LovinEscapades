@@ -9,64 +9,37 @@
 <section id="map-section" class="row col-12 my-5 h-100" aria-labelledby="leaflet map-section">
     <div class="row container-fluid h-100">
 
-
-
-        <div class="col-lg-7 h-100 testimonial-card m-3">
-            <div class="row col-6 container-fluid w-100 ">
-                <div id="images" class="mx-auto h-100">
-                    <!-- Images Section with Carousel -->
-                    <div class="container mt-4">
-                        <h2>Memories from {{ trips.title }}</h2>
-                        <div id="tripCarousel" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                {% for image in images %}
-                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                    <img src="{{ image.image.url }}" alt="{{ image.title }}"
-                                        class="mx-auto d-block w-100 img-fluid border rounded" >
-                                </div>
-                                <div>
-                                    {% if image.title or image.description %}
-
-                                    <div class="carousel-caption d-none d-md-block">
-                                        {% if image.title %}
-                                        <h5>{{ image.title }}</h5>
-                                        {% endif %}
-                                        {% if image.description %}
-                                        <small>
-                                            {{ image.description }}
-                                        </small>
-                                        {% endif %}
-                                    </div>
-                                    {% endif %}
-                                </div>
-
-                                {% empty %}
-                                <div class="alert alert-warning" role="alert">
-                                    No images available for this trip.
-                                </div>
-                                {% endfor %}
-                            </div>
-
-                            <button class="carousel-control-prev" type="button" data-bs-target="#tripCarousel"
-                                data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#tripCarousel"
-                                data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                    </div>
-
+        {% for image in images %}
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ image.image.url }}" alt="{{ image.title }}"
+                    class="mx-auto d-block w-100 img-fluid border rounded">
                 </div>
-
+                
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Memories from {{ trips.title }}</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+
+        {% empty %}
+        <div class="alert alert-warning" role="alert">
+            No images available for this trip.
+        </div>
+        {% endfor %}
+        {% endfor %}
+    
+
 
     </div>
+
+
 </section>
 
 {% block extras %}

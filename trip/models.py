@@ -9,7 +9,7 @@ from user_profile.models import Profile
 from . utils import get_coordinates
 
 '''
-**blank=True**: Specifies that the field is optional. 
+**blank=True**: Specifies that the field is optional.
 - The field is allowed to be empty in forms. It's used for form validation
 
 **null=True**: controls whether the database column allows `NULL` values.
@@ -31,11 +31,11 @@ only `blank=True` and not `null=True`.
 ### Summary
 1. **String Fields (`CharField` and `TextField`):**
    - Use `blank=True` to allow forms to submit empty values.
-   - Do not use `null=True` to keep data handling consistent and 
+   - Do not use `null=True` to keep data handling consistent and
    avoid storing NULL values in string fields.
 
 2. **Non-String Fields:**
-   - Use both `blank=True` and `null=True` for optional fields 
+   - Use both `blank=True` and `null=True` for optional fields
    to allow NULL values in the database.
 
 ### Relationships:
@@ -81,7 +81,7 @@ class Trip(models.Model):
 
     # ratings = models.PositiveSmallIntegerField(default=1,
     #                                        validators=[mxvv(5)])
-    
+
     def save(self, *args, **kwargs):
         '''
         Override the save() method to set the Lat and Lon values
@@ -170,10 +170,8 @@ class Image(models.Model):
     # image = models.ImageField(upload_to='trip_images/')
     title = models.CharField(max_length=50, blank=False)
     image = CloudinaryField('image', default=None, blank=False)
-    
     description = models.CharField(max_length=100, blank=False)
     shared = models.BooleanField(default=True)
-
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -197,4 +195,3 @@ def create_profile(sender, instance, created, **kwargs):
         user_profile.follows.set([instance.profile.id])
         user_profile.save()
 # post_save.connect(create_profile, sender=User)
-

@@ -124,13 +124,15 @@ def delete_trip(request, trip_id):
 
 @login_required
 def handle_get_request_user_page(request):
-    trips = Trip.objects.filter(user=request.user).\
-            prefetch_related('images', 'comments')
+    trips = Trip.objects.filter(user=request.user)  # .prefetch_related('images')
     comments_count, images_count = _trip_stats(trips)
     user = request.user
-    testimonials_count = user.testimonials.filter(approved=True).count()
+    
+    testimonials_count_active = user.testimonials.filter(approved=True).count()
+    testimonials_count_pending = user.testimonials.filter(approved=False).count()
+    testimonials_count_all = testimonials_count_active + testimonials_count_pending
+
     add_trip_form = AddTripForm()
-    # edit_trip_form = EditTripForm(instance=trips.get(pk=request.user))
     
     # Pagination:
     # https://djangocentral.com/adding-pagination-with-django/#adding-pagination-using-function-based-views
@@ -150,10 +152,11 @@ def handle_get_request_user_page(request):
         'page': page,
         'trips': trip_list,
         'comments_count': comments_count,
-        'testimonials_count': testimonials_count,
+        'testimonials_count_active': testimonials_count_active,
+        'testimonials_count_pending': testimonials_count_pending,
+        'testimonials_count_all': testimonials_count_all,
         'images_count': images_count,
         'add_trip_form': add_trip_form,
-        # 'edit_trip_form': edit_trip_form,
     }
     return render(request, "trip/user_page.html", context)
 
@@ -189,11 +192,11 @@ def custom_404_view(request, exception):
 # ==================================================== #
 
 
-def gallery(request, trip_id):
+def gallery(request):
     ''' 
     Redirect user after registration
     '''
-    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
+    trip = get_object_or_404(Trip, pk=trip_id, user=request.user)
     images = trip.images.all()
     return render(
         request,
@@ -277,7 +280,7 @@ def handle_get_request_edit_trip_page(request, trip_id):
     )
 
 
-# @login_required
+@login_required
 def handle_post_request_edit_trip(request, trip_id):
     _edit_trip_form(request, trip_id)
     return redirect('edit_page', trip_id=trip_id)  # back to edit page
@@ -286,7 +289,6 @@ def handle_post_request_edit_trip(request, trip_id):
 def handle_post_request_upload_image(request, trip_id):
     _upload_trip_images(request, trip_id)
     return redirect('edit_page', trip_id=trip_id)  # back to edit page
-
 
 
 @login_required
@@ -302,6 +304,5 @@ def edit_trip_page(request, trip_id):
             return handle_post_request_edit_trip(request, trip_id)
         elif request.POST.get("form_type") == 'uploadImageForm':
             return handle_post_request_upload_image(request, trip_id)
-
 
 

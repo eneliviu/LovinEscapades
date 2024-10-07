@@ -1,17 +1,17 @@
-from django.shortcuts import (render, redirect, reverse,
+from django.shortcuts import (render, redirect,
                               get_object_or_404)
 from django.contrib import messages
 # from django.http import HttpResponseRedirect
 # from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from allauth.account.forms import SignupForm
+# from allauth.account.forms import SignupForm
 from .models import Testimonial
-from .forms import TestimonialForm
+from .forms import TestimonialForm, UpdateProfileForm
 
 
 # Create your views here.
 
-def handle_get_request(request):
+def handle_get_request_profile_page(request):
     posts = Testimonial.objects.filter(user=request.user)
     testimonial_form = TestimonialForm()
     context = {
@@ -19,7 +19,7 @@ def handle_get_request(request):
             'posts': posts
         }
     return render(
-        request, 
+        request,
         "user_profile/user_profile.html",
         context
     )
@@ -54,7 +54,7 @@ def _add_posts_form(request):
                 *cleaned_errors)
 
 
-def handle_post_request(request):
+def handle_post_request_add_post(request):
     _add_posts_form(request)
     return redirect('profile')
 
@@ -62,29 +62,29 @@ def handle_post_request(request):
 @login_required
 def user_profile(request):
     """
-    View for Dashboard
+    View for User Profile
+    https://stackoverflow.com/questions/1395807/proper-way-to-handle-multiple-forms-on-one-page-in-django
     """
     if request.method == 'GET':
-        return handle_get_request(request)
+        return handle_get_request_profile_page(request)
     elif request.method == 'POST':
-        return handle_post_request(request)
+        if request.POST.get("form_type") == 'addTestimonialForm':
+            return handle_post_request_add_post(request)
 
 
-
+# @login_required
 # def user_profile(request):
-#     '''
-#     User profile page
-#     '''
-
-#     posts = Testimonial.objects.filter(user=request.user)
-#     return render(
-#                 request,
-#                 'user_profile/user_profile.html',
-#                 context={
-#                     'testimonial_form': TestimonialForm(),
-#                     'posts': posts
-#                     }
-#             )
+#     """
+#     View for Dashboard
+#     https://stackoverflow.com/questions/1395807/proper-way-to-handle-multiple-forms-on-one-page-in-django
+#     """
+#     if request.method == 'GET':
+#         return handle_get_request_edit_trip_page(request, trip_id)
+#     elif request.method == 'POST':
+#         if request.POST.get("form_type") == 'addTestimonialForm':
+#             return handle_post_request_add_post(request, trip_id)
+#         elif request.POST.get("form_type") == 'editTestimonialForm':
+#             return handle_post_request_edit_post(request, trip_id)
 
 
 @login_required
@@ -105,38 +105,24 @@ def delete_post(request, post_id):
         messages.add_message(
             request,
             messages.ERROR,
-            'The record cannot be deleted.'
+            'The record could not be deleted.'
         )
     return redirect('profile')
 
 
+@login_required
 def update_profile(request):
-    # if request.user.is_authenticated:
-    # current_user = User.objects.get(id=request.user.id)
-    form = SignupForm(request.POST)
-    if form.is_valid():
-        form.save()
-    else:
-        form = SignupForm()
-    
+    form = UpdateProfileForm(instance=request.user)
+    if request.method == 'POST':
+        form = UpdateProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+        else:
+            form = UpdateProfileForm(instance=request.user)
+
     return render(
         request,
-        'user_profile/update_user_profile.html',
-        {
-            'form': form,
-        }
-    )    
-    
-
-# @login_required
-# def user_posts(request):
-#     posts = Testimonial.objects.all()
-#     return render(
-#         request,
-#         'user_profile/user_profile.html',
-#         context={
-#             'posts': posts,
-#         }
-
-#     )
-
+        'user_profile/edit_user_profile.html',
+        context={'form': form}
+    )

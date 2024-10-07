@@ -15,5 +15,8 @@ urlpatterns = [
         user_profile_views.delete_post,
         name='delete_testimonial'
     ),
+    path(
+        'profile/update/',
+        user_profile_views.update_profile,
+        name='update_user_profile'),
 ]
-

@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from .models import Testimonial
 
 
@@ -6,7 +7,7 @@ class TestimonialForm(forms.ModelForm):
     class Meta:
         model = Testimonial
         fields = ['author_name', 'user_info', 'body']
-    
+
     def clean_text(self):
         body = self.cleaned_data.get('body')
         if len(body) < 20:
@@ -22,3 +23,9 @@ class TestimonialForm(forms.ModelForm):
 
 # "An essential tool for every traveler!"
 # Adventurer
+
+
+class UpdateProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']

@@ -2,7 +2,6 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.db.models import Q
-from cloudinary.forms import CloudinaryFileField      
 from .models import Trip, Image
 
 
@@ -24,7 +23,7 @@ class AddTripForm(forms.ModelForm):
             'end_date': forms.widgets.DateInput(attrs={'type': 'date'}),
             'description': forms.Textarea(attrs={'rows': 2})
         }
-        
+
     # Server-side validation:
     def clean(self, *args, **kwargs):
         '''
@@ -43,24 +42,24 @@ class AddTripForm(forms.ModelForm):
         end_date = cleaned_data.get('end_date')
         current_date = timezone.now().date()
         selected_option = cleaned_data.get('trip_status')
-        
+
         # Check if end date is earlier than start date
         if end_date < start_date:
             errMsg = 'End date cannot be earlier than start date'
             raise ValidationError(errMsg)
-        
+
         # Validate dates for Planned trips
         if ((selected_option == 'Planned') and
            (start_date < current_date)):
             errMsg = "Error: Cannot plan a trip on past dates."
             raise ValidationError(errMsg)
-        
+
         # Validate dates for Ongoing trips
-        if ((selected_option == 'Ongoing') and 
+        if ((selected_option == 'Ongoing') and
            ((current_date < start_date) or (current_date > end_date))):
             errMsg = "Error: Ongoing trip must include the current date."
             raise ValidationError(errMsg)
-        
+
         # Validate dates for Completed trips
         if ((selected_option == 'Completed') and
            ((start_date > current_date) or (current_date < end_date))):
@@ -91,18 +90,21 @@ class AddTripForm(forms.ModelForm):
 
 
 class EditTripForm(AddTripForm):
-    ''' 
+    '''
     Extends `AddTripForm` class
     '''
     class Meta(AddTripForm.Meta):
         model = Trip
         exclude = ('user',)
-    
+
     def __init__(self, *args, **kwargs):
         super(EditTripForm, self).__init__(*args, **kwargs)
 
 
 class UploadImageForm(forms.ModelForm):
+    '''
+    For for uploading a single image.
+    '''
     class Meta:
         model = Image
         fields = ['image', 'title', 'description']
@@ -110,16 +112,6 @@ class UploadImageForm(forms.ModelForm):
     def clean_image(self):
         image = self.cleaned_data.get('image')
         if not image:
-            raise forms.ValidationError("No image uploaded. Please select a valid image file to upload.")
+            raise forms.ValidationError("No image uploaded.\
+                Please select a valid image file to upload.")
         return image
-
-    # def clean(self, *args, **kwargs):
-    #     cleaned_data = super(UploadImageForm, self).clean()
-    #     image = cleaned_data.get('image')
-    #     if not image:
-    #         self.add_error(
-    #             'image',
-    #             "No image uploaded. Please upload a valid imaage file.")
-
-    #     return cleaned_data
-

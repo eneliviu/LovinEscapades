@@ -4,7 +4,7 @@
 
 {% block content %}
 <!-- Content Goes here -->
- 
+
 <div class="container-fluid">
     <div class="row">
         <!-- Main Content: Dashboard -->
@@ -21,28 +21,51 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-md-4">
-                    <div class="card text-center mb-1">
+                    <div class="card text-center mb-1 h-100">
                         <div class="card-body">
-                            <h5 class="card-title">Total Trips</h5>
-                            <p class="card-text display-4">{{ trips | length }}</p>
+                            <h5 class="card-title"># Trips</h5>
+                            <hr>
+                            <span class="card-text display-5">{{ trips | length }}</span>
                         </div>
                     </div>
                 </div>
+                
                 <div class="col-md-4">
-                    <div class="card text-center mb-1">
+                    <div class="card text-center mb-1 h-100">
                         <div class="card-body">
-                            <h5 class="card-title">Testimonials</h5>
-                            <p class="card-text display-4">
-                                {{ testimonials_count|default:0 }}
-                            </p>
+                            <h5 class="card-title"># Testimonials</h5>
+                            <hr>
+
+                            <div class="container d-flex justify-content-between">
+                                <span class="float-start">Active</span>
+                                <span class="float-end">
+                                    {{ testimonials_count_active|default:0 }}
+                                </span>
+                            </div>
+                            
+                            <div class="container d-flex justify-content-between">
+                                <span class="float-start">Pending</span>
+                                <span class="float-end">
+                                    {{ testimonials_count_pending|default:0 }}
+                                </span>
+                            </div>
+                            <div class="container d-flex justify-content-between">
+                                <span>All</span>
+                                <span class="'float-end">
+                                    {{ testimonials_count_all|default:0 }}
+                                </span>
+                            </div>
+                           
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-4">
-                    <div class="card text-center mb-1">
+                    <div class="card text-center mb-1 h-100">
                         <div class="card-body">
-                            <h5 class="card-title">Photos</h5>
-                            <p class="card-text display-4">{{ images_count|default:0 }}</p>
+                            <h5 class="card-title"># Photos</h5>
+                            <hr>
+                            <p class="card-text display-5">{{ images_count|default:0 }}</p>
                         </div>
                     </div>
                 </div>
@@ -69,7 +92,8 @@
                                 <form id="addTripForm" method="POST" style="margin-top: 1.2em;">
                                     {% csrf_token %}
                                     {{ add_trip_form | crispy }}
-                                    <button id="cancelButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <button id="cancelButton" type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">
                                         Close
                                     </button>
                                     <button id="submitButton" type="submit" class="btn btn-signup float-end">
@@ -83,11 +107,86 @@
             </div>
         </div>
 
+
         <!-- Trip Entries Column -->
         <div class="col-12 mt-3 left">
             <div class="row">
 
                 {% for trip in trips %}
+
+                <!-- Modal for Image Carousel -->
+                <div class="modal fade" id="tripModal" tabindex="-1" aria-labelledby="tripModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3>Memories from {{ trip }}</h3>
+                                    </div>
+                                    <div>
+                                        <div id="tripCarousel" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                {% for image in trip.images.all  %}
+                                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                                    <img src="{{ image.image.url }}" alt="{{ image.title }}"
+                                                        class="mx-auto d-block w-100 img-fluid border rounded">
+                                                </div>
+                                                {% empty %}
+                                                <div class="alert alert-warning" role="alert">
+                                                    No images available for this trip.
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <button class="carousel-control-prev" type="button"
+                                                data-bs-target="#tripCarousel" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button"
+                                                data-bs-target="#tripCarousel" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                    <div>
+                                        {% if image.title or image.description %}
+                                        <div class="carousel-caption d-none d-md-block">
+                                            {% if image.title %}
+                                            <h5>{{ image.title }}</h5>
+                                            {% endif %}
+                                            {% if image.description %}
+                                            <small>
+                                                {{ image.description }}
+                                            </small>
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ image.title }}</h5>
+
+                                        <p class="card-text">
+                                            {{ image.description }}
+                                        </p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="float-end card-text text-muted">
+                                            Uploaded: {{ image.uploaded_at }}
+                                        </small>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="col-lg-6 d-flex flex-column mb-4">
                     <div class="card my-1 h-100">
@@ -97,33 +196,38 @@
                                 <span class="fw-light">{{ trip.trip_category }}</span>
                             </div>
                             {% if trip.trip_status == 'Planned' %}
-                                <span class="badge c-badge bg-info-subtle  text-muted">Planned</span>
+                            <span class="text-primary">Planned</span>
                             {% elif trip.trip_status == 'Ongoing' %}
-                                <span class="badge c-badge bg-info-subtle text-muted">Ongoing</span>
+                            <span class="text-danger">Ongoing</span>
                             {% else %}
-                                <span class="badge c-badge bg-info-subtle text-muted">Completed</span>
+                            <span class="text-success">Completed</span>
                             {% endif %}
-
                         </div>
 
                         <div class="card-body">
                             <div>
                                 <h5 class="card-title">{{ trip.title }}</h5>
                                 <div class="d-flex flex-column align-items-center">
-                                    <div class="card-text text-muted">From: {{ trip.start_date }}
+                                    <div class="card-text text-muted">
+                                        From: {{ trip.start_date }}
                                         <span class="fw-bold red-o"> | </span>
                                         To: {{ trip.end_date }}
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <div class="mt-2 text-center">
                                 <a type="button" class="btn btn-edit btn-sm float-start"
                                     href="{% url 'edit_page' trip.id %}">
                                     Edit
                                 </a>
-                                
-                                <a href="#" class="btn btn-delete btn-sm float-end" data-trip_id="{{ trip.id }}" 
+
+                                <a type="button" class="btn btn-more btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#tripModal">
+                                    More
+                                </a>
+
+                                <a href="#" class="btn btn-delete btn-sm float-end" data-trip_id="{{ trip.id }}"
                                     type="submit" method="POST">
                                     Delete
                                 </a>
@@ -131,9 +235,13 @@
                             </div>
                         </div>
 
-                        <div class="card-footer text-body-secondary">
+                        <div class="card-footer text-body-secondary d-flex justify-content-between">
+                            <small class="float-end card-text text-muted">
+                                Photos: {{ trip.images.all | length }}
+                            </small>
                             <small class="float-end card-text text-muted">Posted: {{ trip.created_on | timesince }}
-                                ago</small>
+                                ago
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -183,69 +291,8 @@
 
 </div>
 
-<!--  User feedback for form completion 
-<script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-        let form = document.getElementById("addTripForm");
-        let button = document.getElementById("submitButton");
-        let cancelButton = document.getElementById("cancelButton");
-        form.addEventListener("submit", function (e) {
-            
-            // Retrieve the start and end dates
-            let startDateValue = document.getElementById("id_start_date").value;
-            let endDateValue = document.getElementById("id_end_date").value;
-            let tripStatus = document.getElementById("id_trip_status");
 
-            let selectedIndex = tripStatus.selectedIndex;
-            let selectedOption = tripStatus.options[selectedIndex].value;
-            console.log(selectedOption)
 
-            // Convert the date strings to Date objects
-            let startDate = new Date(startDateValue).toLocaleDateString();
-            let endDate = new Date(endDateValue).toLocaleDateString();
-
-            // let currentDate = new Date(new Date().toDateString());
-
-            let currentDate = new Date().toLocaleDateString();
-            let errMsg;
-        
-            // Check if end date is earlier than start date
-            if (endDate < startDate) {
-                errMsg = "Error: End date cannot be earlier than start date.";
-            };
-            if ((selectedOption === 'Planned') && (startDate < currentDate)) {
-                console.log(startDate < currentDate)
-                // Validate dates for Planned trips
-                errMsg = "Error: Cannot plan a trip on past dates.";
-            };
-            if ((selectedOption === 'Ongoing') && 
-                !((startDate <= currentDate) && (endDate >= currentDate) )) {
-                // Validate dates for Ongoing trips
-                errMsg = "Error: Ongoing trip must include the current date.";
-            };
-            if ((selectedOption === 'Completed') &&
-                ((startDate > currentDate) || (currentDate < endDate))) {
-                // Validate dates for Completed trips
-                console.log(selectedOption)
-                errMsg = "Error: Completed trip cannot have an end date in the future.";
-            };
-            alert(errMsg);
-            if (errMsg) {
-                alert(errMsg);
-                // Prevent default submission if there is an error.      
-                e.preventDefault();
-            }
-            // Otherwise, allows the form to be submitted naturally 
-            // if validations passes (standard HTTP form submission).
-            // The form data will be sent to the server, and Django will handle the form processing
-            // and validation on the server-side.
-        });
-        cancelButton.addEventListener('click', function (e) {
-            document.getElementById("addTripForm").reset();
-        })
-    });
-</script>
--->
 {% endblock content %}
 
 

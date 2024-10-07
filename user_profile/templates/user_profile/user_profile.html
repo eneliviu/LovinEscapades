@@ -5,112 +5,176 @@
 {% block content %}
 
 <!-- User Profile section -->
-<section class="row col-12 my-5" aria-labelledby="leaflet map-section">
+<section class="row col-12 my-5" aria-labelledby="user-profile-section">
+
+
+
+
+
     <div class="row container-fluid h-100">
 
+
         <!--Submit testimonial-->
-        <div class="col-lg-4 testimonial-card m-3 h-100">
-            <div class="d-flex flex-column ">
-                <!-- Button to trigger add testimonial modal -->
-                <div class="container text-center">
-                    <button type="button" class="btn btn-primary btn-lg w-50 my-2" data-bs-toggle="modal"
-                        data-bs-target="#addTestimonialModal">
-                        Add Testimonial
-                    </button>
-                </div>
-                <div class="container text-center">
-                    <button type="button" class="btn btn-edit btn-lg w-50 my-2" data-bs-toggle="modal"
-                        data-bs-target="#EditProfileModal">
-                        Edit profile
-                    </button>
-                </div>
+        <!--<div class="col-lg-4 testimonial-card m-3 h-100">-->
+
+        <div class="testimonial-card col-lg-4 d-flex flex-column my-2 w-100">
+            <h4>User Profile</h4>
+            <hr>
+
+            <div class="my-1">
+
+                {% if not user.first_name %}
+                <span class="badge c-badge bg-secondary text-light">
+                    First name
+                </span>
+                <small class="fst-italic"> Please add your first name</small>
+                {% else %}
+                <span class="badge c-badge bg-success bg-gradienttext-light">
+                    First name
+                </span>
+                <span class="text-muted">
+                    {{ user.first_name }}
+                </span>
+                {% endif %}
+            </div>
+            <div class="my-1">
+                {% if not user.last_name %}
+                <span class="badge c-badge bg-secondary text-light">
+                    Last name
+                </span>
+                <small class="fst-italic">
+                    Please add your last name
+                </small>
+                {% else %}
+                <span class="badge c-badge bg-success bg-gradient text-light">
+                    Last name
+                </span>
+                <span class="text-muted">
+                    {{ user.last_name }}
+                </span>
+                {% endif %}
+            </div>
+            <div class="my-1">
+                {% if not user.email %}
+                <span class="badge c-badge bg-secondary text-light">
+                    Email
+                </span>
+                <small class="fst-italic"> Please add your email</small>
+                {% else %}
+                <span class="badge c-badge bg-success bg-gradient text-light">
+                    Email
+                </span>
+                <span class="text-muted">
+                    {{ user.email }}
+                </span>
+                {% endif %}
             </div>
 
-            <!-- Add Testimonial Form Modal -->
-            <h2 class="visually-hidden">Testimonial form</h2>
-            <div class="modal fade" id="addTestimonialModal" tabindex="-1" aria-labelledby="addTestimonialModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="col-md-12 card mb-2 mt-2">
-                                <div class="card-body">
-                                    <form id="addTestimonialForm" method="POST" style="margin-top: 1.2em;">
-                                        {% csrf_token %}
-                                        {{ testimonial_form | crispy }}
-                                        <button id="submitButton" type="submit" class="btn btn-signup float-end">
-                                            Submit
-                                        </button>
-                                    </form>
-                                </div>
+            <div class="container text-center">
+                <a type="button" href="{% url 'update_user_profile' %}" class="btn btn-edit btn-lg w-50 btn-sm my-3">
+                    <!--data-bs-target="#editProfileModal data-bs-toggle="modal"" -->
+                    Update profile
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Add Testimonial Form Modal -->
+        <h2 class="visually-hidden">Testimonial form</h2>
+        <div class="modal fade" id="addTestimonialModal" tabindex="-1" aria-labelledby="addTestimonialModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12 card mb-2 mt-2">
+                            <div class="card-body">
+                                <form id="addTestimonialForm" method="POST" style="margin-top: 1.2em;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="addTestimonialForm">
+                                    {{ testimonial_form | crispy }}
+                                    <button id="submitButton" type="submit" class="btn btn-signup float-end">
+                                        Submit
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
+        <!--</div>-->
 
         <!-- Testimonnials list -->
+        <div class="col-lg-7 h-100 testimonial-card m-2 mx-4">
 
-       
-        <div class="col-lg-7 h-100 testimonial-card m-3">
+
+            <!-- Button to trigger add testimonial modal -->
+
+            <div class=" d-flex justify-content-between align-items-center">
+                <h4>Your testimonials</h4>
+                <div class="float-end">
+                    <button class="btn btn-edit btn-sm w-100" data-bs-toggle="modal" data-bs-target="#addTestimonialModal">
+                        Add Testimonial
+                    </button>
+                </div>
+
+            </div>
+
+            <hr>
+
             {% if posts %}
 
-            <div class="row col-6 container-fluid w-100 ">
-                <div id="posts" class="mx-auto h-100"></div>
+            <div class="row col-6 w-100 d-flex flex-column justify-content-center">
+                <div id="posts " class="h-100 ">
 
-                <h5>Your testimonials</h5>
-                {% for post in posts %}
-                <div class="testimonial-card d-flex align-items-center">
+                    {% for post in posts %}
+                    <div class="testimonial-card d-flex  align-items-center">
+                        <div class=" text-muted">
+                            <h6>
+                                {{ post.body }}
+                            </h6>
 
-                    <div class="container-fluid d-flex text-muted">
-                        {{ post.body }}
+                            <div>
+                                {% if post.approved %}
+                                <small class="badge c-badge bg-success bg-gradient">Approved</small>
+                                {% else %}
+                                <small class="badge c-badge bg-secondary">Pending approval</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <a href="#" class="btn btn-delete btn-sm float-end m-2" data-post_id="{{ post.id }}"
+                                type="submit" method="POST">
+                                Delete
+                            </a>
+                        </div>
+
                     </div>
-
-                    <div class="container">
-                        <a href="#" class="btn btn-edit btn-sm float-end m-2" data-post_id="{{ post.id }}" type="submit"
-                            method="POST">
-                            Edit
-                        </a>
-
-                        <a href="#" class="btn btn-delete btn-sm float-end m-2" data-post_id="{{ post.id }}"
-                            type="submit" method="POST">
-                            Delete
-                        </a>
-                    </div>
+                    {% endfor %}
 
                 </div>
-                {% endfor %}
+                {% else %}
+                <div class="alert alert-warning" role="alert">
+                    No testimonials have been posted.
+                </div>
+                {% endif %}
 
             </div>
-            {% else %}
-            <div class="alert alert-warning" role="alert">
-                No testimonials have been posted.
-            </div>
-            {% endif %}
 
         </div>
-       
-        
-
-
-
-
-
-    </div>
 </section>
 
 <!-- Delete confirmation modal -->
-<div class="modal fade" id="deleteModal2" tabindex="-1" aria-labelledby="deleteModalLabel2" aria-hidden="true">
+<div class="modal fade" id="deleteModalPost" tabindex="-1" aria-labelledby="deleteModalPostLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel2">Delete testimonial?</h5>
+                <h5 class="modal-title" id="deleteModalPostLabel">Delete testimonial?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -118,7 +182,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a id="deleteConfirm2" href="#" class="btn btn-danger">Delete</a>
+                <a id="deletePostConfirm" href="#" class="btn btn-danger">Delete</a>
             </div>
         </div>
     </div>
