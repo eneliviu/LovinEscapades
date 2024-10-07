@@ -278,21 +278,30 @@ def handle_get_request_edit_trip_page(request, trip_id):
 
 
 # @login_required
-def handle_post_request_edit_trip_page(request, trip_id):
-    # _edit_trip_form(request, trip_id)
+def handle_post_request_edit_trip(request, trip_id):
+    _edit_trip_form(request, trip_id)
+    return redirect('edit_page', trip_id=trip_id)  # back to edit page
+
+
+def handle_post_request_upload_image(request, trip_id):
     _upload_trip_images(request, trip_id)
     return redirect('edit_page', trip_id=trip_id)  # back to edit page
+
 
 
 @login_required
 def edit_trip_page(request, trip_id):
     """
     View for Dashboard
+    https://stackoverflow.com/questions/1395807/proper-way-to-handle-multiple-forms-on-one-page-in-django
     """
     if request.method == 'GET':
         return handle_get_request_edit_trip_page(request, trip_id)
     elif request.method == 'POST':
-        return handle_post_request_edit_trip_page(request, trip_id)
+        if request.POST.get("form_type") == 'editTripForm':
+            return handle_post_request_edit_trip(request, trip_id)
+        elif request.POST.get("form_type") == 'uploadImageForm':
+            return handle_post_request_upload_image(request, trip_id)
 
 
 
