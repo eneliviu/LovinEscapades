@@ -9,14 +9,14 @@
 <section id="map-section" class="row col-12 my-5 h-100" aria-labelledby="leaflet map-section">
     <div class="row container-fluid h-100">
 
-        {% for image in images %}
+        {% for image in trip_images %}
         <div class="card mb-3" style="max-width: 540px;">
             <div class="row g-0">
                 <div class="col-md-4">
                     <img src="{{ image.image.url }}" alt="{{ image.title }}"
-                    class="mx-auto d-block w-100 img-fluid border rounded">
+                        class="mx-auto d-block w-100 img-fluid border rounded">
                 </div>
-                
+
                 <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">Memories from {{ trips.title }}</h5>
@@ -34,7 +34,11 @@
         </div>
         {% endfor %}
         {% endfor %}
-    
+
+
+
+
+
 
 
     </div>

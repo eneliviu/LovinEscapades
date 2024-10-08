@@ -29,7 +29,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="card text-center mb-1 h-100">
                         <div class="card-body">
@@ -42,7 +42,7 @@
                                     {{ testimonials_count_active|default:0 }}
                                 </span>
                             </div>
-                            
+
                             <div class="container d-flex justify-content-between">
                                 <span class="float-start">Pending</span>
                                 <span class="float-end">
@@ -55,7 +55,7 @@
                                     {{ testimonials_count_all|default:0 }}
                                 </span>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -114,80 +114,7 @@
 
                 {% for trip in trips %}
 
-                <!-- Modal for Image Carousel -->
-                <div class="modal fade" id="tripModal" tabindex="-1" aria-labelledby="tripModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3>Memories from {{ trip }}</h3>
-                                    </div>
-                                    <div>
-                                        <div id="tripCarousel" class="carousel slide" data-bs-ride="carousel">
-                                            <div class="carousel-inner">
-                                                {% for image in trip.images.all  %}
-                                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                                    <img src="{{ image.image.url }}" alt="{{ image.title }}"
-                                                        class="mx-auto d-block w-100 img-fluid border rounded">
-                                                </div>
-                                                {% empty %}
-                                                <div class="alert alert-warning" role="alert">
-                                                    No images available for this trip.
-                                                </div>
-                                                {% endfor %}
-                                            </div>
-                                            <button class="carousel-control-prev" type="button"
-                                                data-bs-target="#tripCarousel" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button"
-                                                data-bs-target="#tripCarousel" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </button>
-                                        </div>
-                                    </div>
-
-
-                                    <div>
-                                        {% if image.title or image.description %}
-                                        <div class="carousel-caption d-none d-md-block">
-                                            {% if image.title %}
-                                            <h5>{{ image.title }}</h5>
-                                            {% endif %}
-                                            {% if image.description %}
-                                            <small>
-                                                {{ image.description }}
-                                            </small>
-                                            {% endif %}
-                                        </div>
-                                        {% endif %}
-                                    </div>
-
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ image.title }}</h5>
-
-                                        <p class="card-text">
-                                            {{ image.description }}
-                                        </p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <small class="float-end card-text text-muted">
-                                            Uploaded: {{ image.uploaded_at }}
-                                        </small>
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                            Close
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <!-- Trip card -->
                 <div class="col-lg-6 d-flex flex-column mb-4">
                     <div class="card my-1 h-100">
                         <div class="card-header d-flex flex-row justify-content-between align-items-center">
@@ -222,10 +149,15 @@
                                     Edit
                                 </a>
 
-                                <a type="button" class="btn btn-more btn-sm" data-bs-toggle="modal"
+                                <!-- <a type="button" class="btn btn-more btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#tripModal">
                                     More
+                                </a> -->
+
+                                <a type="button" class="btn btn-more btn-sm" href="{% url 'trip_details' trip.id %}">
+                                    More
                                 </a>
+
 
                                 <a href="#" class="btn btn-delete btn-sm float-end" data-trip_id="{{ trip.id }}"
                                     type="submit" method="POST">
@@ -290,8 +222,6 @@
 
 
 </div>
-
-
 
 {% endblock content %}
 

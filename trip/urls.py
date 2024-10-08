@@ -32,10 +32,15 @@ urlpatterns = [
         name='edit_page'
     ),
     path(
+        'user_page/details/<int:trip_id>',
+        trip_views.trip_details_page,
+        name='trip_details'
+    ),
+    path(
         '',
         trip_views.landing_page,
         name='home'
     ),
     # path('', trip_views.custom_404_view, name='404_page'), <str:username>
-    #  path('trip/<int:trip_id>/images/', views.trip_images, name='trip_images'),
+
 ]

@@ -16,7 +16,6 @@ def landing_page(request):
     # Serialization require a list of objects:
     trips = list(Trip.objects.filter(shared='Yes').
                  order_by('-created_on').values())
-    
     # Fetch testimonials from the database
     testimonials = Testimonial.objects.filter(approved=True)
     trip_filter = TripFilter(request.GET,
@@ -124,20 +123,20 @@ def delete_trip(request, trip_id):
 
 @login_required
 def handle_get_request_user_page(request):
-    trips = Trip.objects.filter(user=request.user)  # .prefetch_related('images')
+    '''
+    Pagination:
+    https://djangocentral.com/adding-pagination-with-django/#adding-pagination-using-function-based-views
+    '''
+    trips = Trip.objects.filter(user=request.user).prefetch_related('images')
     comments_count, images_count = _trip_stats(trips)
     user = request.user
-    
-    testimonials_count_active = user.testimonials.filter(approved=True).count()
-    testimonials_count_pending = user.testimonials.filter(approved=False).count()
-    testimonials_count_all = testimonials_count_active + testimonials_count_pending
+
+    testimonials_active = user.testimonials.filter(approved=True).count()
+    testimonials_pending = user.testimonials.filter(approved=False).count()
+    testimonials_all = testimonials_active + testimonials_pending
 
     add_trip_form = AddTripForm()
-    
-    # Pagination:
-    # https://djangocentral.com/adding-pagination-with-django/#adding-pagination-using-function-based-views
-    # 3 trips in each page
-    paginator = Paginator(trips, 6)
+    paginator = Paginator(trips, 6)  # 6 trips in each page
     page = request.GET.get('page')
     try:
         trip_list = paginator.page(page)
@@ -146,15 +145,15 @@ def handle_get_request_user_page(request):
         trip_list = paginator.page(1)
     except EmptyPage:
         # If page is out of range deliver last page of results
-        trip_list = paginator.page(paginator.num_pages)    
-    
+        trip_list = paginator.page(paginator.num_pages)
+
     context = {
         'page': page,
         'trips': trip_list,
         'comments_count': comments_count,
-        'testimonials_count_active': testimonials_count_active,
-        'testimonials_count_pending': testimonials_count_pending,
-        'testimonials_count_all': testimonials_count_all,
+        'testimonials_count_active': testimonials_active,
+        'testimonials_count_pending': testimonials_pending,
+        'testimonials_count_all': testimonials_all,
         'images_count': images_count,
         'add_trip_form': add_trip_form,
     }
@@ -178,7 +177,7 @@ def user_page(request):
 
 
 def custom_404_view(request, exception):
-    ''' 
+    '''
     Render 404 Error page
     '''
     return render(
@@ -192,8 +191,8 @@ def custom_404_view(request, exception):
 # ==================================================== #
 
 
-def gallery(request):
-    ''' 
+def gallery(request, trip_id):
+    '''
     Redirect user after registration
     '''
     trip = get_object_or_404(Trip, pk=trip_id, user=request.user)
@@ -209,10 +208,9 @@ def gallery(request):
 
 
 def contact(request):
-    ''' 
+    '''
     Redirect user after registration
     '''
-    
     return render(request, 'trip/contact_us.html', {})
 
 # ==================================================== #
@@ -269,7 +267,6 @@ def handle_get_request_edit_trip_page(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id, user=request.user)
     trip_form = EditTripForm(instance=trip)
     image_form = UploadImageForm()
-    
     return render(
         request,
         "trip/edit_trip.html",
@@ -306,3 +303,30 @@ def edit_trip_page(request, trip_id):
             return handle_post_request_upload_image(request, trip_id)
 
 
+
+@login_required
+def _trip_details(request, trip_id):
+    trip = get_object_or_404(Trip, user=request.user, pk=trip_id)
+    images = trip.images.all()
+    return render(
+            request,
+            "trip/trip_details.html",
+            context={
+                'selected_trip': trip,
+                'trip_images':  images,
+            }
+        )
+
+
+@login_required
+def trip_details_page(request, trip_id):
+    trip = get_object_or_404(Trip, user=request.user, id=trip_id)
+    images = trip.images.all()
+    return render(
+            request,
+            "trip/trip_details.html",
+            context={
+                'selected_trip': trip,
+                'trip_images':  images,
+            }
+        )

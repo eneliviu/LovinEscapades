@@ -12,7 +12,7 @@ from .forms import TestimonialForm, UpdateProfileForm
 # Create your views here.
 
 def handle_get_request_profile_page(request):
-    posts = Testimonial.objects.filter(user=request.user)
+    posts = Testimonial.objects.filter(user=request.user).order_by('-created_at')
     testimonial_form = TestimonialForm()
     context = {
             'testimonial_form': testimonial_form,
@@ -70,21 +70,6 @@ def user_profile(request):
     elif request.method == 'POST':
         if request.POST.get("form_type") == 'addTestimonialForm':
             return handle_post_request_add_post(request)
-
-
-# @login_required
-# def user_profile(request):
-#     """
-#     View for Dashboard
-#     https://stackoverflow.com/questions/1395807/proper-way-to-handle-multiple-forms-on-one-page-in-django
-#     """
-#     if request.method == 'GET':
-#         return handle_get_request_edit_trip_page(request, trip_id)
-#     elif request.method == 'POST':
-#         if request.POST.get("form_type") == 'addTestimonialForm':
-#             return handle_post_request_add_post(request, trip_id)
-#         elif request.POST.get("form_type") == 'editTestimonialForm':
-#             return handle_post_request_edit_post(request, trip_id)
 
 
 @login_required

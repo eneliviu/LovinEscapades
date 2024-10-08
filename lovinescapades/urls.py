@@ -27,8 +27,5 @@ urlpatterns = [
     path('dashboard/', include('trip.urls'), name='delete_trip'),
     path('gallery/', include('trip.urls'), name='gallery'),
     path("profile/", include('user_profile.urls'), name='profile'),
-    # path('profile/', include('user_profile.urls'), name='delete_testimonial'),
-    # path('profile/', include('user_profile.urls'), name='update_user_profile'),
     path("", include('trip.urls'), name='home'),
 ]
-
