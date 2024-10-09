@@ -1,7 +1,7 @@
+
 document.addEventListener("DOMContentLoaded", () => {
     let upload_image_form = document.getElementById("uploadImageForm");
     let cancelButton_upload = document.getElementById("cancelButtonImage");
-    // console.log('OK')
 
     upload_image_form.addEventListener("submit", (e) => {
         
@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // console.log(endDateValue);
         // console.log(currentDate);
 
-    
         // Check if end date is earlier than start date
         if (endDate < startDate) {
             errMsg = "Error: End date cannot be earlier than start date.";
@@ -62,9 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
     cancelButton_upload.addEventListener('click', (e) => {
         document.getElementById("editTripForm").reset();
     })
-
-    
-
 
 });
 

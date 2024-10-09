@@ -1,39 +1,3 @@
-
-/* --------------------------------------------------------------------------*/
-/* ----------------------  EDIT  ------------------------------------------*/
-/* --------------------------------------------------------------------------*/
-/*
- * Initializes edit functionality for the provided edit buttons.
- * 
- * For each button in the `editButtons` collection:
- * - Retrieves the associated note's ID upon click.
- * - Fetches the content of the corresponding note.
- * - Populates the `noteText` input/textarea with the comment's content for editing.
- * - Updates the submit button's text to "Update".
- * - Sets the form's action attribute to the `edit_note/{noteId}` endpoint.
- */
-
-// var editButtons = document.getElementsByClassName("btn-edit");
-// var tripText = document.getElementById("id_body");
-// var tripForm = document.getElementById("editTripModal");
-// var submitButton = document.getElementById("editButton");
-
-// var editConfirm = document.getElementById("deleteConfirm");
-// for (let button of editButtons) {
-//     button.addEventListener("click", (e) => {
-//         var tripId = e.target.getAttribute("data-trip_id");
-//         let tripContent = document.getElementById(`trip${tripId}`).innerText;
-//         //tripText.value = tripContent;
-//         editConfirm.href = `user/edit_trip/${tripId}`;
-//         submitButton.innerText = "Update";
-//         //noteForm.setAttribute("action", `edit_note/${tripId}`);
-//         editModal.show();
-//     });
-
-// }
-
-
-
 /* --------------------------------------------------------------------------*/
 /* ----------------------  DELETE  ------------------------------------------*/
 /* --------------------------------------------------------------------------*/
@@ -48,7 +12,6 @@
  * the user for confirmation before deletion.
  */
 
-// let deleteModal = bootstrap.Modal.getOrCreateInstance("deleteModal")
 let deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
 let deleteButtons = document.getElementsByClassName("btn-delete");
 let deleteConfirm = document.getElementById("deleteConfirm");
@@ -78,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let selectedIndex = tripStatus.selectedIndex;
         let selectedOption = tripStatus.options[selectedIndex].value;
-        console.log(selectedOption)
 
         // Convert the date strings to Date objects
         let startDate = new Date(startDateValue).toLocaleDateString();
@@ -124,6 +86,3 @@ document.addEventListener("DOMContentLoaded", function () {
     })
 
 });
-
-/*--------------------------------------------------------------------*/
-/* Edit TRIPS */

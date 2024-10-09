@@ -111,21 +111,18 @@ main {
 }
 
 
-.carousel-item{
-    /*z-index: -2 !important;*/
-}
-
-
 .carousel-inner {
     position: relative; /* Ensure carousel forms a new stacking context */
     /*z-index: 1!important;   Lower z-index to ensure it stays below the navbar */
 }
+
 
 .carousel-item img {
     width: 100%;  
     height: 500px; 
     object-fit: cover; 
 }
+
 
 .c_map{
     width: 100%;
@@ -134,46 +131,45 @@ main {
     min-width: 280px;
 }
 
+
 .red-o {
     color: #E84610;
 }
+
 
 .btn-signup,
 .btn-edit {
     background-color: #188181;
     color: #fff;
-    width: 6rem;
+    width: 5rem;
 }
+
 
 .btn-more {
     color: #fff;
     background: #030e42;
-    width: 6rem;
+    width: 5rem;
 }
+
 
 .btn-signup:hover,
 .btn-signup:active {
     background-color: #fff;
     color: #23BBBB;
-    width: 6rem;
-}
-
-
-.btn-like {
-    color: #E84610;
-    border: none;
-    background: transparent;
+    width: 5rem;
 }
 
 
 .btn-delete {
     color: #fff;
     background: #E84610;
-    width: 6rem;
+    width: 5rem;
 }
+
 
 .c-badge{
     width: 7rem;
+    padding: 0.5rem;
 }
 
 
@@ -208,25 +204,27 @@ footer a {
     border-color: #dc3545;
 }
 
+
 .error-message {
     color: #dc3545;
     display: none;  /* Initially hidden, will be shown on error */
 }
 
+
 .modal-backdrop {
     z-index: 9000! important; /* Ensure the backdrop is behind the modal */
 }
+
 
 .modal {
     z-index: 9999 ! important;  /* Ensure the modal stays on top */
 }
 
-
-
 #img-container {
     background-color: var(--bgk-col-body);
-    height: auto;
+    height: 100%;
     width: 100%;
+    object-fit: cover;
 }
 
 
@@ -239,8 +237,6 @@ footer a {
     break-inside: avoid;
     margin-top: 0;
 }
-
-
 
 
 @media screen and (min-width: 768px) {

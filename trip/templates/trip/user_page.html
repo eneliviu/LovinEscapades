@@ -10,7 +10,7 @@
         <!-- Main Content: Dashboard -->
 
         <!-- Dashboard Header -->
-        <div class="row mb-3 mt-2">
+        <div class="row mb-2 mt-3">
             <div class="col-md-12 text-center">
                 <h2>Welcome, {{ user.username }}</h2>
                 <p>Here's a quick overview of your trips and activities.</p>
@@ -21,7 +21,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-md-4">
-                    <div class="card text-center mb-1 h-100">
+                    <div class="card text-center h-100">
                         <div class="card-body">
                             <h5 class="card-title"># Trips</h5>
                             <hr>
@@ -35,6 +35,10 @@
                         <div class="card-body">
                             <h5 class="card-title"># Testimonials</h5>
                             <hr>
+
+                            <div class="container">
+
+                            
 
                             <div class="container d-flex justify-content-between">
                                 <span class="float-start">Active</span>
@@ -57,6 +61,8 @@
                             </div>
 
                         </div>
+
+                        </div>
                     </div>
                 </div>
 
@@ -73,14 +79,16 @@
         </div>
 
         <!-- Button to trigger modal -->
-        <div class="container text-center">
-            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addTripModal">
-                Add Trip
+        <div class="container text-center my-1">
+            <button type="button" class="btn btn-primary btn-lg" 
+                data-bs-toggle="modal" data-bs-target="#addTripModal">
+                Add New Trip
             </button>
         </div>
 
         <!-- Add Trip Form Modal -->
-        <div class="modal fade" id="addTripModal" tabindex="-1" aria-labelledby="addTripModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addTripModal" tabindex="-1" 
+            aria-labelledby="addTripModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -109,18 +117,21 @@
 
 
         <!-- Trip Entries Column -->
-        <div class="col-12 mt-3 left">
+        <div class="col-12 mt-1 left">
             <div class="row">
 
                 {% for trip in trips %}
 
                 <!-- Trip card -->
-                <div class="col-lg-6 d-flex flex-column mb-4">
-                    <div class="card my-1 h-100">
+                <div class="col-lg-6 d-flex flex-column mb-3">
+                    <div class="card my-0 h-100">
                         <div class="card-header d-flex flex-row justify-content-between align-items-center">
                             <div>
-                                {{ trip.place }}, {{ trip.country }} <span class="fw-bold red-o"> | </span>
-                                <span class="fw-light">{{ trip.trip_category }}</span>
+                                {{ trip.place }}, {{ trip.country }} 
+                                <span class="fw-bold red-o"> | </span>
+                                <span class="fw-light">
+                                    {{ trip.trip_category }}
+                                </span>
                             </div>
                             {% if trip.trip_status == 'Planned' %}
                             <span class="text-primary">Planned</span>
@@ -134,33 +145,30 @@
                         <div class="card-body">
                             <div>
                                 <h5 class="card-title">{{ trip.title }}</h5>
-                                <div class="d-flex flex-column align-items-center">
-                                    <div class="card-text text-muted">
+                                <div class="d-flex flex-column ">
+                                    <p>
+                                        {{ trip.description }}
+                                    </p>
+                                    <div class="card-text d-flex align-items-center justify-content-between fs-6 text">
                                         From: {{ trip.start_date }}
-                                        <span class="fw-bold red-o"> | </span>
+                                        <span class="fw-bold red-o">  |  </span>
                                         To: {{ trip.end_date }}
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mt-2 text-center">
-                                <a type="button" class="btn btn-edit btn-sm float-start"
+                                <a type="button" class="btn btn-edit btn-sm float-start" 
                                     href="{% url 'edit_page' trip.id %}">
                                     Edit
                                 </a>
-
-                                <!-- <a type="button" class="btn btn-more btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#tripModal">
-                                    More
-                                </a> -->
 
                                 <a type="button" class="btn btn-more btn-sm" href="{% url 'trip_details' trip.id %}">
                                     More
                                 </a>
 
-
                                 <a href="#" class="btn btn-delete btn-sm float-end" data-trip_id="{{ trip.id }}"
-                                    type="submit" method="POST">
+                                    data-bs-toggle="modal" data-bs-target="#deleteModal" type="submit" method="POST">
                                     Delete
                                 </a>
 
@@ -201,31 +209,32 @@
     {% endif %}
 
 
-    <!-- Delete confirmation modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Delete comment?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete your comment? This action cannot be undone.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
-                </div>
+</div>
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete comment?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your comment? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
             </div>
         </div>
     </div>
-
-
 </div>
+
 
 {% endblock content %}
 
-
 {% block extras %}
+
 <script src="{% static 'js/manage_trips.js' %}" type="text/javascript"></script>
+
 {% endblock %}

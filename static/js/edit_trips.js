@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let endDate = new Date(endDateValue).toLocaleDateString();
 
         // let currentDate = new Date(new Date().toDateString());
-
         let currentDate = new Date().toLocaleDateString();
         let errMsg;
 

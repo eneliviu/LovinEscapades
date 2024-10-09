@@ -62,7 +62,7 @@ class Trip(models.Model):
     title = models.CharField(max_length=100)
 
     # Optional field,stored as an empty string if left blank
-    description = models.TextField(blank=True)
+    # description = models.TextField(blank=True)
 
     place = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
@@ -170,7 +170,7 @@ class Image(models.Model):
     # image = models.ImageField(upload_to='trip_images/')
     title = models.CharField(max_length=50, blank=False)
     image = CloudinaryField('image', default=None, blank=False)
-    description = models.CharField(max_length=100, blank=False)
+    description = models.TextField(blank=False)
     shared = models.BooleanField(default=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 

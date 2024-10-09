@@ -5,168 +5,155 @@
 {% block content %}
 
 <!-- User Profile section -->
-<section class="row col-12 my-5" aria-labelledby="user-profile-section">
+<section class="row container-fluid  justify-content-center w-100 my-5" aria-labelledby="user-profile-section">
 
+    <!--<div class="container h-100"> </div> -->
 
+    <!--Submit testimonial-->
+    <div class="testimonial-card col-lg-4 my-2 h-100 mx-3">
 
+        <h4>User Profile</h4>
+        <hr>
 
+        <div class="my-3 d-flex flex-row">
+            {% if not user.first_name %}
+            <span class="badge c-badge bg-secondary text-light py-2 mx-2">
+                First name
+            </span>
+            <small class="fst-italic">
+                N/A
+            </small>
+            {% else %}
+            <span class="badge c-badge bg-success text-light py-2 mx-2">
+                First name
+            </span>
+            <span class="text-muted">
+                {{ user.first_name }}
+            </span>
+            {% endif %}
+        </div>
 
-    <div class="row container-fluid h-100">
+        <div class="my-3">
+            {% if not user.last_name %}
+            <span class="badge c-badge bg-secondary text-light py-2 mx-2">
+                Last name
+            </span>
+            <small class="fst-italic">
+                N/A
+            </small>
+            {% else %}
+            <span class="badge c-badge bg-success text-light py-2 mx-2">
+                Last name
+            </span>
+            <span class="text-muted">
+                {{ user.last_name }}
+            </span>
+            {% endif %}
+        </div>
 
+        <div class="my-3">
+            <span class="badge c-badge bg-success text-light py-2 mx-2">
+                Email
+            </span>
+            <span class="text-muted">
+                {{ user.email }}
+            </span>
+        </div>
 
-        <!--Submit testimonial-->
-        <!--<div class="col-lg-4 testimonial-card m-3 h-100">-->
+        <div class="container text-center">
+            <a type="button" href="{% url 'update_user_profile' %}" class="btn btn-edit btn-lg w-50 btn-sm mt-4">
+                <!--data-bs-target="#editProfileModal data-bs-toggle="modal"" -->
+                Update
+            </a>
+        </div>
 
-        <div class="testimonial-card col-lg-4 d-flex flex-column my-2 w-100">
-            <h4>User Profile</h4>
-            <hr>
+    </div>
 
-            <div class="my-1">
+    <!-- Testimonials list -->
+    <div class="testimonial-card col-lg-7 my-2 h-100 mx-3">
 
-                {% if not user.first_name %}
-                <span class="badge c-badge bg-secondary text-light">
-                    First name
-                </span>
-                <small class="fst-italic"> Please add your first name</small>
-                {% else %}
-                <span class="badge c-badge bg-success bg-gradienttext-light">
-                    First name
-                </span>
-                <span class="text-muted">
-                    {{ user.first_name }}
-                </span>
-                {% endif %}
-            </div>
-            <div class="my-1">
-                {% if not user.last_name %}
-                <span class="badge c-badge bg-secondary text-light">
-                    Last name
-                </span>
-                <small class="fst-italic">
-                    Please add your last name
-                </small>
-                {% else %}
-                <span class="badge c-badge bg-success bg-gradient text-light">
-                    Last name
-                </span>
-                <span class="text-muted">
-                    {{ user.last_name }}
-                </span>
-                {% endif %}
-            </div>
-            <div class="my-1">
-                {% if not user.email %}
-                <span class="badge c-badge bg-secondary text-light">
-                    Email
-                </span>
-                <small class="fst-italic"> Please add your email</small>
-                {% else %}
-                <span class="badge c-badge bg-success bg-gradient text-light">
-                    Email
-                </span>
-                <span class="text-muted">
-                    {{ user.email }}
-                </span>
-                {% endif %}
-            </div>
-
-            <div class="container text-center">
-                <a type="button" href="{% url 'update_user_profile' %}" class="btn btn-edit btn-lg w-50 btn-sm my-3">
-                    <!--data-bs-target="#editProfileModal data-bs-toggle="modal"" -->
-                    Update profile
-                </a>
+        <!-- Button to trigger add testimonial modal -->
+        <div class="d-flex justify-content-between">
+            <h4 class="m-0">Your testimonials</h4>
+            <div>
+                <button class="btn btn-edit px-2 w-100 float-end p-0" data-bs-toggle="modal"
+                    data-bs-target="#addTestimonialModal">
+                    New Testimonial
+                </button>
             </div>
 
         </div>
+        <hr>
 
-        <!-- Add Testimonial Form Modal -->
+
+        {% if posts %}
+
+        <div id="posts" class="h-100">
+            {% for post in posts %}
+            <div class="testimonial-card container-fluid d-flex align-items-center my-3">
+
+                <div class="text-muted">
+                    <h6>
+                        {{ post.body }}
+                    </h6>
+
+                    <div>
+                        {% if post.approved %}
+                        <small class="badge c-badge bg-success float-start">Approved</small>
+                        {% else %}
+                        <small class="badge c-badge bg-secondary  float-start">Pending approval</small>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="container">
+                    <a href="#" class="btn btn-delete btn-sm float-end m-2" data-post_id="{{ post.id }}" type="submit"
+                        method="POST">
+                        Delete
+                    </a>
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <div class="alert alert-warning" role="alert">
+            No testimonials have been posted.
+        </div>
+        {% endif %}
+
+
+
+    </div>
+
+    <!-- Add Testimonial Form Modal -->
+    <div class="modal fade" id="addTestimonialModal" tabindex="-1" aria-labelledby="addTestimonialModalLabel"
+        aria-hidden="true">
         <h2 class="visually-hidden">Testimonial form</h2>
-        <div class="modal fade" id="addTestimonialModal" tabindex="-1" aria-labelledby="addTestimonialModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-md-12 card mb-2 mt-2">
-                            <div class="card-body">
-                                <form id="addTestimonialForm" method="POST" style="margin-top: 1.2em;">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="form_type" value="addTestimonialForm">
-                                    {{ testimonial_form | crispy }}
-                                    <button id="submitButton" type="submit" class="btn btn-signup float-end">
-                                        Submit
-                                    </button>
-                                </form>
-                            </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 card mb-2 mt-2">
+                        <div class="card-body">
+                            <form id="addTestimonialForm" method="POST" style="margin-top: 1.2em;">
+                                {% csrf_token %}
+                                <input type="hidden" name="form_type" value="addTestimonialForm">
+                                {{ testimonial_form | crispy }}
+                                <button id="submitButton" type="submit" class="btn btn-signup float-end">
+                                    Submit
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!--</div>-->
-
-        <!-- Testimonnials list -->
-        <div class="col-lg-7 h-100 testimonial-card m-2 mx-4">
-
-
-            <!-- Button to trigger add testimonial modal -->
-
-            <div class=" d-flex justify-content-between align-items-center">
-                <h4>Your testimonials</h4>
-                <div class="float-end">
-                    <button class="btn btn-edit btn-sm w-100" data-bs-toggle="modal" data-bs-target="#addTestimonialModal">
-                        Add Testimonial
-                    </button>
-                </div>
-
-            </div>
-
-            <hr>
-
-            {% if posts %}
-
-            <div class="row col-6 w-100 d-flex flex-column justify-content-center">
-                <div id="posts " class="h-100 ">
-
-                    {% for post in posts %}
-                    <div class="testimonial-card d-flex  align-items-center">
-                        <div class=" text-muted">
-                            <h6>
-                                {{ post.body }}
-                            </h6>
-
-                            <div>
-                                {% if post.approved %}
-                                <small class="badge c-badge bg-success bg-gradient">Approved</small>
-                                {% else %}
-                                <small class="badge c-badge bg-secondary">Pending approval</small>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="container">
-                            <a href="#" class="btn btn-delete btn-sm float-end m-2" data-post_id="{{ post.id }}"
-                                type="submit" method="POST">
-                                Delete
-                            </a>
-                        </div>
-
-                    </div>
-                    {% endfor %}
-
-                </div>
-                {% else %}
-                <div class="alert alert-warning" role="alert">
-                    No testimonials have been posted.
-                </div>
-                {% endif %}
-
-            </div>
-
-        </div>
 </section>
 
 <!-- Delete confirmation modal -->
@@ -188,10 +175,11 @@
     </div>
 </div>
 
+{% endblock content %}
+
 
 {% block extras %}
-<script src="{% static 'js/manage_user.js' %}" type="text/javascript"></script>
-{% endblock %}
 
+<script src="{% static 'js/manage_user.js' %}" type="text/javascript"></script>
 
 {% endblock %}

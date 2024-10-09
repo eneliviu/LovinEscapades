@@ -303,10 +303,13 @@ def edit_trip_page(request, trip_id):
             return handle_post_request_upload_image(request, trip_id)
 
 
-
 @login_required
 def _trip_details(request, trip_id):
-    trip = get_object_or_404(Trip, user=request.user, pk=trip_id)
+    trip = get_object_or_404(
+            Trip,
+            user=request.user,
+            pk=trip_id
+        )
     images = trip.images.all()
     return render(
             request,
@@ -320,7 +323,11 @@ def _trip_details(request, trip_id):
 
 @login_required
 def trip_details_page(request, trip_id):
-    trip = get_object_or_404(Trip, user=request.user, id=trip_id)
+    trip = get_object_or_404(
+            Trip,
+            user=request.user,
+            id=trip_id
+        )
     images = trip.images.all()
     return render(
             request,

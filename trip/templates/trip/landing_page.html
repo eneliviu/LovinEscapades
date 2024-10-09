@@ -6,13 +6,13 @@
 <!-- Content Goes here -->
 
 
-<div class="container-fluid d-flex flex-column text-center">
+<div class="row container-fluid d-flex flex-column align-items-center  mx-0 px-0">
 
     <!-- Hero Section -->
-    <section id='hero-section' class="row container-fluid my-4 col-12" aria-labelledby="hero-section">
+    <section id='hero-section' class="container my-4 col-12 " aria-labelledby="hero-section">
         <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg flex-lg-row-reverse">
             <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-                <img class="border c-img" alt="Map image with pinned locations"
+                <img id='hero-img' class="c-img" alt="Map image with pinned locations"
                     src="{% static 'images/leandro-barreto-nomAp6_KVXU-unsplash.jpg' %}">
             </div>
             <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
@@ -41,16 +41,15 @@
         </div>
     </section>
 
-
     <!-- Testimonials Section -->
     {% if testimonials %}
-    <section id="carousel-testimonials" class="row container col-12" aria-labelledby="testimonials-title">
+    <section id="carousel-testimonials" class="container col-12 " aria-labelledby="testimonials-title">
         <h2 class="container col-12 text-center mt-1" id="testimonial-header">What our users say </h2>
         <h3 id="testimonials-title" class="visually-hidden">Testimonials</h3>
         <div id="testimonials" class="row carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 {% for testimonial in testimonials %}
-                
+
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
                     <div class="testimonial-card text-center">
                         <h5 class="testimonial-text">"{{ testimonial.body }}"</h5>
@@ -69,10 +68,9 @@
     </section>
     {% endif %}
 
-
     <!-- Map section -->
-    <section id="map-section" class="row col-12 mb-3 mt-1 bg-dark" aria-labelledby="leaflet map-section">
-        <div class="row container-fluid h-100">
+    <section id="map-section" class="container col-12 mb-3 mt-1 " aria-labelledby="leaflet map-section">
+        <div class=" container-fluid  h-100">
             <h2 id="map-title" class="text-center">Explore the World with Our Interactive Map</h2>
             <div class="row p-4 testimonial-card align-items-center">
                 <div class="col-lg-4 ">
@@ -87,33 +85,6 @@
                     </form>
 
                 </div>
-
-                <!-- Add Trip Form Modal 
-                <div class="modal fade" id="addTripModal" tabindex="-1" aria-labelledby="addTripModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="col-md-12 card mb-2 mt-2">
-                                    <div class="card-body">
-                                        <form id="addTripForm" method="POST" style="margin-top: 1.2em;">
-                                            {% csrf_token %}
-                                            {{ trip_filter_form | crispy }}
-                                            <button id="submitButton" type="submit" class="btn btn-signup float-end">
-                                                Submit
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                -->
 
                 <div class="col-lg-8 d-flex flex-columns h-100">
                     <div class="container testimonial-card">
@@ -150,12 +121,9 @@
     }).addTo(map);
 
     let locations = JSON.parse(document.getElementById('trips_json').textContent);
-
-
     if (!Array.isArray(locations)) {
         locations = [locations];
     }
-    console.log(locations)
 
     let markers = L.markerClusterGroup();
     if (Object.keys(locations)) {
@@ -211,12 +179,11 @@
     if (!Array.isArray(locations)) {
         locations = [locations];
     }
-    console.log(locations)
 
-    const markers = L.markerClusterGroup();
+    let markers = L.markerClusterGroup();
     if (Object.keys(locations)) {
         locations.forEach(element => {
-            const marker = L.marker([element.lat, element.lon])
+            let marker = L.marker([element.lat, element.lon])
                 .bindPopup(
                     '<div>' +
                     //<img src='img/" + feature.properties.img_name + "' width='259'/>+
@@ -250,5 +217,12 @@
 
 {% endif %}
 
+
+{% endblock content%}
+
+
+{% block extras %}
+
+<script src="{% static 'js/manage_jquery.js' %}" type="text/javascript"></script>
 
 {% endblock %}
