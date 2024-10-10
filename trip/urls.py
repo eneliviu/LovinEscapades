@@ -37,6 +37,11 @@ urlpatterns = [
         name='trip_details'
     ),
     path(
+        'delete_photo/<int:photo_id>',
+        trip_views.delete_photo,
+        name='delete_photo'
+    ),
+    path(
         '',
         trip_views.landing_page,
         name='home'

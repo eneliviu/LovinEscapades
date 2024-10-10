@@ -141,14 +141,14 @@ main {
 .btn-edit {
     background-color: #188181;
     color: #fff;
-    width: 5rem;
+    width: 6rem;
 }
 
 
 .btn-more {
     color: #fff;
     background: #030e42;
-    width: 5rem;
+    width: 6rem;
 }
 
 
@@ -156,14 +156,14 @@ main {
 .btn-signup:active {
     background-color: #fff;
     color: #23BBBB;
-    width: 5rem;
+    width: 6rem;
 }
 
 
 .btn-delete {
     color: #fff;
     background: #E84610;
-    width: 5rem;
+    width: 6rem;
 }
 
 

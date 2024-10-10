@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from user_profile.models import Testimonial
-from .models import Trip
+from .models import Trip, Image
 from .forms import AddTripForm, EditTripForm, UploadImageForm
 from .filters import TripFilter
 
@@ -337,3 +337,24 @@ def trip_details_page(request, trip_id):
                 'trip_images':  images,
             }
         )
+
+
+@login_required
+def delete_photo(request, photo_id):
+    image = Image.objects.filter(id=photo_id)
+    print(image.values())
+    if image:
+        image.delete()
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            'Photo deleted successfully.'
+        )
+    else:
+        messages.add_message(
+            request,
+            messages.ERROR,
+            'The record cannot be deleted.'
+        )
+    return redirect('user')
+    

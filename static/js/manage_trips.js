@@ -12,6 +12,7 @@
  * the user for confirmation before deletion.
  */
 
+
 let deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
 let deleteButtons = document.getElementsByClassName("btn-delete");
 let deleteConfirm = document.getElementById("deleteConfirm");
@@ -64,8 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Validate dates for Ongoing trips
             errMsg = "Error: Ongoing trip must include the current date.";
         };
-        if ((selectedOption === 'Completed') &&
-            ((startDate > currentDate) || (currentDate < endDate))) {
+        if ((selectedOption === 'Completed') && (currentDate < endDate)) {
             // Validate dates for Completed trips
             errMsg = "Error: Completed trip cannot have an end date in the future.";
         };
