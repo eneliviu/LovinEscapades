@@ -63,8 +63,8 @@ class Trip(models.Model):
     # Optional field,stored as an empty string if left blank
     # description = models.TextField(blank=True)
 
-    place = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
+    place = models.CharField(max_length=100, blank=False)
+    country = models.CharField(max_length=100, blank=False)
     lat = models.FloatField(blank=True, null=True)
     lon = models.FloatField(blank=True, null=True)
     trip_category = models.CharField(max_length=50,
