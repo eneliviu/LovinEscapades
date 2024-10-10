@@ -56,16 +56,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (endDate < startDate) {
             errMsg = "Error: End date cannot be earlier than start date.";
         };
-        if ((selectedOption === 'Planned') && (startDate < currentDate)) {
+        if ( (selectedOption === 'Planned') && (startDate < currentDate) ) {
             // Validate dates for Planned trips
             errMsg = "Error: Cannot plan a trip on past dates.";
         };
-        if ((selectedOption === 'Ongoing') && 
-            !((startDate <= currentDate) && (endDate >= currentDate) )) {
+        if ( (selectedOption === 'Ongoing') && 
+            !( (startDate <= currentDate) && (endDate >= currentDate)) ) {
             // Validate dates for Ongoing trips
             errMsg = "Error: Ongoing trip must include the current date.";
         };
-        if ((selectedOption === 'Completed') && (currentDate < endDate)) {
+        if ( (selectedOption === 'Completed') && (currentDate < endDate) ) {
             // Validate dates for Completed trips
             errMsg = "Error: Completed trip cannot have an end date in the future.";
         };

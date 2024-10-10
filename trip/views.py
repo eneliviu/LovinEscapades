@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -112,11 +112,12 @@ def delete_trip(request, trip_id):
             messages.SUCCESS,
             'Trip deleted successfully.'
         )
+        print(messages)
     else:
         messages.add_message(
             request,
             messages.ERROR,
-            'The record cannot be deleted.'
+            'Error: The record cannot be deleted.'
         )
     return redirect('user')
 
@@ -354,7 +355,6 @@ def delete_photo(request, photo_id):
         messages.add_message(
             request,
             messages.ERROR,
-            'The record cannot be deleted.'
+            'Error: The record cannot be deleted.'
         )
     return redirect('user')
-    

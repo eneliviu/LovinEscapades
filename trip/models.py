@@ -1,8 +1,7 @@
 from django.db import models
-# from django.core.validators import MaxValueValidator as mxvv
-# from django.core.validators import ValidationError
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.core.exceptions import ValidationError
 from django.dispatch import receiver  # to create Profile instance
 from cloudinary.models import CloudinaryField
 from user_profile.models import Profile
@@ -79,28 +78,70 @@ class Trip(models.Model):
                               choices=SHARE_CHOICES,
                               default='YES')
 
-    # ratings = models.PositiveSmallIntegerField(default=1,
-    #                                        validators=[mxvv(5)])
+    # Raise Validation Error In Model Save Method:
+    # https://ilovedjango.com/django/models-and-databases/tips/sub/raise-validation-error-in-model-save-method/
+
+    is_cleaned = False
+
+    def clean(self):
+        self.is_cleaned = True
+        coords = get_coordinates(self.place)
+
+        if coords == 'location-error':
+            raise ValidationError("Error: could not geocode the location")
+        else:
+            self.lat = coords[0]
+            self.lon = coords[1]
+        super(Trip, self).clean()
 
     def save(self, *args, **kwargs):
         '''
         Override the save() method to set the Lat and Lon values
         before saving.
         '''
-        try:
-            coords = get_coordinates(self.place)
-            self.lat = coords[0]
-            self.lon = coords[1]
-        except Exception as e:
-            print(f"Operation failed: {e}")
-
+        if not self.is_cleaned:
+            self.full_clean()
         super(Trip, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.trip_category} trip to {self.place}, {self.country}'
 
     class Meta:
-        ordering = ["-created_on", 'start_date', 'country']
+        ordering = ["-created_on", 'country', 'start_date']
+
+
+class Image(models.Model):
+    trip = models.ForeignKey(Trip,
+                             on_delete=models.CASCADE,
+                             related_name='images')
+    # image = models.ImageField(upload_to='trip_images/')
+    title = models.CharField(max_length=50, blank=False)
+    image = CloudinaryField('image', default=None, blank=False)
+    description = models.TextField(blank=False)
+    shared = models.BooleanField(default=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Photo for {self.trip.title}, {self.trip.place},\
+                 {self.trip.country}'
+
+    class Meta:
+        ordering = ["-uploaded_at"]
+
+
+# Create user profile when a new user registers
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    '''
+    Create profile for new user automatically
+    '''
+    if created:
+        user_profile = Profile(user=instance)
+        user_profile.save()
+        # User follow themselves
+        user_profile.follows.set([instance.profile.id])
+        user_profile.save()
+# post_save.connect(create_profile, sender=User)
 
 
 class Activity(models.Model):
@@ -161,37 +202,3 @@ class Note(AbstractPostModel):
 
     def __str__(self):
         return f'Post by {self.user.username} on {self.trip.title}'
-
-
-class Image(models.Model):
-    trip = models.ForeignKey(Trip,
-                             on_delete=models.CASCADE,
-                             related_name='images')
-    # image = models.ImageField(upload_to='trip_images/')
-    title = models.CharField(max_length=50, blank=False)
-    image = CloudinaryField('image', default=None, blank=False)
-    description = models.TextField(blank=False)
-    shared = models.BooleanField(default=True)
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'Photo for {self.trip.title}, {self.trip.place},\
-                 {self.trip.country}'
-
-    class Meta:
-        ordering = ["-uploaded_at"]
-
-
-# Create user profile when a new user registers
-@receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwargs):
-    '''
-    Create profile for new user automatically
-    '''
-    if created:
-        user_profile = Profile(user=instance)
-        user_profile.save()
-        # User follow themselves
-        user_profile.follows.set([instance.profile.id])
-        user_profile.save()
-# post_save.connect(create_profile, sender=User)

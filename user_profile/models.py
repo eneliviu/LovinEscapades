@@ -48,7 +48,7 @@ class Testimonial(models.Model):
 #         return self.title
 
 
-# class CollaborateRequest(models.Model):
+# class ContactUs(models.Model):
 #     """
 #     Stores a single collaboration request message
 #     """

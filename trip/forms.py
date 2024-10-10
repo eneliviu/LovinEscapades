@@ -107,7 +107,7 @@ class UploadImageForm(forms.ModelForm):
     '''
     class Meta:
         model = Image
-        fields = ['image', 'title', 'description']
+        fields = ['image', 'title', 'description', 'shared']
 
     def clean_image(self):
         image = self.cleaned_data.get('image')
