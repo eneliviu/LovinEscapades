@@ -27,9 +27,8 @@ header {
 
 
 #logo{
-   color:rgb(16, 63, 218)
+   color:rgb(5, 45, 173)
 }
-
 
 .navbar__base {
    z-index: 2000;
@@ -37,10 +36,21 @@ header {
    backdrop-filter: blur(1px);
 }
 
+
+#message_trip_added {
+    position: fixed;
+    bottom: 80px;  
+    right: 20px;  
+    z-index: 2050;
+    height: auto;  
+    max-width: 300px;
+}
+
 .link {
     color: #23BBBB;
     text-decoration: none;
 }
+
 
 .link:hover,
 .link:active {
@@ -48,21 +58,48 @@ header {
     text-decoration: underline;
 }
 
+
 main {
     flex: 1;
 }
 
+
 #testimonials {
     padding: 1.5rem 0;
     background: rgba(255, 255, 255, 0.9) !important;
-    z-index: 0 !important;
+    /*z-index: 0 !important;*/
 }
+
+
 #testimonials h2 {
     margin-bottom: 0.5rem;
     font-size: 36px;
     font-weight: 700;
     text-align: center;
 }
+
+
+.testimonial-text {
+    font-size: 18px;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+
+.testimonial-author {
+    font-weight: bold;
+    color: #333;
+}
+
+
+.testimonial-author small {
+    display: block;
+    font-style: normal;
+    color: #666;
+}
+
+
 .testimonial-card {
     background: #fff;
     border: none;
@@ -70,51 +107,71 @@ main {
     padding: 1rem;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     margin: 0.5rem 0;
-    z-index: -2 !important; 
-}
-.testimonial-text {
-    font-size: 18px;
-    font-style: italic;
-    color: #555;
-    margin-bottom: 20px;
-}
-.testimonial-author {
-    font-weight: bold;
-    color: #333;
-}
-.testimonial-author small {
-    display: block;
-    font-style: normal;
-    color: #666;
-}
-.carousel-item{
-    z-index: -2 !important;
+    /*z-index: -2 !important;*/ 
 }
 
 
 .carousel-inner {
-    position: relative;  
-    z-index: 1 !important; 
+    position: relative; /* Ensure carousel forms a new stacking context */
+    /*z-index: 1!important;   Lower z-index to ensure it stays below the navbar */
 }
+
+
+.carousel-item img {
+    width: 100%;  
+    height: 500px; 
+    object-fit: cover; 
+}
+
 
 .c_map{
     width: 100%;
     height: auto;
-    min-height: 300px; 
+    min-height: 300px;
     min-width: 280px;
 }
+
+
+.red-o {
+    color: #E84610;
+}
+
 
 .btn-signup,
 .btn-edit {
     background-color: #188181;
     color: #fff;
+    width: 6rem;
 }
+
+
+.btn-more {
+    color: #fff;
+    background: #030e42;
+    width: 6rem;
+}
+
 
 .btn-signup:hover,
 .btn-signup:active {
     background-color: #fff;
     color: #23BBBB;
+    width: 6rem;
 }
+
+
+.btn-delete {
+    color: #fff;
+    background: #E84610;
+    width: 6rem;
+}
+
+
+.c-badge{
+    width: 7rem;
+    padding: 0.5rem;
+}
+
 
 .footer__base{
     max-height: 70px;
@@ -129,13 +186,80 @@ footer a i {
     scale: 1.1;
 }
 
+
 footer a:hover i {
-    color: #ccc; /* Adjust the color on hover */
+    color: #ccc; /* Adjust the color on hover as needed */
     display:inline-block;
     scale: 1.5;
 }
+
 
 footer a {
     text-decoration: none; /* Remove underline from anchor tags */
     justify-content: space-between;
 }
+
+
+.is-invalid {
+    border-color: #dc3545;
+}
+
+
+.error-message {
+    color: #dc3545;
+    display: none;  /* Initially hidden, will be shown on error */
+}
+
+
+.modal-backdrop {
+    z-index: 9000! important; /* Ensure the backdrop is behind the modal */
+}
+
+
+.modal {
+    z-index: 9999 ! important;  /* Ensure the modal stays on top */
+}
+
+#img-container {
+    background-color: var(--bgk-col-body);
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+
+.c-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 0.1rem solid var(--card-border-col);
+    break-inside: avoid;
+    margin-top: 0;
+}
+
+
+@media screen and (min-width: 768px) {
+    .c-img {
+      width: 100%; 
+      height: auto;
+    }
+
+    #img-container {
+        columns: 2;
+    }
+}
+
+
+@media screen and (min-width: 992px) {
+    .c-img {
+      width: 720px; 
+      height: auto;
+    }
+
+    #img-container {
+        columns: 3;
+    }
+}
+
+
