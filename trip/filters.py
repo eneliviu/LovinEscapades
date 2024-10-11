@@ -4,7 +4,7 @@ from trip.models import Trip
 
 
 class TripFilter(django_filters.FilterSet):
-    
+
     # https://stackoverflow.com/questions/66964037/boolean-field-for-django-filter-search-bar
     # shared__exact = django_filters.BooleanFilter(
     #     field_name='shared',
@@ -24,6 +24,6 @@ class TripFilter(django_filters.FilterSet):
                   'trip_category': ['exact'],
                   'trip_status': ['exact'],
                   # 'shared': ['exact'],
-                  # 'start_date', 'end_date',
+                  # 'start_date': ['exact'],
+                  # 'end_date': ['exact'],
                   }
-

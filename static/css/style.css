@@ -144,16 +144,18 @@ main {
     width: 6rem;
 }
 
-
 .btn-more {
     color: #fff;
-    background: #030e42;
+    background: #034174f8;
     width: 6rem;
 }
 
-
 .btn-signup:hover,
-.btn-signup:active {
+.btn-signup:active,
+.btn-edit:hover,
+.btn-edit:active,
+.btn-more:active,
+.btn-more:hover {
     background-color: #fff;
     color: #23BBBB;
     width: 6rem;
@@ -168,7 +170,7 @@ main {
 
 
 .c-badge{
-    width: 7rem;
+    width: 6rem;
     padding: 0.5rem;
 }
 
@@ -238,6 +240,12 @@ footer a {
     margin-top: 0;
 }
 
+#edit-trip-card{
+    min-width: 280px;
+}
+
+
+
 
 @media screen and (min-width: 768px) {
     .c-img {
@@ -249,7 +257,7 @@ footer a {
         columns: 2;
     }
 }
-
+   
 
 @media screen and (min-width: 992px) {
     .c-img {
@@ -259,7 +267,32 @@ footer a {
 
     #img-container {
         columns: 3;
+    }    
+
+}
+
+
+@media screen and (max-width: 375px) {
+  
+    .trip-card-btns-holder,
+    .trip-card-btns-footer{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    .trip-card-btns-holder > a{
+        margin-top: 5px;
     }
 }
+
+@media screen and (min-width: 376px) {
+  
+    .trip-card-btns-holder{
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
+ 
 
 

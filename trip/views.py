@@ -20,7 +20,6 @@ def landing_page(request):
     testimonials = Testimonial.objects.filter(approved=True)
     trip_filter = TripFilter(request.GET,
                              queryset=Trip.objects.filter(shared='Yes'))
-
     if trip_filter.qs.exists():
         trips = list(trip_filter.qs.values())
         context = {

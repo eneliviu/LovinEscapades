@@ -169,17 +169,21 @@
         <div class="row">
 
             {% for message in messages %}
+
             {% if 'error' in message.tags %}
-            <div class="alert {{ message.tags }} alert-danger alert-dismissible fade show" id="msg" role="alert">
-                {% else %}
-                <div class="alert {{ message.tags }} alert-success alert-dismissible fade show" id="msg" role="alert">
-                    {% endif %}
-                    {{ message | safe }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% endfor %}
+            <div class="alert {{ message.tags }} alert-danger alert-dismissible fade show" id="msg-success"
+                role="alert">
+                {{ message | safe }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+            {% else %}
+            
+            {% endif %}
+            
+
+            {% endfor %}
         </div>
+    </div>
     </div>
 
 

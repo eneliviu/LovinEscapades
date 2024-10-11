@@ -6,11 +6,18 @@
 {% block content %}
 <!-- Content Goes here -->
 
-<section class="row col-12 my-5  justify-content-center" aria-labelledby="edit trip section">
-    <div class="d-flex flex-column testimonial-card h-100 w-25 ">
+<section class="row my-5 justify-content-center" aria-labelledby="edit trip section">
+   
+    <div id="edit-trip-card" class="d-flex flex-column testimonial-card h-100 w-25 text-center container-fluid ">
+  
+            <h4>
+                Manage trip details
+            </h4>
+            <hr>
+    
 
         <!-- Buttons to trigger modals -->
-        <div class="container text-center my-3 p-0 ">
+        <div class="container text-center mb-3 p-0 ">
             <button type="button" class="btn btn-edit btn-lg w-100 my-2" data-bs-toggle="modal"
                 data-bs-target="#editTripModal">
                 Update trip

@@ -37,9 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     add_form.addEventListener("submit", function (e) {
        
-       
         let title = document.getElementById("id_title").value;
-        console.log(title.value)
         let place = document.getElementById("id_place").value;
         let country = document.getElementById("id_country").value;
         
@@ -56,10 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let endDate = new Date(endDateValue).toLocaleDateString();
 
         // let currentDate = new Date(new Date().toDateString());
-
         let currentDate = new Date().toLocaleDateString();
        
-        let errMsg = [];
+        let errMsg;
         // Check if end date is earlier than start date
         if (endDate < startDate) {
             errMsg = "Error: End date cannot be earlier than start date.";
@@ -87,8 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if(country.length === 0){
             errMsg = "Error: Country cannot be empty string.";
         }
-
-        console.log(errMsg.length)
 
         if (errMsg) {
             // Prevent default submission if there is an error.      

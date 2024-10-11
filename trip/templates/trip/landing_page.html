@@ -80,13 +80,28 @@
                 <div class="col-lg-4 ">
                     <h2 class="visually-hidden">Map filter</h2>
                     <!-- Button to trigger modal -->
+
+
+
+
                     <form id="tripSelectionForm" style="margin-top: 1.2em;">
                         {% csrf_token %}
                         {{ trip_filter_form | crispy }}
-                        <button id="submitButton" type="submit" class="btn btn-signup float-center">
-                            Submit
-                        </button>
+
+                        <div class="d-flex justify-content-around">
+                            <button id="submitButton" type="submit" class="btn btn-signup ">
+                                Submit
+                            </button>
+                            <button id="clearButton" class="btn btn-more" 
+                                href="{%  url 'home' %}"> 
+                                Clear all
+                            </button>
+                        </div>
+
+
                     </form>
+
+
 
                 </div>
 
