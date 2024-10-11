@@ -92,10 +92,10 @@
             {% for post in posts %}
             <div class="testimonial-card container-fluid d-flex align-items-center my-3">
 
-                <div class="text-muted">
-                    <h6>
+                <div class="container-fluid text-muted">
+                    <p>
                         {{ post.body }}
-                    </h6>
+                    </p>
 
                     <div>
                         {% if post.approved %}
@@ -106,7 +106,7 @@
                     </div>
                 </div>
 
-                <div class="container">
+                <div class="container w-25">
                     <a href="#" class="btn btn-delete btn-sm float-end m-2" data-post_id="{{ post.id }}" type="submit"
                         method="POST">
                         Delete

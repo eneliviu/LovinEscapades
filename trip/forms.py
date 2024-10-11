@@ -77,6 +77,7 @@ class AddTripForm(forms.ModelForm):
                   end_date__gte=start_date)
             )
             # Exclude completed trips and the current instance (if it exists)
+            # and the trip itself
             collide_trips = collide_trips.exclude(
                     # Q(trip_status__in=['Completed', 'Ongoing']) |
                     Q(id=self.instance.id if self.instance else None)
@@ -86,7 +87,7 @@ class AddTripForm(forms.ModelForm):
                 raise ValidationError(errMsg)
 
         super().clean(*args, **kwargs)
-        # return cleaned_data
+        return cleaned_data
 
 
 class EditTripForm(AddTripForm):

@@ -24,8 +24,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin', admin.site.urls),
     path("accounts/", include("allauth.urls")),
+    path('contact_us/', include('contact.urls'), name='contact_page'),
     path('dashboard/', include('trip.urls'), name='delete_trip'),
-    # path('dashboard/', include('trip.urls'), name='delete_photo'),
     path('gallery/', include('trip.urls'), name='gallery'),
     path("profile/", include('user_profile.urls'), name='profile'),
     path("", include('trip.urls'), name='home'),

@@ -125,9 +125,9 @@ main {
 
 
 .c_map{
-    width: 100%;
-    height: auto;
-    min-height: 300px;
+    width: auto;
+    height: 100%;
+    min-height: 400px;
     min-width: 280px;
 }
 
@@ -170,7 +170,7 @@ main {
 
 
 .c-badge{
-    width: 6rem;
+    width: 7rem;
     padding: 0.5rem;
 }
 

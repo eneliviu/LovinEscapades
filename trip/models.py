@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.core.exceptions import ValidationError
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.dispatch import receiver  # to create Profile instance
 from cloudinary.models import CloudinaryField
 from user_profile.models import Profile
@@ -58,13 +59,28 @@ class Trip(models.Model):
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
                              related_name='trips')
-    title = models.CharField(max_length=100)
+    title = models.CharField(
+        max_length=100,
+        blank=False,
+        validators=[MinLengthValidator(2)]
+    )
 
     # Optional field,stored as an empty string if left blank
     # description = models.TextField(blank=True)
 
-    place = models.CharField(max_length=100, blank=False)
-    country = models.CharField(max_length=100, blank=False)
+    place = models.CharField(
+        max_length=100,
+        blank=False,
+        validators=[MinLengthValidator(2)]
+        )
+    country = models.CharField(
+        max_length=100,
+        blank=False,
+        validators=[
+            MinLengthValidator(2),
+            MaxLengthValidator(56)
+            ]
+        )
     lat = models.FloatField(blank=True, null=True)
     lon = models.FloatField(blank=True, null=True)
     trip_category = models.CharField(max_length=50,
@@ -115,9 +131,18 @@ class Image(models.Model):
                              on_delete=models.CASCADE,
                              related_name='images')
     # image = models.ImageField(upload_to='trip_images/')
-    title = models.CharField(max_length=50, blank=False)
+    title = models.CharField(
+        max_length=50,
+        blank=False,
+        validators=[MinLengthValidator(2)])
     image = CloudinaryField('image', default=None, blank=False)
-    description = models.TextField(blank=False)
+    description = models.TextField(
+        blank=False,
+        validators=[
+            MinLengthValidator(2),
+            MaxLengthValidator(500)
+            ]
+        )
     shared = models.BooleanField(default=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 

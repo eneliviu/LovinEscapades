@@ -48,7 +48,7 @@
     <!-- Testimonials Section -->
     {% if testimonials %}
     <section id="carousel-testimonials" class="container col-12 " aria-labelledby="testimonials-title">
-        <h2 class="container col-12 text-center mt-1" id="testimonial-header">What our users say </h2>
+        <h2 class="text-center mt-1" id="testimonial-header">What our users say </h2>
         <h3 id="testimonials-title" class="visually-hidden">Testimonials</h3>
         <div id="testimonials" class="row carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -73,17 +73,12 @@
     {% endif %}
 
     <!-- Map section -->
-    <section id="map-section" class="container col-12 mb-3 mt-1 " aria-labelledby="leaflet map-section">
-        <div class=" container-fluid  h-100">
+    <section id="map-section" class="container col-12 mt-2" aria-labelledby="leaflet map-section">
+        <!-- <div class="h-100 mb-5"> -->
             <h2 id="map-title" class="text-center">Explore the World with Our Interactive Map</h2>
-            <div class="row p-4 testimonial-card align-items-center">
+            <div class="row p-3 testimonial-card align-items-center h-100 mb-4">
                 <div class="col-lg-4 ">
                     <h2 class="visually-hidden">Map filter</h2>
-                    <!-- Button to trigger modal -->
-
-
-
-
                     <form id="tripSelectionForm" style="margin-top: 1.2em;">
                         {% csrf_token %}
                         {{ trip_filter_form | crispy }}
@@ -97,24 +92,17 @@
                                 Clear all
                             </button>
                         </div>
-
-
                     </form>
-
-
-
                 </div>
 
-                <div class="col-lg-8 d-flex flex-columns h-100">
+                <div class="col-lg-8 d-flex flex-columns">
                     <div class="container testimonial-card">
-                        <div id="map" class="c_map mx-auto h-100"></div>
+                        <div id="map" class="c_map mx-auto"></div>
                     </div>
                 </div>
 
-
             </div>
-
-        </div>
+        <!-- </div> -->
     </section>
 
 </div>

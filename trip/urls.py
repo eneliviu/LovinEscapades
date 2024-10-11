@@ -17,11 +17,6 @@ urlpatterns = [
         name='gallery'
     ),
     path(
-        'contact/',
-        trip_views.contact,
-        name='contact'
-    ),
-    path(
         'delete_trip/<int:trip_id>',
         trip_views.delete_trip,
         name='delete_trip'

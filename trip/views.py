@@ -8,6 +8,7 @@ from .forms import AddTripForm, EditTripForm, UploadImageForm
 from .filters import TripFilter
 
 
+@login_required
 def landing_page(request):
     '''
     View for Landing page
@@ -67,6 +68,7 @@ def _trip_stats(trips):
     return comments_count, images_count
 
 
+@login_required
 def _add_trip_form(request):
     '''
     Handle form for creating new trips
@@ -83,12 +85,14 @@ def _add_trip_form(request):
         )
         # Reload trips and recalculate stats after saving:
         trips = Trip.objects.filter(user=request.user).\
-            prefetch_related('images', 'comments')
+            prefetch_related('images')
         comments_count, images_count = _trip_stats(trips)
     else:
         cleaned_errors = []
         for field, errors in add_trip_form.errors.items():
+            print(*errors)
             for error in errors:
+                print(error)
                 if field == '__all__':
                     cleaned_errors.append(error)
                 else:
@@ -253,10 +257,14 @@ def _upload_trip_images(request, trip_id):
             image = image_form.save(commit=False)
             image.trip = trip  # Foreign key
             image.save()
+            if image.shared:
+                msg = 'Image loaded successfully and added to the Gallery!'
+            else:
+                msg = 'Image loaded successfully!'
             messages.add_message(
                 request,
                 messages.SUCCESS,
-                'Image loaded successfully and added to the Gallery!'
+                msg
             )
     else:
         image_form = UploadImageForm()

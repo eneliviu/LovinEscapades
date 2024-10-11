@@ -32,15 +32,18 @@ document.addEventListener("DOMContentLoaded", function () {
     let add_form = document.getElementById("addTripForm");
     //let button = document.getElementById("submitButton");
     let cancelButton_add = document.getElementById("cancelButton");
+    
     // console.log(add_form)
-    // console.log(add_form["id_title"])
-
     add_form.addEventListener("submit", function (e) {
        
-        let title = document.getElementById("id_title").value;
-        let place = document.getElementById("id_place").value;
-        let country = document.getElementById("id_country").value;
+        let title = document.getElementById("id_title").value.trim();
+        let place = document.getElementById("id_place").value.trim();
+        let country = document.getElementById("id_country").value.trim();
         
+        // console.log(title.length)
+        // console.log(place.length)
+        // console.log(country.length)
+
         // Retrieve the start and end dates
         let startDateValue = document.getElementById("id_start_date").value;
         let endDateValue = document.getElementById("id_end_date").value;
@@ -50,46 +53,59 @@ document.addEventListener("DOMContentLoaded", function () {
         let selectedOption = tripStatus.options[selectedIndex].value;
 
         // Convert the date strings to Date objects
-        let startDate = new Date(startDateValue).toLocaleDateString();
-        let endDate = new Date(endDateValue).toLocaleDateString();
+        // let startDate = new Date(startDateValue).toLocaleDateString();
+        // let endDate = new Date(endDateValue).toLocaleDateString();
+        // let currentDate = new Date().toLocaleDateString();
+        // // let currentDate = new Date(new Date().toDateString());
+        
+        let startDate = new Date(startDateValue).getTime();
+        let endDate = new Date(endDateValue).getTime();
+        let currentDate = new Date().getTime();
 
-        // let currentDate = new Date(new Date().toDateString());
-        let currentDate = new Date().toLocaleDateString();
-       
-        let errMsg;
+        let errMsg = [];
+
+        // Datetime inputs:
+
+        console.log(startDate)
+        console.log(endDate)
+        console.log(endDate < startDate)
+
         // Check if end date is earlier than start date
         if (endDate < startDate) {
-            errMsg = "Error: End date cannot be earlier than start date.";
+            errMsg.push("Error: End date cannot be earlier than start date.");
         };
         if ( (selectedOption === 'Planned') && (startDate < currentDate) ) {
             // Validate dates for Planned trips
-            errMsg = "Error: Cannot plan a trip on past dates.";
+            errMsg.push("Error: Cannot plan a trip on past dates.");
         };
         if ( (selectedOption === 'Ongoing') && 
             !( (startDate <= currentDate) && (endDate >= currentDate)) ) {
             // Validate dates for Ongoing trips
-            errMsg = "Error: Ongoing trip must include the current date.";
+            errMsg.push("Error: Ongoing trip must include the current date.");
         };
-        if ( (selectedOption === 'Completed') && (currentDate < endDate) ) {
+        if ( (selectedOption === 'Completed') && 
+             (startDate>currentDate && endDate > currentDate) ) {
             // Validate dates for Completed trips
-            errMsg = "Error: Completed trip cannot have an end date in the future.";
+            errMsg.push("Error: Completed trip cannot have an end date in the future.");
         };
+
+        // Text inputs
 
         if(title.length === 0){
-            errMsg = "Error: Title cannot be empty string.";
+            errMsg.push("Error: Title cannot be empty string.");
         }
         if(place.length === 0){
-            errMsg = "Error: Place cannot be empty string.";
+            errMsg.push("Error: Place cannot be empty string.");
         }
         if(country.length === 0){
-            errMsg = "Error: Country cannot be empty string.";
+            errMsg.push("Error: Country cannot be empty string.");
         }
 
-        if (errMsg) {
+        // Show errors
+        if (errMsg.length>0) {
             // Prevent default submission if there is an error.      
             e.preventDefault();
-            // alert(errMsg.join('\n'));
-            alert(errMsg);  
+            alert(errMsg.join('\n'));
         }
         // Otherwise, allows the form to be submitted naturally 
         // if validations passes (standard HTTP form submission).

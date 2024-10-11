@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from cloudinary.models import CloudinaryField
+from django.core.validators import MinLengthValidator
+# from cloudinary.models import CloudinaryField
 # from trip.models import Trip
 
 
@@ -19,15 +20,28 @@ class Profile(models.Model):
 
 
 class Testimonial(models.Model):
-    ''' 
+    '''
     Stores a single testimonial text
     '''
     user = models.ForeignKey(User,
-                             on_delete=models.CASCADE, 
+                             on_delete=models.CASCADE,
                              related_name='testimonials')
-    author_name = models.CharField(max_length=50, default="Anonymous")
-    user_info = models.CharField(max_length=50, default="Enthusiast user")
-    body = models.CharField(max_length=100, blank=False)
+    author_name = models.CharField(
+        max_length=50,
+        blank=False,
+        default="Anonymous",
+        validators=[MinLengthValidator(2)]
+        )
+    user_info = models.CharField(
+        max_length=50,
+        blank=False,
+        default="Enthusiast user",
+        validators=[MinLengthValidator(2)]
+        )
+    body = models.TextField(
+        blank=False,
+        validators=[MinLengthValidator(20)]
+        )
     created_at = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
 
