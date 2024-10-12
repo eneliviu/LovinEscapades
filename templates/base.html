@@ -16,9 +16,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LovinEscapades</title>
 
-
-    <!--FAVICON-->
-
     <link rel="shortcut icon" type="image/png" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="512x512" href="{% static 'favicon/android-chrome-512x512.png' %} ">
     <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/android-chrome-192x192.png' %}">
@@ -29,16 +26,6 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#dafeff">
 
-    <!--FAVICON
-    <link rel="icon" type="image/png" sizes="192x192" href="static/favicon/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="static/favicon/android-chrome-512x512.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="static/favicon/favicon-16x16.png">
-    <link rel="manifest" href="static/favicon/site.webmanifest" crossorigin="use-credentials">
-    <link rel="mask-icon" href="static/favicon/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#dafeff">
-    -->
     <!-- Google Fonts CSS -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" />
@@ -84,7 +71,7 @@
 
                 <!-- Toggler button for small screens -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                    aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -93,17 +80,17 @@
                     <ul class="navbar-nav w-100 me-auto">
 
                         <li class="nav-item mx-3">
-                            <a class="nav-link {% if request.path == home_url %}active{% endif %}" aria-current="page"
+                            <a class="nav-link {% if request.path == home_url %}active aria-current='page' {% endif %}"
                                 href="{% url 'home' %}">Home</a>
                         </li>
 
                         {% if user.is_authenticated %}
                         <li class="nav-item mx-3">
-                            <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page"
+                            <a class="nav-link {% if request.path == logout_url %}active aria-current='page'{% endif %}" 
                                 href="{% url 'account_logout' %}">Logout</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link {% if request.path == '/user/' %}active{% endif %}" aria-current="page"
+                            <a class="nav-link {% if request.path == '/user/' %}active aria-current='page'{% endif %}" 
                                 href="{% url 'user' %}">Dashboard</a>
                         </li>
                         <li class="nav-item mx-3">
@@ -112,24 +99,24 @@
                         </li>
                         {% else %}
                         <li class="nav-item mx-3">
-                            <a class="nav-link {% if request.path == signup_url %}active{% endif %}" aria-current="page"
+                            <a class="nav-link {% if request.path == signup_url %}active aria-current='page'{% endif %}" 
                                 href="{% url 'account_signup' %}">Register</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link {% if request.path == login_url %}active{% endif %}" aria-current="page"
+                            <a class="nav-link {% if request.path == login_url %}active aria-current='page'{% endif %}"
                                 href="{% url 'account_login' %}">Login</a>
                         </li>
                         {% endif %}
 
                         <li class="nav-item mx-3">
-                            <a class="nav-link {% if request.path == '/contact/' %}active{% endif %}"
-                                aria-current="page" href="{% url 'contact' %}"> Contact Us </a>
+                            <a class="nav-link {% if request.path == '/contact/' %}active aria-current='page'{% endif %}"
+                                href="{% url 'contact' %}"> Contact Us </a>
                         </li>
 
                         {% if user.is_authenticated %}
                         <li class="nav-item mx-3 ms-lg-auto ">
-                            <a class="nav-link text-decoration-none {% if request.path == '/profile/' %}active{% endif %}"
-                                aria-current="page" href="{% url 'profile' %}">
+                            <a class="nav-link text-decoration-none {% if request.path == '/profile/' %}active aria-current='page'{% endif %}"
+                                href="{% url 'profile' %}">
                                 My profile
                                 <i class="bi bi-person-circle ms-2"></i>
                             </a>
