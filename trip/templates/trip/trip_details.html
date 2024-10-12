@@ -2,10 +2,12 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block metadescription %}
+<meta name="description" content="Gallery page with trip photos and details.">
+{% endblock %}
 
 {% block content %}
 
-<meta name="description" content="Gallery page with trip photos and details.">
 
 <!-- Masonry gallery of image cards-->
 <section id="trips_details-section" class="row container" aria-labelledby="trip details-section">
