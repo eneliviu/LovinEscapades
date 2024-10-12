@@ -61,10 +61,15 @@
 
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
                     <div class="testimonial-card text-center">
-                        <p class="testimonial-text">"{{ testimonial.body }}"</p>
+                        <strong class="testimonial-text">
+                            "{{ testimonial.body }}"
+                        </strong>
                         <div class="testimonial-author mb-2">
-                            @{{ testimonial.author_name }}<br>
-                            <small class="text-center text-muted">{{ testimonial.user_info }}</small>
+                            @{{ testimonial.author_name }}
+                            <br>
+                            <small class="text-center text-muted">
+                                {{ testimonial.user_info }}
+                            </small>
                             <small class="text-muted float-end fst-italic fst-light">
                                 Posted at: {{ testimonial.created_at }}
                             </small>
