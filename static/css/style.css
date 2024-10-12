@@ -190,16 +190,16 @@ main {
 
 
 footer a i {
-    color: white;
+    color: #fafafa;
     transition: color 0.3s;
-    scale: 1.1;
+    transform: scale(1.1);
 }
 
 
 footer a:hover i {
-    color: #ccc; /* Adjust the color on hover as needed */
+    color: #fff; /* Adjust the color on hover as needed */
     display:inline-block;
-    scale: 1.5;
+    transform: scale(1.5);
 }
 
 
