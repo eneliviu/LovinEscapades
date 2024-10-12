@@ -49,10 +49,10 @@ Some of the user stories that shaped the development process include:
 
 Throughout the development process, significant progress was made despite encountering numerous bugs and undergoing substantial code refactoring to adhere to the DRY (Don't Repeat Yourself) principles.
 
-During iterations, the overview over the app development was guided using Lucid wireframes like the one shwon below:
+<!-- During iterations, the overview over the app development was guided using Lucid wireframes like the one shwon below:
 
 ![App flowchart](/assets/images/Flowchart_CLI_TODO.png)<br>
-<center>*LovinPlans: Lucid flowchart for application development.*</center><br>
+<center>*LovinPlans: Lucid flowchart for application development.*</center><br> -->
 
 [*Back to top*](#)
 
@@ -61,13 +61,13 @@ During iterations, the overview over the app development was guided using Lucid 
 
 ### **1. A user-friendly interface**
 
-***LovinEscapades*** is a Django application that provides an intuitive usage experience.
+***LovinEscapades*** is a Django application that provides an intuitive user experience.
 
 - The app opens with a Landing Page than provides the following options:
     - 1 (User Login): Login of regsitered users via username and password;
-    - 2 (Register a new user): Requires a valid username, password and email address to creates a user profile
-        and a dedicated user worksheet for storing the tasks;
-    - 3 (Help): Show the help menu content for running the application;
+    - 2 (Register): Requires a valid username, password and email address to creates a user profile
+        and a dedicated Dashobard-page for managing the trips;
+    - 3 (Contact Us): Allows the site visitors to reach out with inquiries or issues, which could help convert them into registered users;
     - 4 (Exit): Gracefully exiting the application.
 
 ![Main menu](/assets/images/main-menu.png#center)
@@ -86,7 +86,7 @@ During iterations, the overview over the app development was guided using Lucid 
 - In addition, the users can invoque forced exit by entering 'exit' from the keyboard instead of the suggested options. In the script, the forced exit calls the sys.exit(0) Python routine to close the app gracefully.
 - The app is user-friendly and easy to start using without a steep learning curve. To assist new users, the Main Menu includes a Help Menu option that offers a quick tour of the app's functionality (more details in the [Help Menu](#help-menu) section).
 
-### **2. Use of Google Sheets**
+### **2. Use of Leaflet.js**
 
 The user information and the TODO lists are stored in a dedicated document hosted by Google Sheets.
 The app uses two categories of worksheets:
@@ -235,15 +235,26 @@ The app is currently deployed on github and can be accessed at: https://love-pla
 [*Back to top*](#)
 
 
+### Accessibility
+
+The font 'Permanent Marker' was chosen as the font for the logo as well as logo related statement text. It is legible, but also rough and gritty. Breaking the clean visual of the site.
+
+'Alatsi' was chosen for the Headings and Roboto for the general text. Both are easily readable and clean in their optic.
+
+Colors
+The website's style and vibe are defined by its color scheme. 
+
+
+
 ## Usage and screenshots
 
-- A quick demonstration of using the app for viewing the user tasks can be found here: [***here.***](assets/giffs/Demo-functionality.gif)
+- A quick demonstration of using the app can be found here: [***here.***](assets/giffs/Demo-functionality.gif)
 
 - The user registraton process can be found here: [***here.***](assets/giffs/Demo-functionality-registration.gif)
 
-- An example for the task deletion process can be found here: [***here.***](assets/giffs/Demo-functionality-task-delete.gif)
+- An example for the trip deletion process can be found here: [***here.***](assets/giffs/Demo-functionality-task-delete.gif)
 
-- An example for adding a new task can be found here: [***here.***](assets/giffs/Demo-functionality-task-add.gif)
+- An example for adding a new trip can be found here: [***here.***](assets/giffs/Demo-functionality-task-add.gif)
 
 [*Back to top*](#)
 

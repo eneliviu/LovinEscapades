@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from user_profile.models import Testimonial
@@ -8,7 +8,6 @@ from .forms import AddTripForm, EditTripForm, UploadImageForm
 from .filters import TripFilter
 
 
-@login_required
 def landing_page(request):
     '''
     View for Landing page
@@ -68,7 +67,6 @@ def _trip_stats(trips):
     return comments_count, images_count
 
 
-@login_required
 def _add_trip_form(request):
     '''
     Handle form for creating new trips
@@ -104,7 +102,6 @@ def _add_trip_form(request):
                 *cleaned_errors)  # Unpack the error list
 
 
-@login_required
 def delete_trip(request, trip_id):
     qs = Trip.objects.filter(user=request.user)
     trip = get_object_or_404(qs, id=trip_id)
@@ -115,7 +112,6 @@ def delete_trip(request, trip_id):
             messages.SUCCESS,
             'Trip deleted successfully.'
         )
-        print(messages)
     else:
         messages.add_message(
             request,
@@ -125,7 +121,6 @@ def delete_trip(request, trip_id):
     return redirect('user')
 
 
-@login_required
 def handle_get_request_user_page(request):
     '''
     Pagination:
@@ -164,7 +159,6 @@ def handle_get_request_user_page(request):
     return render(request, "trip/user_page.html", context)
 
 
-@login_required
 def handle_post_request_user_page(request):
     _add_trip_form(request)
     return redirect('user')
@@ -193,8 +187,6 @@ def custom_404_view(request, exception):
 
 
 # ==================================================== #
-
-
 def gallery(request, trip_id):
     '''
     Redirect user after registration
@@ -209,14 +201,6 @@ def gallery(request, trip_id):
             'trips': trip,
         }
     )
-
-
-def contact(request):
-    '''
-    Redirect user after registration
-    '''
-    return render(request, 'trip/contact_us.html', {})
-
 # ==================================================== #
 
 
@@ -270,7 +254,6 @@ def _upload_trip_images(request, trip_id):
         image_form = UploadImageForm()
 
 
-@login_required
 def handle_get_request_edit_trip_page(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id, user=request.user)
     trip_form = EditTripForm(instance=trip)
@@ -285,7 +268,6 @@ def handle_get_request_edit_trip_page(request, trip_id):
     )
 
 
-@login_required
 def handle_post_request_edit_trip(request, trip_id):
     _edit_trip_form(request, trip_id)
     return redirect('edit_page', trip_id=trip_id)  # back to edit page
@@ -296,7 +278,6 @@ def handle_post_request_upload_image(request, trip_id):
     return redirect('edit_page', trip_id=trip_id)  # back to edit page
 
 
-@login_required
 def edit_trip_page(request, trip_id):
     """
     View for Dashboard
@@ -311,7 +292,6 @@ def edit_trip_page(request, trip_id):
             return handle_post_request_upload_image(request, trip_id)
 
 
-@login_required
 def _trip_details(request, trip_id):
     trip = get_object_or_404(
             Trip,
@@ -329,7 +309,6 @@ def _trip_details(request, trip_id):
         )
 
 
-@login_required
 def trip_details_page(request, trip_id):
     trip = get_object_or_404(
             Trip,
@@ -347,7 +326,6 @@ def trip_details_page(request, trip_id):
         )
 
 
-@login_required
 def delete_photo(request, photo_id):
     image = Image.objects.filter(id=photo_id)
     print(image.values())

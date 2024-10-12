@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+
 {% load static %}
+
 {% load crispy_forms_tags %}
 
 
 {% block content %}
-<!-- Content Goes here -->
 
 <section class="row my-5 justify-content-center" aria-labelledby="contact us section">
     <div class="d-flex flex-column testimonial-card h-100 w-50 container-fluid ">
@@ -15,11 +16,14 @@
         <form method="post">
             {% csrf_token %}
             {{ contact_form | crispy }}
-            <button type="submit" class="btn btn-signup">Submit</button>
+            <div class="text-center">
+                <button type="submit" class="btn btn-signup">
+                    Submit
+                </button>
+            </div>
         </form>
 
     </div>
-
 </section>
 
-{% endblock %}
+{% endblock content %}

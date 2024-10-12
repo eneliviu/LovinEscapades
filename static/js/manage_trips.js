@@ -12,18 +12,43 @@
  * the user for confirmation before deletion.
  */
 
+// let deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
+// let deleteButtons = document.getElementsByClassName("btn-delete");
+// let deleteConfirm = document.getElementById("deleteConfirm");
+// for (let button of deleteButtons) {
+//     button.addEventListener("click", (e) => {
+//         let tripId = e.target.getAttribute("data-trip_id");
+        
+//         deleteConfirm.href = `/delete_trip/${tripId}`;
+//         deleteModal.show();
+//     });
+// }
 
-let deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-let deleteButtons = document.getElementsByClassName("btn-delete");
-let deleteConfirm = document.getElementById("deleteConfirm");
+document.addEventListener("DOMContentLoaded", function() {
+    // Check if the deleteModal element exists before using it
+    let deleteModalElement = document.getElementById("deleteModal");
+    if (deleteModalElement) {
+        let deleteModal = new bootstrap.Modal(deleteModalElement);
+        let deleteButtons = document.getElementsByClassName("btn-delete");
+        let deleteConfirm = document.getElementById("deleteConfirm");
 
-for (let button of deleteButtons) {
-    button.addEventListener("click", (e) => {
-        let tripId = e.target.getAttribute("data-trip_id");
-        deleteConfirm.href = `/delete_trip/${tripId}`;
-        deleteModal.show();
-    });
-}
+        // Ensure deleteConfirm exists before proceeding
+        if (deleteConfirm) {
+            for (let button of deleteButtons) {
+                button.addEventListener("click", (e) => {
+                    let tripId = e.target.getAttribute("data-trip_id");
+                    
+                    deleteConfirm.href = `/delete_trip/${tripId}`;
+                    deleteModal.show();
+                });
+            }
+        } else {
+            console.error("Element with ID 'deleteConfirm' is not found.");
+        }
+    } else {
+        console.error("Element with ID 'deleteModal' is not found.");
+    }
+});
 
 /*--------------------------------------------------------------------*/
 /* ADD TRIPS */
@@ -33,17 +58,12 @@ document.addEventListener("DOMContentLoaded", function () {
     //let button = document.getElementById("submitButton");
     let cancelButton_add = document.getElementById("cancelButton");
     
-    // console.log(add_form)
     add_form.addEventListener("submit", function (e) {
        
         let title = document.getElementById("id_title").value.trim();
         let place = document.getElementById("id_place").value.trim();
         let country = document.getElementById("id_country").value.trim();
         
-        // console.log(title.length)
-        // console.log(place.length)
-        // console.log(country.length)
-
         // Retrieve the start and end dates
         let startDateValue = document.getElementById("id_start_date").value;
         let endDateValue = document.getElementById("id_end_date").value;
@@ -52,12 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let selectedIndex = tripStatus.selectedIndex;
         let selectedOption = tripStatus.options[selectedIndex].value;
 
-        // Convert the date strings to Date objects
-        // let startDate = new Date(startDateValue).toLocaleDateString();
-        // let endDate = new Date(endDateValue).toLocaleDateString();
-        // let currentDate = new Date().toLocaleDateString();
-        // // let currentDate = new Date(new Date().toDateString());
-        
+        // Convert to Unix time
         let startDate = new Date(startDateValue).getTime();
         let endDate = new Date(endDateValue).getTime();
         let currentDate = new Date().getTime();
@@ -65,10 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let errMsg = [];
 
         // Datetime inputs:
-
-        console.log(startDate)
-        console.log(endDate)
-        console.log(endDate < startDate)
 
         // Check if end date is earlier than start date
         if (endDate < startDate) {

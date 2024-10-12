@@ -5,6 +5,9 @@
 {% block content %}
 <!-- Content Goes here -->
 
+
+
+
 <div class="container-fluid">
     <div class="row">
         <!-- Main Content: Dashboard -->
@@ -38,29 +41,29 @@
 
                             <div class="container">
 
-                            
 
-                            <div class="container d-flex justify-content-between">
-                                <span class="float-start">Active</span>
-                                <span class="float-end">
-                                    {{ testimonials_count_active|default:0 }}
-                                </span>
-                            </div>
 
-                            <div class="container d-flex justify-content-between">
-                                <span class="float-start">Pending</span>
-                                <span class="float-end">
-                                    {{ testimonials_count_pending|default:0 }}
-                                </span>
-                            </div>
-                            <div class="container d-flex justify-content-between">
-                                <span>All</span>
-                                <span class="'float-end">
-                                    {{ testimonials_count_all|default:0 }}
-                                </span>
-                            </div>
+                                <div class="container d-flex justify-content-between">
+                                    <span class="float-start">Active</span>
+                                    <span class="float-end">
+                                        {{ testimonials_count_active|default:0 }}
+                                    </span>
+                                </div>
 
-                        </div>
+                                <div class="container d-flex justify-content-between">
+                                    <span class="float-start">Pending</span>
+                                    <span class="float-end">
+                                        {{ testimonials_count_pending|default:0 }}
+                                    </span>
+                                </div>
+                                <div class="container d-flex justify-content-between">
+                                    <span>All</span>
+                                    <span class="'float-end">
+                                        {{ testimonials_count_all|default:0 }}
+                                    </span>
+                                </div>
+
+                            </div>
 
                         </div>
                     </div>
@@ -80,15 +83,13 @@
 
         <!-- Button to trigger modal -->
         <div class="container text-center my-1">
-            <button type="button" class="btn btn-primary btn-lg" 
-                data-bs-toggle="modal" data-bs-target="#addTripModal">
+            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addTripModal">
                 Add New Trip
             </button>
         </div>
 
         <!-- Add Trip Form Modal -->
-        <div class="modal fade" id="addTripModal" tabindex="-1" 
-            aria-labelledby="addTripModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addTripModal" tabindex="-1" aria-labelledby="addTripModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -126,7 +127,7 @@
                     <div class="card my-0 h-100">
                         <div class="card-header d-flex flex-row justify-content-between align-items-center">
                             <div>
-                                {{ trip.place }}, {{ trip.country }} 
+                                {{ trip.place }}, {{ trip.country }}
                                 <span class="fw-bold red-o"> | </span>
                                 <span class="fw-light">
                                     {{ trip.trip_category }}
@@ -150,14 +151,14 @@
                                     </p>
                                     <div class="card-text d-flex align-items-center justify-content-between fs-6 text">
                                         From: {{ trip.start_date }}
-                                        <span class="fw-bold red-o">  |  </span>
+                                        <span class="fw-bold red-o"> | </span>
                                         To: {{ trip.end_date }}
                                     </div>
                                 </div>
                             </div>
 
-                            <div  class="mt-2 justify-content-around trip-card-btns-holder">
-                                <a type="button" class="btn btn-edit btn-sm float-start" 
+                            <div class="mt-2 justify-content-around trip-card-btns-holder">
+                                <a type="button" class="btn btn-edit btn-sm float-start"
                                     href="{% url 'edit_page' trip.id %}">
                                     Update
                                 </a>
@@ -166,7 +167,7 @@
                                     Photos
                                 </a>
 
-                                <a href="#" class="btn btn-delete btn-sm float-end"  data-trip_id="{{ trip.id }}"
+                                <a href="#" class="btn btn-delete btn-sm float-end" data-trip_id="{{ trip.id }}"
                                     data-bs-toggle="modal" data-bs-target="#deleteModal" type="submit" method="POST">
                                     Delete
                                 </a>
@@ -174,7 +175,8 @@
                             </div>
                         </div>
 
-                        <div  class="card-footer text-body-secondary d-flex justify-content-between trip-card-btns-footer">
+                        <div
+                            class="card-footer text-body-secondary d-flex justify-content-between trip-card-btns-footer">
                             <small class="float-end card-text text-muted">
                                 Photos: {{ trip.images.all | length }}
                             </small>
@@ -193,6 +195,28 @@
             </div>
         </div>
 
+        <!-- Delete confirmation modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Delete trip?</h5>
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal"
+                            data-bs-target="#deleteModal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete the record? This action cannot be undone.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            data-bs-target="#deleteModal">Close</button>
+                        <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     {% if trips.has_other_pages %}
@@ -210,30 +234,12 @@
 
 </div>
 
-<!-- Delete confirmation modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Delete comment?</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete your comment? This action cannot be undone.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 {% endblock content %}
 
 
+<!-- {% block extras %}
 
-
+{% endblock  %} -->
 
 
