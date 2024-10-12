@@ -47,8 +47,12 @@ header {
 }
 
 .link {
-    color: #23BBBB;
+    color: #065245;
+    padding: 5px;
     text-decoration: none;
+    font-size: larger;
+    font-weight: 700;
+    /* background-color: #0c192e; */
 }
 
 
@@ -66,7 +70,7 @@ main {
 
 #testimonials {
     padding: 1.5rem 0;
-    background: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 1) !important;
     /*z-index: 0 !important;*/
 }
 
@@ -139,7 +143,7 @@ main {
 
 .btn-signup,
 .btn-edit {
-    background-color: #188181;
+    background-color: #0a5c5c;
     color: #fff;
     width: 6rem;
 }
@@ -156,8 +160,8 @@ main {
 .btn-edit:active,
 .btn-more:active,
 .btn-more:hover {
-    background-color: #fff;
-    color: #23BBBB;
+    background-color: #fafafa;
+    color: #032929;
     width: 6rem;
 }
 
@@ -223,10 +227,7 @@ footer a {
 }
 
 #img-container {
-    background-color: var(--bgk-col-body);
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 
@@ -239,6 +240,11 @@ footer a {
     break-inside: avoid;
     margin-top: 0;
 }
+
+.c-card-text{
+    word-break: break-all
+}
+
 
 #edit-trip-card{
     min-width: 280px;

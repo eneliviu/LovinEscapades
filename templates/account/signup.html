@@ -11,19 +11,18 @@
 <div class="container w-50">
   <div class="row">
     <div class="col-md-8 mt-3 offset-md-2">
-      <h3>{% trans "Sign Up" %}</h3>
+      <h1>{% trans "Sign Up" %}</h1>
       <p>{% blocktrans %}
         Already have an account? Then please 
         <a href="{{ login_url }}" class="link">
-          sign in  instead.
-        </a>
+          Log in </a> instead.
         {% endblocktrans %}
       </p>
     </div>
   </div>
 
   <div class="row">
-    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+    <form class="signup fw-bolder" id="signup_form" method="post" action="{% url 'account_signup' %}">
       {% csrf_token %}
       {{ form | crispy }}
       {% if redirect_field_value %}

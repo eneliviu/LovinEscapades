@@ -36,17 +36,14 @@
 
             <div class="card-body  d-flex flex-column">
                 <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid border rounded">
-                <div class="card-text mt-2 mb-0 align-items-center">
+                <p class="card-text mt-2 mb-0 align-items-center c-card-text">
                     {{ image.description }}
-                </div>
-
+                </p>
                 <a type="submit" method="POST" href="#" class="btn btn-delete btn-sm float-end"
                     id="deleteImageBtn" data-photo_id="{{ image.id }}" data-trip_id="{{ selected_trip.id }}" 
                     data-bs-toggle="modal" data-bs-target="#deleteImageModal">
                     Delete
                 </a>
-
-
             </div>
 
             <div class="card-footer text-muted  w-100">
