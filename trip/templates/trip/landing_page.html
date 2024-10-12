@@ -78,36 +78,33 @@
     {% endif %}
 
     <!-- Map section -->
-    <section id="map-section" class="container col-12 mt-2" aria-labelledby="leaflet map-section">
-        <!-- <div class="h-100 mb-5"> -->
-            <h2 id="map-title" class="text-center">Explore the World with Our Interactive Map</h2>
-            <div class="row p-3 testimonial-card align-items-center h-100 mb-4">
-                <div class="col-lg-4 ">
-                    <h2 class="visually-hidden">Map filter</h2>
-                    <form id="tripSelectionForm" style="margin-top: 1.2em;">
-                        {% csrf_token %}
-                        {{ trip_filter_form | crispy }}
+    <section id="map-section" class="container col-12 mt-2" aria-labelledby="leaflet-map-title">
+        <h2 id="leaflet-map-title" class="text-center">Explore the World with Our Interactive Map</h2>
+        <div class="row p-3 testimonial-card align-items-center h-100 mb-4">
+            <div class="col-lg-4 ">
+                <h2 class="visually-hidden">Map filter</h2>
+                <form id="tripSelectionForm" style="margin-top: 1.2em;">
+                    {% csrf_token %}
+                    {{ trip_filter_form | crispy }}
 
-                        <div class="d-flex justify-content-around">
-                            <button id="submitButton" type="submit" class="btn btn-signup ">
-                                Submit
-                            </button>
-                            <button id="clearButton" class="btn btn-more" 
-                                href="{%  url 'home' %}"> 
-                                Clear all
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="col-lg-8 d-flex flex-columns">
-                    <div class="container testimonial-card">
-                        <div id="map" class="c_map mx-auto"></div>
+                    <div class="d-flex justify-content-around">
+                        <button id="submitButton" type="submit" class="btn btn-signup ">
+                            Submit
+                        </button>
+                        <button id="clearButton" type="button" class="btn btn-more" href="{%  url 'home' %}">
+                            Clear all
+                        </button>
                     </div>
-                </div>
-
+                </form>
             </div>
-        <!-- </div> -->
+
+            <div class="col-lg-8 d-flex flex-columns">
+                <div class="container testimonial-card">
+                    <div id="map" class="c_map mx-auto"></div>
+                </div>
+            </div>
+
+        </div>
     </section>
 
 </div>

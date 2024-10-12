@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from user_profile.models import Testimonial
@@ -163,7 +163,7 @@ def handle_post_request_user_page(request):
     _add_trip_form(request)
     return redirect('user')
 
-
+@login_required
 def user_page(request):
     """
     View for Dashboard
