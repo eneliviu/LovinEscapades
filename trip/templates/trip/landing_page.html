@@ -40,11 +40,6 @@
 
                     </div>
                     {% endif %}
-
-                    <!-- <a class="btn btn-outline-secondary btn-lg px-4 me-md-2 fw-bold" aria-current="page"
-                        href="{% url 'gallery' %}">
-                        Visit us
-                    </a> -->
                 </div>
             </div>
         </div>
@@ -114,13 +109,13 @@
 
 </div>
 
-<!--TODO: create scripts.js file -->
-
 <!-- Leaflet -->
 {{ trips | json_script:"trips_json" }}
 
-{% if not user.is_authenticated %}
 
+
+<!-- 
+{% if not user.is_authenticated %}
 <script type='text/javascript'>
     // Greenwich Coordinates default
     var map = L.map('map', { zoomControl: true }).setView([51.4934, 0.0098], 3);
@@ -172,9 +167,7 @@
     }
 
 </script>
-
 {% else %}
-
 <script type='text/javascript'>
     // Greenwich Coordinates default
     var map = L.map('map', { zoomControl: true }).setView([51.4934, 0.0098], 3);
@@ -227,9 +220,8 @@
     }
 
 </script>
-
 {% endif %}
-
+ -->
 
 {% endblock content%}
 

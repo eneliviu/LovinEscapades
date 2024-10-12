@@ -151,11 +151,9 @@
 
     </main>
 
-    <!-- Displaying Django messages
-    Change the default tags for a message level in settings.py
-    -->
-    <div id="message_trip_added" class="container">
-        <div class="row">
+    <!-- Displaying Django messages / Change the default tags for a message level in settings.py -->
+    <div class="row container-fluid">
+        <div class="message_trip_added ">
             {% if messages %}
             {% for message in messages %}
             <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -219,19 +217,24 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
     <!-- Custom JS -->
+    <script src="{% static 'js/manage_trips.js' %}" type="text/javascript" defer></script>
+    <script src="{% static 'js/manage_jquery.js' %}" type="text/javascript" defer></script>
+    <script src="{% static 'js/manage_photos.js' %}" type="text/javascript" defer></script>
 
-    <script src="{% static 'js/manage_trips.js' %}" type="text/javascript" ></script>
-    <script src="{% static 'js/manage_photos.js' %}" type="text/javascript" async></script>
+
+
+    <script src="{% static 'js/leaflet_map.js' %}" defer></script>
+    <!-- Flag for user authentication -->
+    <script>
+        // Determine which URL to use for the "More..." link based on whether the user is authenticated. 
+        // Check leaflet_map.js for `isAuthenticated` variable from the Django template.
+        var isAuthenticated = "{% if user.is_authenticated %}true{% else %}false{% endif %}";
+    </script>
+
 </body>
 
 <!-- {% block extras %}
-<script src="{% static 'js/manage_trips.js' %}" type="text/javascript" async></script>
-<script src="{% static 'js/manage_user.js' %}" type="text/javascript" async></script>
-<script src="{% static 'js/edit_trips.js' %}" type="text/javascript" async></script>
-<script src="{% static 'js/manage_photos.js' %}" type="text/javascript" async></script>
-<script src="{% static 'js/manage_jquery.js' %}" type="text/javascript" async></script>
 {% endblock  %} -->
 
 </html>

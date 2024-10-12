@@ -31,8 +31,8 @@ def landing_page(request):
         if len(trips) == 0:
             messages.add_message(
                 request,
-                messages.ERROR,
-                'No trips are posted'
+                messages.SUCCESS,
+                'No trips are posted yet!'
             )
         else:
             messages.add_message(
