@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group, User
-from .models import (Trip, Note, Image, Comment, Activity, Profile)
+from .models import (Trip, Image, Profile)
 
 
 class ProfileInline(admin.StackedInline):
@@ -27,8 +27,5 @@ admin.site.unregister(Group)
 # Register your models here.
 admin.site.register(User, UserAdmin)
 admin.site.register(Trip)
-admin.site.register(Note)
 admin.site.register(Image)
-admin.site.register(Comment)
-admin.site.register(Activity)
 admin.site.register(Profile)
