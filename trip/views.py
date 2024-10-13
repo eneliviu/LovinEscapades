@@ -162,7 +162,7 @@ def handle_post_request_user_page(request):
     _add_trip_form(request)
     return redirect('user')
 
-@login_required
+# @login_required
 def user_page(request):
     """
     View for Dashboard
