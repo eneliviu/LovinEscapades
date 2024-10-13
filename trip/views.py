@@ -10,7 +10,15 @@ from .filters import TripFilter
 
 def landing_page(request):
     '''
-    View for Landing page
+     Renders the landing page with shared trips and approved testimonials.
+
+    **Context**
+    - ``trips``: List of filtered shared :model:`Trip`
+    - ``testimonials``: Approved :model:`Testimonial`
+    - ``trip_filter_form``: Trip filter form
+
+    **Template**
+    :template:`trip/landing_page.html`
     '''
 
     # Serialization require a list of objects:
@@ -56,7 +64,10 @@ def landing_page(request):
 
 def _trip_stats(trips):
     """
-    Calculate trip statistics
+    Calculates the total number of comments and images across trips.
+
+    :param trips: A list or queryset of :model:`Trip` objects.
+    :return: A tuple containing total comment count and image count.
     """
     comments_count = 0
     images_count = 0
@@ -69,7 +80,10 @@ def _trip_stats(trips):
 
 def _add_trip_form(request):
     '''
-    Handle form for creating new trips
+    Handles the submission and validation of the new trip form.
+
+    :param request: The HTTP request object containing form data.
+    :return: Updates user messages with success or error feedback.
     '''
     add_trip_form = AddTripForm(request.POST, user=request.user)
     if add_trip_form.is_valid():
@@ -103,9 +117,18 @@ def _add_trip_form(request):
 @login_required
 def delete_trip(request, trip_id):
     '''
-    This function allows users to delete their own trips.
+    Allows an authenticated user to delete their own trip.
     Since it modifies personal data, only authorized users
     should access this functionality.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+    - `trip_id`: The ID of the trip to be deleted.
+
+    **Functionality**
+    - Deletes the specified trip if it belongs to the user.
+    - Adds a success or error message upon completion.
+    - Redirects the user to their dashboard.
     '''
     qs = Trip.objects.filter(user=request.user)
     trip = get_object_or_404(qs, id=trip_id)
@@ -127,6 +150,18 @@ def delete_trip(request, trip_id):
 
 def handle_get_request_user_page(request):
     '''
+    Renders the user's trip page with pagination and trip statistics.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+
+    **Functionality**
+    - Retrieves and paginates the user's trips.
+    - Calculates trip statistics including comments and images count.
+    - Provides counts of active and pending testimonials.
+    - Prepares a form for adding new trips.
+    - Renders the "user_page.html" template with the prepared context.
+
     Pagination:
     https://djangocentral.com/adding-pagination-with-django/#adding-pagination-using-function-based-views
     '''
@@ -164,17 +199,35 @@ def handle_get_request_user_page(request):
 
 
 def handle_post_request_user_page(request):
+    '''
+    Processes POST requests for the user's trip page.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+
+    **Functionality**
+    - Calls the `_add_trip_form` to handle trip form submission.
+    - Redirects the user to their trip page after submission.
+    '''
     _add_trip_form(request)
     return redirect('user')
 
 
 @login_required
 def user_page(request):
-    """
-     This function serves as the user's dashboard, handling both GET
-     and POST requests related to a user's personal data.
-     It should definitely require the user to be logged in.
-    """
+    '''
+    This function serves as the user's dashboard, handling both GET
+    and POST requests related to a user's personal data.
+    It requires the user to be logged in.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+
+    **Functionality**
+    - Redirects GET requests to handle retrieval and display of user data.
+    - Processes POST requests for adding new data.
+    - Requires the user to be logged in to access the dashboard.
+    '''
     if request.method == 'GET':
         return handle_get_request_user_page(request)
     elif request.method == 'POST':
@@ -183,7 +236,14 @@ def user_page(request):
 
 def custom_404_view(request, exception):
     '''
-    Render 404 Error page
+    Renders a custom 404 error page.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+    - `exception`: The exception that triggered the 404 error.
+
+    **Functionality**
+    - Returns the '404.html' template with a 404 status code.
     '''
     return render(
         request,
@@ -194,11 +254,21 @@ def custom_404_view(request, exception):
 
 
 def _edit_trip_form(request, trip_id):
-    """
-    Display an individual trip for edit.
-    """
+    '''
+    Handles the editing of an existing trip.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+    - `trip_id`: The ID of the trip to be edited.
+
+    **Functionality**
+    - Fetches the trip to edit, ensuring it belongs to the logged-in user.
+    - Pre-populates and validates the edit form with the trip data.
+    - Saves the updated trip if the form is valid, showing success messages.
+    - Displays error messages if validation fails.
+    '''
+
     trip = get_object_or_404(Trip, user=request.user, id=trip_id)
-    # Pre-populates form with existing trip data
     form = EditTripForm(request.POST, instance=trip)
     if form.is_valid():
         form.save()
@@ -223,6 +293,19 @@ def _edit_trip_form(request, trip_id):
 
 
 def _upload_trip_images(request, trip_id):
+    '''
+    Handles the upload of images for a specific trip.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+    - `trip_id`: The ID of the trip to associate images with.
+
+    **Functionality**
+    - Retrieves the trip, ensuring it belongs to the logged-in user.
+    - Processes the image upload form for POST requests.
+    - Saves the image with a reference to the trip if the form is valid.
+    - Displays success messages indicating the upload status.
+    '''
     trip = get_object_or_404(Trip, user=request.user, id=trip_id)
     if request.method == 'POST':
         image_form = UploadImageForm(request.POST, request.FILES)
@@ -244,6 +327,19 @@ def _upload_trip_images(request, trip_id):
 
 
 def handle_get_request_edit_trip_page(request, trip_id):
+    '''
+     Renders the edit trip page with pre-populated trip and image forms.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+    - `trip_id`: The ID of the trip to be edited.
+
+    **Functionality**
+    - Retrieves the specified trip for the logged-in user.
+    - Initializes the edit trip form with current trip data.
+    - Provides an empty image upload form.
+    - Renders the "edit_trip.html" template with the initialized forms.
+    '''
     trip = get_object_or_404(Trip, id=trip_id, user=request.user)
     trip_form = EditTripForm(instance=trip)
     image_form = UploadImageForm()
@@ -258,24 +354,61 @@ def handle_get_request_edit_trip_page(request, trip_id):
 
 
 def handle_post_request_edit_trip(request, trip_id):
+    '''
+    Processes the submission of the edit trip form.
+    Redirects back to the edit page.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+    - `trip_id`: The ID of the trip being edited.
+
+    **Functionality**
+    - Calls the `_edit_trip_form` to handle form validation and
+        updating of the trip.
+    - Redirects to the edit page after processing.
+    '''
     _edit_trip_form(request, trip_id)
     return redirect('edit_page', trip_id=trip_id)  # back to edit page
 
 
 def handle_post_request_upload_image(request, trip_id):
+    '''
+    Processes the image upload for a specific trip.
+    Redirects back to the edit page.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+    - `trip_id`: The ID of the trip associated with the uploaded image.
+
+    **Functionality**
+    - Calls `_upload_trip_images` to handle image upload and form validation.
+    - Redirects to the edit page after processing.
+    '''
     _upload_trip_images(request, trip_id)
     return redirect('edit_page', trip_id=trip_id)  # back to edit page
 
 
 @login_required
 def edit_trip_page(request, trip_id):
-    """
-    Handles the editing of specific user trips, which involves user-specific
-    operations and data modifications, thus requiring authentication.
+    '''
+    Handles editing operations for a specific user trip,
+    requiring authentication.
 
-    View for Dashboard
+    **Parameters**
+    - `request`: The HTTP request object.
+    - `trip_id`: The ID of the trip to be edited.
+
+    **Functionality**
+    - Directs GET requests to render the trip edit page with
+        pre-populated forms.
+    - Processes POST requests based on the type of form submitted:
+      - `editTripForm`: Handles updating trip details.
+      - `uploadImageForm`: Handles uploading images associated with the trip.
+
+    **References**
+    - Related discussion on handling multiple forms:
     https://stackoverflow.com/questions/1395807/proper-way-to-handle-multiple-forms-on-one-page-in-django
-    """
+    '''
     if request.method == 'GET':
         return handle_get_request_edit_trip_page(request, trip_id)
     elif request.method == 'POST':
@@ -286,6 +419,17 @@ def edit_trip_page(request, trip_id):
 
 
 def _trip_details(request, trip_id):
+    '''
+    Retrieves and displays details for a specific user trip.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+    - `trip_id`: The ID of the trip to retrieve details for.
+
+    **Functionality**
+    - Fetches the trip and associated images for the logged-in user.
+    - Renders the "trip_details.html" template with the trip and its images.
+    '''
     trip = get_object_or_404(
             Trip,
             user=request.user,
@@ -327,8 +471,17 @@ def trip_details_page(request, trip_id):
 @login_required
 def delete_photo(request, photo_id):
     '''
-    Allows users to delete photos. This action modifies the user's own data
-    and should be protected.
+    Allows users to delete photos.
+    This action modifies the user's own data and should be protected.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+    - `trip_id`: The ID of the trip to be displayed.
+
+    **Functionality**
+    - Ensures the user is authenticated.
+    - Retrieves the trip and its associated images for the logged-in user.
+    - Renders the "trip_details.html" template with trip details and images.
     '''
     image = Image.objects.filter(id=photo_id)
     if image:

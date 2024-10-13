@@ -189,32 +189,31 @@ The script contains the following main sections:
 
 
 ### Python modules
-The application uses the following external Python modules:
-- gspread 6.1.0 ([Python API for Google Sheets](https://docs.gspread.org/en/v6.0.0/))
-- gspread_formatting 1.1.2 ([Complete Google Sheets formatting support for gspread worksheets](https://pypi.org/project/gspread-formatting/))
-- google-auth 2.29.0 ([Google Auth Library for Python](https://google-auth.readthedocs.io/en/master/))
-- google-auth-oauthlib 1.2.0 ([Google Authentication Library](https://pypi.org/project/google-auth-oauthlib/))
-- regex 2024.5.10 ([Alternative regular expression module, to replace re.](https://pypi.org/project/regex/))
-- rich 13.7.1 ([Python library for writing rich text](https://rich.readthedocs.io/en/stable/introduction.html))
-- tabulate 0.9.0 ([Pretty-print tabular data](https://pypi.org/project/tabulate/))
+The following external Python modules were installed using the `pip install` command in the terminal:
+- asgiref==3.8.1 ([ASGI specs, helper code, and adapters](https://pypi.org/project/asgiref/))
+- cloudinary==1.36.0 ([Python and Django SDK for Cloudinary](https://pypi.org/project/cloudinary/))
+- crispy-bootstrap5==0.7 ([Bootstrap5 template pack for django-crispy-forms](https://pypi.org/project/crispy-bootstrap5/))
+- dj-database-url==0.5.0
+- dj3-cloudinary-storage==0.0.6
+- Django==4.2.16
+- django-allauth==0.57.2
+- django-crispy-forms==2.3
+- django-filter==24.3
+- geographiclib==2.0
+- geopy==2.4.1
+- gunicorn==20.1.0
+- oauthlib==3.2.2
+- pillow==10.4.0
+- psycopg2==2.9.9
+- PyJWT==2.9.0
+- python3-openid==3.2.0
+- requests-oauthlib==2.0.0
+- sqlparse==0.5.1
+- urllib3==1.26.20
+- whitenoise==5.3.0
 
-The extrenal modules were installed locally via `pip install` command in the VSCode PowerShell.
-
-
-### Google Sheets
-- The application uses Google Sheets for storin agd retrieveing user information.
-- The google-auth and google-auth-oauthlib Python modules are used for authorization and authentication
-- The API calls are run performed using the gspread and gspread_formatting Python modules
-
-### Local Development and deployment
-The application developement was done using the The Visual Studio Code ([`VScode`](https://code.visualstudio.com/)) IDE version 1.89.1. with the [Microsoft Python extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python) installed. The `VScode` linters [Flake8](https://marketplace.visualstudio.com/items?itemName=ms-python.flake8) and [Pylint](https://marketplace.visualstudio.com/items?itemName=ms-python.pylint) were manually installed and used for checking the Python code style follows the PEP8 conventions.
-
-
-The app can be run locally using the
-```
-python python run.py
-```
-command in the terminal.
+### Javascript libraries
+- Leaflet 1.9.4 ([JavaScript library for mobile-friendly interactive maps](https://leafletjs.com/index.html))
 
 
 ### Markdown
@@ -230,34 +229,57 @@ pip freeze > requirements.txt
 ```
 command in the VSCode PowerShell.
 
-The app is currently deployed on github and can be accessed at: https://love-planning-cli-f243068a58dc.herokuapp.com/.
+The app is currently deployed on github and can be accessed at: https://lovinescapades-dd5c221f87db.herokuapp.com/.
 
 [*Back to top*](#)
 
 
 ### Accessibility
 
-The font 'Permanent Marker' was chosen as the font for the logo as well as logo related statement text. It is legible, but also rough and gritty. Breaking the clean visual of the site.
-
-'Alatsi' was chosen for the Headings and Roboto for the general text. Both are easily readable and clean in their optic.
-
-Colors
-The website's style and vibe are defined by its color scheme. 
+- Attention was given to the aria content, such that the screen readers can effectivly retrive the information when needed.
+- The font 'Permanent Marker' was chosen as the font for the logo as well as logo related statement text. It is legible, but also rough and gritty. Breaking the clean visual of the site.
+- 'Alatsi' was chosen for the Headings and Roboto for the general text. Both are easily readable and clean in their optic.
 
 
+Colors and themes
+The website's style and vibe are quite minimalistic since are mostly based on predefined Bootstrap 5.3 themes, but it provides good contrast and (I think) decent aestethics. 
 
 ## Usage and screenshots
 
 - A quick demonstration of using the app can be found here: [***here.***](assets/giffs/Demo-functionality.gif)
-
 - The user registraton process can be found here: [***here.***](assets/giffs/Demo-functionality-registration.gif)
-
 - An example for the trip deletion process can be found here: [***here.***](assets/giffs/Demo-functionality-task-delete.gif)
-
 - An example for adding a new trip can be found here: [***here.***](assets/giffs/Demo-functionality-task-add.gif)
 
 [*Back to top*](#)
 
+---
+#### PEP8
+
+The [Pep8 CI](https://pep8ci.herokuapp.com/) Python Linter retuned no errors:
+
+| App            | File                 | CI Linter Result           |  Status |
+| --- | --- | --- | --- |
+| `trip`           | forms.py           | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | filters.py           | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | models.py            | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | utils.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | urls.py              | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | views.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `contact`      | forms.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | models.py            | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | urls.py              | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | views.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `gallery`      | forms.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | models.py            | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | urls.py              | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | views.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `user_profile` | forms.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | models.py            | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | urls.py              | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | views.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+
+---
 
 ## Manual testing:
 
@@ -298,10 +320,7 @@ The website's style and vibe are defined by its color scheme.
 | &nbsp;&nbsp;- *App awaits for valid input* | App runs until the the user inputs are valid | Entry valid and invalid user inputs |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
 | `Forced exit` | **User can force the App to exit with the menu Exit option**
 | &nbsp;&nbsp;- *Exiting the app from the `Main Menu`* | App exits when the user enters the number indicated by the `Exit`- menu option | Check if the user input corresponds to the `Exit`- menu option. Exits for correct input, or stays in the loop otherwise | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| `PEP8 code style conventions` | **Code syle follows the PEP8 conventions**
-| &nbsp;&nbsp;- *`VSCode` linters compatibilty* | Feedback on code quality according to PEP8 conventions | [Flake8](https://marketplace.visualstudio.com/items?itemName=ms-python.flake8) extension - no problems found| ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *`VSCode` linters compatibilty* | Feedback on code quality according to PEP8 conventions | [Pylint](https://marketplace.visualstudio.com/items?itemName=ms-python.pylint) extension raises a warning on using more than 1000 lines of code| ![warning](https://via.placeholder.com/10/ff8c00?text=+) `warning` `Too many lines in module (1127/1000)`|
-| &nbsp;&nbsp;- *`CI Python Linter` compatibilty* | Feedback on code quality according to PEP8 conventions |Python code tested using the [CodeInstitute test service](https://pep8ci.herokuapp.com/#) | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass` `All clear, no errors found`|
+
 ---
 
 ### Additional testing
@@ -309,11 +328,9 @@ The website's style and vibe are defined by its color scheme.
 #### Devices and browsers
 Additional testing was performed by calling the application from my private devices operating on Windows 11 (desktop and laptop), as well as
 on my smartphone (Samsung Galaxy S21) operating on Android OS, using the following web browsers:
-- Google Chrome: Version 125.0.6422.77 (Official Build) (64-bit)
-- Brave: version 1.66.115 Chromium: 125.0.6422.112 (Official Build) (64-bit)
-- Microsoft Edge: Version 125.0.2535.67 (Official build) (64-bit)
-
-In my opinion, using the app on mobiles provides a negative UX, mostly due to difficulties with taking the inputs from user when using the mobile keyboard, and poor text visibility.
+- Google Chrome: Version 129.0.6668.100 (Official Build) (64-bit)
+- Brave: version 1.70.126 Chromium: 125.0.6422.112 (Official Build) (64-bit)
+- Microsoft Edge: Version 129.0.2792.89 (Official build) (64-bit)
 
 ## <font color="red">Known bugs and issues</font>
 - Switching back to the Main Menu from the User Menu not implemented yet;
@@ -324,41 +341,29 @@ If you encounter issues or bugs, please create an issue by clicking [here](https
 
 [*Back to top*](#)
 
-## Possible improvements
+## Further improvements
 
 ### Fix formatting-errors reported by Lint according to Python's PEP 8 coding standard
-- Refactor the run.py scrip by moving the function definitions to an utils.py file, and then import the utils.py inside the run.py script.
+- Refactor the delete functions since there is quite a bit of overlap between them.
 
 ### Contact the user
-- Functionality to retrieve or change the username and password may be implemented, but the application security has to be enhanced to protect the user privacy
+- Functionality to reply to user inquiries send through the form on the Contact Us page
 
-### Improved task editing
-- Task categories could be introduced such that the users can categorize their tasks by importance (e.g., urgent, chore)
-and/or type categories (e.g., work, personal, etc).
-- Functionality for re-catogorizing and editing existing tasks.
-
-### Filtering and Sorting Tasks
-- Filter and sort options to organize and view the tasks according to specific criteria.
-- Possible filters:
-    - task status (e.g., active, completed or overdue tasks)
-    - activity type (work, personal, etc)
-    - task relevance/importance (urgent, chores) by due date or incoming within a certain time horizon.
+### Filtering and Sorting Trips
+- Filter and sort options to organize and view the trips and photos according to more detailed criteria.
+    - Add a day-time picker to improve the map filter
+    - Add separate filter for the image gallery page
+    - Add separate filter for dashboard page
 
 ### Reminders
-- Set due dates with automatic reminder to receive timely notifications for upcoming tasks and deadlines.
-- Add a day-time picker to improve the UX
-- Check for task overlapp and possible collisions
-
+- Set due dates with automatic reminder to receive timely notifications for upcoming trips and deadlines.
 
 ### About menu option
 For further development, including an About option would to provide more information about the various releases and other information
 that helps keeping the users updated.
 
 ### Collaboration tools
-- Include features for inviting people to participate in various tasks, sharing task lists and/or assigning tasks to team members.
-- Add the tools to allow the collaborators would have access to view, edit, and comment on the tasks.
-
-Some of the improvements mentioned in this section (such as the task classification or an About menu option) were not introduced in the current release due to  the printing space limitations imposed in the Heroku terminal.
+- Include features for inviting people to like, comment, and follow each other.
 
 [*Back to top*](#)
 
@@ -379,17 +384,15 @@ Some of the improvements mentioned in this section (such as the task classificat
 
 ## License
 ### Open Source
-As an open-source project, ***LovinPlans*** encourages transparency, and community involvement.
+As an open-source project, ***LovinEscapades*** encourages transparency, and community involvement.
 
 The code is available on GitHub, such that developers can view, fork, and contribute to the project if they wish so.
 
 [*Back to top*](#)
 
 ## Acknowledgements
-- Further details on the usage of Google Sheets API were obtained from https://developers.google.com/sheets/api/quickstart/python
-- Printing the Markdown file in the console used for the Help-menu followed the expamples provided at https://rich.readthedocs.io/en/stable/console.html
-- Formatting the worksheet cell background color followed the examples from https://gspread-formatting.readthedocs.io/en/latest/#
-- The use of ChatGPT was restricted to getting sensible inputs for the text content in the Readme-file and for proof-checking the language.
+- Further details on the usage of Leaflet JS were obtained from https://leafletjs.com/
+- The use of ChatGPT was restricted to getting sensible inputs for the text content, Readme-file and for proof-checking the language.
 [*Back to top*](#)
 
 ## Documentation version

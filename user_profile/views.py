@@ -10,9 +10,22 @@ from .forms import TestimonialForm, UpdateProfileForm
 
 
 # Create your views here.
-
+@login_required
 def handle_get_request_profile_page(request):
-    posts = Testimonial.objects.filter(user=request.user).order_by('-created_at')
+    '''
+    Renders the user profile page with testimonials.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+
+    **Functionality**
+    - Retrieves all testimonials for the logged-in user,
+        ordered by creation date.
+    - Initializes a blank testimonial form for user input.
+    - Renders the "user_profile.html" template with testimonials and the form.
+    '''
+    posts = Testimonial.objects.filter(user=request.user)\
+        .order_by('-created_at')
     testimonial_form = TestimonialForm()
     context = {
             'testimonial_form': testimonial_form,
@@ -27,7 +40,15 @@ def handle_get_request_profile_page(request):
 
 def _add_posts_form(request):
     '''
-    Handle form for posting new posts
+    Processes the form submission for adding new testimonials.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+
+    **Functionality**
+    - Validates and saves a new testimonial associated with the logged-in user.
+    - Displays a success message if the form is valid.
+    - Collects and displays error messages if the form submission fails.
     '''
     posts_form = TestimonialForm(request.POST)
     if posts_form.is_valid():
@@ -54,17 +75,41 @@ def _add_posts_form(request):
                 *cleaned_errors)
 
 
+@login_required
 def handle_post_request_add_post(request):
+    '''
+    Processes the POST request for adding a new testimonial.
+    Redirects to the profile page.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+
+    **Functionality**
+    - Calls `_add_posts_form` to process the form submission for a new post.
+    - Redirects the user to the profile page after form processing.
+    '''
     _add_posts_form(request)
     return redirect('profile')
 
 
 @login_required
 def user_profile(request):
-    """
-    View for User Profile
+    '''
+    Manages the display and updates for the user profile page.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+
+    **Functionality**
+    - Handles GET requests to display the profile page with user testimonials.
+    - Processes POST requests to add new testimonials when the appropriate
+        form is submitted.
+    - Requires the user to be logged in.
+
+    **References**
+    - Discussion on handling multiple forms:
     https://stackoverflow.com/questions/1395807/proper-way-to-handle-multiple-forms-on-one-page-in-django
-    """
+    '''
     if request.method == 'GET':
         return handle_get_request_profile_page(request)
     elif request.method == 'POST':
@@ -75,7 +120,19 @@ def user_profile(request):
 @login_required
 def delete_post(request, post_id):
     '''
-    same as in trip,views - make one function in utils.py
+    Deletes a testimonial post for the logged-in user.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+    - `post_id`: The ID of the testimonial post to be deleted.
+
+    **Functionality**
+    - Retrieves and deletes the specified post if it belongs to the user.
+    - Displays success or error messages based on the operation result.
+    - Redirects the user back to their profile page.
+
+    **Note**
+    - Similar to trip deletion, refactor into a shared utility function.
     '''
     qs = Testimonial.objects.filter(user=request.user)
     post = get_object_or_404(qs, id=post_id)
@@ -97,6 +154,22 @@ def delete_post(request, post_id):
 
 @login_required
 def update_profile(request):
+    '''
+    Updates the profile information of the logged-in user.
+
+    **Parameters**
+    - `request`: The HTTP request object.
+
+    **Functionality**
+    - Displays the current user profile information in a form for editing.
+    - Handles form submission to update the profile.
+    - Validates the form data and saves changes if valid.
+    - Redirects to the profile page upon successful update.
+    - Renders the template for GET requests or invalid submissions.
+
+    **Template**
+    - Renders: 'user_profile/edit_user_profile.html'
+    '''
     form = UpdateProfileForm(instance=request.user)
     if request.method == 'POST':
         form = UpdateProfileForm(request.POST, instance=request.user)

@@ -6,14 +6,21 @@ from .forms import ContactForm
 # Create your views here.
 def contact_us(request):
     '''
-    Renders the most recent information on the website
-    and allows user inqueries.
+    Processes user inquiries submitted through the contact form, saving the
+    information to the database and providing user feedback.
 
     **Context**
     ``contact_form``
         An instance of :form:`contact.ContactForm`
+
     **Template**
-        :template:`contact/about.html`
+    :template:`contact/contact_page.html`
+
+    **Functionality**
+    - Handles GET requests by returning an empty contact form.
+    - Handles POST requests by validating and saving submitted form data.
+    - Adds a success message to inform users of successful form submission.
+    - Redirects to the contact page upon successful submission.
     '''
 
     if request.method == 'POST':

@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from trip.models import Image
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
@@ -6,14 +6,19 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 # Create your views here.
 def gallery(request):
     '''
-    Renders the most recent information on the website
-    and allows user inqueries.
+    Displays a paginated gallery of shared trip images.
 
     **Context**
-    ``contact_form``
-        An instance of :form:`contact.ContactForm`
+    ``image_list``
+        A paginated list of shared :model:`images.Image`
+
     **Template**
-        :template:`contact/about.html`
+    :template:`gallery/shared_gallery.html`
+
+    **Functionality**
+    - Retrieves all images marked as shared.
+    - Paginates the images, 6 per page.
+    - Handles page navigation errors to ensure valid page rendering.
     '''
     images = Image.objects.filter(shared=True)
     paginator = Paginator(images, 6)  # 6 trips in each page
