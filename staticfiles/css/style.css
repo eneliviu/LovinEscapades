@@ -70,7 +70,7 @@ main {
 }
 
 .c-img {
-    width: 720px; 
+    width: 100%; 
     height: auto;
   }
 
@@ -148,7 +148,16 @@ main {
     color: #E84610;
 }
 
+.icon-like {
+    color: #a30808;
+}
 
+.btn-like:hover,
+.btn-like:active {
+    color: #E84610;
+    background: transparent;
+    /* border: none; */
+}
 .btn-signup,
 .btn-edit {
     background-color: #0a5c5c;
