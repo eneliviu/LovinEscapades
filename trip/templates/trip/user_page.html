@@ -92,23 +92,26 @@
         </div>
 
         <!-- Add Trip Form Modal -->
-        <div class="modal fade" id="addTripModal" tabindex="-1" aria-labelledby="addTripModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addTripModal" tabindex="-1" aria-labelledby="addTripModalLabel"
+            aria-describedby="addTripModalDescription" aria-hidden="true">
+            <h1 class="visually-hidden" id="addTripModalLabel">Add trip Modal</h1>
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="addTripModalDescription">
                         <div class="col-md-12 card mb-2 mt-2">
                             <div class="card-body">
                                 <form id="addTripForm" method="POST" style="margin-top: 1.2em;">
                                     {% csrf_token %}
                                     {{ add_trip_form | crispy }}
                                     <button id="cancelButton" type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">
+                                        data-bs-dismiss="modal" aria-label="Cancel and close the modal">
                                         Close
                                     </button>
-                                    <button id="submitButton" type="submit" class="btn btn-signup float-end">
+                                    <button id="submitButton" type="submit" class="btn btn-signup float-end"
+                                        aria-label="Confirm submission">
                                         Submit
                                     </button>
                                 </form>
@@ -199,7 +202,9 @@
         </div>
 
         <!-- Delete confirmation modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+            aria-describedby="deleteTripModalDescription" aria-hidden="true">
+            <h1 class="visually-hidden" id="deleteModalLabel"></h1>
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -207,23 +212,26 @@
                         <button type="button" class="btn btn-close" data-bs-dismiss="modal"
                             data-bs-target="#deleteModal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="deleteTripModalDescription">
                         Are you sure you want to delete the record? This action cannot be undone.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                            data-bs-target="#deleteModal">Close</button>
-                        <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
+                            data-bs-target="#deleteModal" aria-label="Close detele trip modal">
+                            Close
+                        </button>
+                        <a type="button" id="deleteConfirm" href="#" class="btn btn-danger"
+                            aria-label="Confirm deletion">
+                            Delete
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 
     {% if trips.has_other_pages %}
-    <nav aria-label="Page navigation conatiner">
+    <nav aria-label="Page navigation conatiner" aria-label="Pagination for trip list">
         <ul class="pagination justify-content-center">
             {% if trips.has_previous %}
             <li><a href="?page={{ trips.previous_page_number }}" class="page-link">&laquo; PREV </a></li>

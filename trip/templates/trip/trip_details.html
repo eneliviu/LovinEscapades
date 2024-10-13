@@ -10,14 +10,15 @@
 
 
 <!-- Masonry gallery of image cards-->
-<section id="trips_details-section" class="row container" aria-labelledby="trip details-section">
+<section id="trips_details-section" class="row container" aria-labelledby="imageGallery">
+    <h1 id="imageGallery" class="visually-hidden">Gallery with trip photos</h1>
 
     <div class="row container text-center mt-5 mb-4">
         {% if trip_images|length == 0 %}
         <h3>To be updated</h3>
         {% else %}
         <h3>Memories from {{ selected_trip.title }}</h3>
-        <h5>{{ selected_trip.place }}, {{ selected_trip.country }}</h5>
+        <h4>{{ selected_trip.place }}, {{ selected_trip.country }}</h4>
         {% endif %}
     </div>
     <hr>

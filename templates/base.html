@@ -1,9 +1,11 @@
 {% load static %}
 
-<!-- assign the 'home' URL to a variable named home_url -->
+<!-- assign  URLs to a variables named xxx_url -->
 {% url 'home' as home_url %}
-
-<!-- assign the 'account_xxx' URLs to a variables named xxx_url -->
+{% url 'user' as user_url %}
+{% url 'gallery' as gallery_url %}
+{% url 'contact' as contact_url %}
+{% url 'profile' as profile_url %}
 {% url 'account_login' as login_url %}
 {% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
@@ -66,7 +68,7 @@
         <nav class="navbar navbar__base nav-underline navbar-expand-lg px-0 mx-0">
             <div class="container-fluid">
                 <!-- LOGO -->
-                <a class="navbar-brand text-capitalize mb-1" href="{% url 'home' %}">
+                <a class="navbar-brand text-capitalize mb-1" href="{% url 'home' %}" aria-label="Site Logo">
                     <strong id="logo"> 📌 LovinEscapades </strong>
                 </a>
 
@@ -81,103 +83,115 @@
                     <ul class="navbar-nav w-100 me-auto">
 
                         <li class="nav-item mx-3 fw-bold">
-                            {% if request.path == home_url  %}
-                                <a class="nav-link active" href="{% url 'home' %}" aria-current="page">
-                                    Home
-                                </a>
+                            {% if request.path == home_url %}
+                            <a class="nav-link active" href="{% url 'home' %}" aria-current="page"
+                                aria-label="Home page">
+                                Home
+                            </a>
                             {% else %}
-                                <a class="nav-link active" href="{% url 'home' %}">
-                                    Home
-                                </a>
+                            <a class="nav-link" href="{% url 'home' %}" aria-label="Home page">
+                                Home
+                            </a>
                             {% endif %}
                         </li>
 
                         {% if user.is_authenticated %}
+
                         <li class="nav-item mx-3 fw-bold">
                             {% if request.path == logout_url %}
-                            <a class="nav-link active" href="{% url 'account_logout' %}" aria-current='page'>
+                            <a class="nav-link active" href="{% url 'account_logout' %}" aria-current='page'
+                                aria-label="Login">
                                 Logout
                             </a>
                             {% else %}
-                            <a class="nav-link" href="{% url 'account_logout' %}">
+                            <a class="nav-link" href="{% url 'account_logout' %}" aria-label="Login">
                                 Logout
                             </a>
                             {% endif %}
                         </li>
                         <li class="nav-item mx-3 fw-bold">
-                            {% if request.path == '/user/' %}
-                            <a class="nav-link active" href="{% url 'user' %}" aria-current='page'>
+                            {% if request.path == user_url %}
+                            <a class="nav-link active" href="{% url 'user' %}" aria-current='page'
+                                aria-label="User dahsboard">
                                 Dashboard
                             </a>
                             {% else %}
-                            <a class="nav-link" href="{% url 'user' %}">
+                            <a class="nav-link" href="{% url 'user' %}" aria-label="User dahsboard">
                                 Dashboard
                             </a>
                             {% endif %}
                         </li>
-                        <li class="nav-item mx-3 fw-bold">
-                            {% if request.path == '/gallery/' %}
-                            <a class="nav-link active" href="{% url 'gallery' %}" aria-current="page"> 
-                                Gallery
-                            </a>
-                            {% else %}
-                            <a class="nav-link" href="{% url 'gallery' %}"> 
-                                Gallery
-                            </a>
-                            {% endif %}
-                        </li>
-                        {% else %}
+                        
+                        {% else %} <!--All site visitors-->
+                        
                         <li class="nav-item mx-3 fw-bold">
                             {% if request.path == signup_url %}
-                                <a class="nav-link active" href="{% url 'account_signup' %}" aria-current='page'>
-                                    Register
-                                </a>
+                            <a class="nav-link active" href="{% url 'account_signup' %}" aria-current='page'
+                                aria-label="User login">
+                                Register
+                            </a>
                             {% else %}
-                                <a class="nav-link" href="{% url 'account_signup' %}">
-                                    Register
-                                </a>
+                            <a class="nav-link" href="{% url 'account_signup' %}" aria-label="User login">
+                                Register
+                            </a>
                             {% endif %}
                         </li>
                         <li class="nav-item mx-3 fw-bold">
                             {% if request.path == login_url %}
-                            <a class="nav-link active" href="{% url 'account_login' %}" aria-current='page'>
+                            <a class="nav-link active" href="{% url 'account_login' %}" aria-current='page'
+                                aria-label="New user regstration">
                                 Login
                             </a>
                             {% else %}
-                            <a class="nav-link" href="{% url 'account_login' %}">
+                            <a class="nav-link" href="{% url 'account_login' %}" aria-label="New user regstration">
                                 Login
                             </a>
                             {% endif %}
                         </li>
                         {% endif %}
 
+                         <!--All site visitors-->
                         <li class="nav-item mx-3 fw-bold">
-                            {% if request.path == '/contact/' %}
-                            <a class="nav-link active" href="{% url 'contact' %}" aria-current='page'>
-                                Contact Us 
+                            {% if request.path == gallery_url %}
+                            <a class="nav-link active" href="{% url 'shared_gallery' %}" aria-current="page"
+                                aria-label="Image gallery">
+                                Gallery
                             </a>
                             {% else %}
-                            <a class="nav-link" href="{% url 'contact' %}">
-                                Contact Us 
+                            <a class="nav-link" href="{% url 'shared_gallery' %}" aria-label="Image gallery">
+                                Gallery
+                            </a>
+                            {% endif %}
+                        </li>
+                        
+                        <li class="nav-item mx-3 fw-bold">
+                            {% if request.path == contact_url %}
+                            <a class="nav-link active" href="{% url 'contact' %}" aria-current='page'
+                                aria-label="Contact us page">
+                                Contact Us
+                            </a>
+                            {% else %}
+                            <a class="nav-link" href="{% url 'contact' %}" aria-label="Contact us page">
+                                Contact Us
                             </a>
                             {% endif %}
                         </li>
 
                         {% if user.is_authenticated %}
                         <li class="nav-item mx-3 ms-lg-auto fw-bold">
-                            {% if request.path == '/profile/' %}
-                            <a class="nav-link text-decoration-none active" href="{% url 'profile' %}" aria-current='page'>
+                            {% if request.path == profile_url %}
+                            <a class="nav-link text-decoration-none active" href="{% url 'profile' %}"
+                                aria-current='page' aria-label="User profile page">
                                 My profile
                                 <i class="bi bi-person-circle ms-2"></i>
                             </a>
                             {% else %}
-                            <a class="nav-link text-decoration-none" href="{% url 'profile' %}" >
+                            <a class="nav-link text-decoration-none" href="{% url 'profile' %}"
+                                aria-label="User profile page">
                                 My profile
                                 <i class="bi bi-person-circle ms-2"></i>
                             </a>
                             {% endif %}
-                                
-                            </a>
                         </li>
                         {% endif %}
 
@@ -185,8 +199,9 @@
                 </div>
                 {% if not user.is_authenticated %}
                 <span
-                    class="navbar-text navbar-text mx-3 d-none d-lg-inline small fst-italic text-primary-emphasis text-muted ">
-                    <small class="fw-bolder"> sharing travel experiences </small>
+                    class="navbar-text navbar-text mx-3 d-none d-lg-inline small fst-italic text-primary-emphasis text-muted">
+                    <spans class="fw-bolder"> sharing travel experiences
+                </span>
                 </span>
                 {% endif %}
             </div>
@@ -280,17 +295,8 @@
     <script src="{% static 'js/manage_jquery.js' %}" type="text/javascript" defer></script>
     <script src="{% static 'js/manage_photos.js' %}" type="text/javascript" defer></script>
 
-    <script src="{% static 'js/leaflet_map.js' %}" defer></script>
-    <!-- Flag for user authentication -->
-    <script>
-        // Determine which URL to use for the "More..." link based on whether the user is authenticated. 
-        // Check leaflet_map.js for `isAuthenticated` variable from the Django template.
-        var isAuthenticated = "{% if user.is_authenticated %}true{% else %}false{% endif %}";
-    </script>
 
 </body>
 
-<!-- {% block extras %}
-{% endblock  %} -->
 
 </html>

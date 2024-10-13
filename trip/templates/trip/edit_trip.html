@@ -11,9 +11,9 @@
 
 <section class="row my-5 justify-content-center" aria-labelledby="edit-trip-card">
    
-    <div id="edit-trip-card" class="d-flex flex-column testimonial-card h-100 w-25 text-center container-fluid ">
+    <div class="d-flex flex-column testimonial-card h-100 w-25 text-center container-fluid ">
   
-            <h1>
+            <h1 id="edit-trip-card">
                 Update trip
             </h1>
             <hr>
@@ -22,14 +22,14 @@
         <!-- Buttons to trigger modals -->
         <div class="container text-center mb-3 p-0 ">
             <button type="button" class="btn btn-edit btn-lg w-100 my-2" data-bs-toggle="modal"
-                data-bs-target="#editTripModal">
+                data-bs-target="#editTripModal" aria-label="Update trip button">
                 Update trip
             </button>
         </div>
 
         <div class="container text-center my-3 p-0 ">
             <button type="button" class="btn btn-edit btn-lg w-100 my-2" data-bs-toggle="modal"
-                data-bs-target="#uploadImageModal">
+                data-bs-target="#uploadImageModal" aria-label="Update photos button">
                 Upload photos
             </button>
         </div>
@@ -38,13 +38,15 @@
 
  
     <!-- Edit **TRIP FORM** Modal -->
-    <div class="modal fade" id="editTripModal" tabindex="-1" aria-labelledby="editTripModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editTripModal" tabindex="-1" aria-labelledby="editTripModalLabel"
+        aria-describedby="editTripModalLabelDescription"  aria-hidden="true">
+        <h1 class="visually-hidden" id="editTripModalLabel">Update Selected Trip Modal </h1>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="editTripModalLabelDescription">
                     <div class="col-md-12 card mb-2 mt-2">
                         <div class="card-body">
                             <form id="editTripForm" method="POST" style="margin-top: 1.2em;">
@@ -52,14 +54,14 @@
                                 <input type="hidden" name="form_type" value="editTripForm">
                                 {{ edit_trip_form | crispy }}
                                 <button id="cancelButtonTrip" type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">
+                                    data-bs-dismiss="modal" aria-label="Close modal button">
                                     Close
                                 </button>
-                                <button id="updateButtonTrip" type="submit" class="btn btn-signup float-end">
+                                <button id="updateButtonTrip" type="submit" class="btn btn-signup float-end" 
+                                    aria-label="Submit button">
                                     Submit
                                 </button>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -74,13 +76,15 @@
     -->
 
     <!-- **UPLOAD IMAGE** Modal -->
-    <div class="modal fade" id="uploadImageModal" tabindex="-1" aria-labelledby="uploadImageModalLabel" aria-hidden="true">
+    <div class="modal fade" id="uploadImageModal" tabindex="-1" aria-labelledby="uploadImageModalLabel" 
+        aria-hidden="true" aria-describedby="uploadImageModalLabelDescription" >
+        <h1 class="visually-hidden" id="uploadImageModalLabel">Upload photo Modal </h1>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="uploadImageModalLabelDescription">
                     <div class="col-md-12 card mb-2 mt-2">
                         <div class="card-body">
                             <form id="uploadImageForm" method="POST" enctype="multipart/form-data">
@@ -95,7 +99,6 @@
                                     Upload
                                 </button>
                             </form>
-
                         </div>
                     </div>
                 </div>

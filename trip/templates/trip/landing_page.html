@@ -7,6 +7,7 @@
 <meta name="description" content="Landing page.">
 {% endblock %}
 
+
 {% block content %}
 <!-- Content Goes here -->
 
@@ -14,15 +15,15 @@
 <div class="row container-fluid d-flex flex-column align-items-center  mx-0 px-0">
 
     <!-- Hero Section -->
-    <section id='hero-section' class="container my-4 col-12 " aria-labelledby="hero-section">
+    <section id='hero-section' class="container my-4 col-12 " aria-labelledby="hero-heading">
         <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg flex-lg-row-reverse">
             <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
                 <img id='hero-img' class="c-img" alt="Map image with pinned locations" width="400" height="267"
                     src="{% static 'images/hero.webp' %}">
-                    <!-- src="{% static 'images/leandro-barreto-nomAp6_KVXU-unsplash.jpg' %}" -->
+                <!-- src="{% static 'images/leandro-barreto-nomAp6_KVXU-unsplash.jpg' %}" -->
             </div>
             <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-                <h1 class="display-4 fw-bold lh-1 text-body-emphasis">
+                <h1 id='hero-heading' class="display-4 fw-bold lh-1 text-body-emphasis">
                     Map Your Adventures, Share Your Stories
                 </h1>
                 <p class="text-muted fs-4">
@@ -48,9 +49,9 @@
 
     <!-- Testimonials Section -->
     {% if testimonials %}
-    <section id="carousel-testimonials" class="container col-12 " aria-labelledby="testimonials-title">
+    <section id="carousel-testimonials" class="container col-12 " aria-labelledby="testimonials-header">
         <h2 class="text-center mt-1" id="testimonial-header">What our users say </h2>
-        <h3 id="testimonials-title" class="visually-hidden">Testimonials</h3>
+        <h3 class="visually-hidden">Testimonials</h3>
         <div id="testimonials" class="row carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 {% for testimonial in testimonials %}
@@ -78,7 +79,12 @@
     </section>
     {% endif %}
 
+
     <!-- Map section -->
+
+    <!-- Leaflet -->
+    {{ trips | json_script:"trips_json" }}
+
     <section id="map-section" class="container col-12 mt-2" aria-labelledby="leaflet-map-title">
         <h2 id="leaflet-map-title" class="text-center">Explore the World with Our Interactive Map</h2>
         <div class="row p-3 testimonial-card align-items-center h-100 mb-4">
@@ -87,12 +93,13 @@
                 <form id="tripSelectionForm" style="margin-top: 1.2em;">
                     {% csrf_token %}
                     {{ trip_filter_form | crispy }}
-
                     <div class="d-flex justify-content-around">
-                        <button id="submitButton" type="submit" class="btn btn-signup ">
+                        <button id="submitButton" type="submit" class="btn btn-signup"
+                            aria-label="Submit map filter query">
                             Submit
                         </button>
-                        <button id="clearButton" type="button" class="btn btn-more" href="{%  url 'home' %}">
+                        <button id="clearButton" type="button" class="btn btn-more" href="{%  url 'home' %}"
+                            aria-label="Clear all filters and reset the map">
                             Clear all
                         </button>
                     </div>
@@ -110,12 +117,8 @@
 
 </div>
 
-<!-- Leaflet -->
-{{ trips | json_script:"trips_json" }}
 
 
-
-<!-- 
 {% if not user.is_authenticated %}
 <script type='text/javascript'>
     // Greenwich Coordinates default
@@ -130,12 +133,12 @@
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    let locations = JSON.parse(document.getElementById('trips_json').textContent);
+    var locations = JSON.parse(document.getElementById('trips_json').textContent);
     if (!Array.isArray(locations)) {
         locations = [locations];
     }
 
-    let markers = L.markerClusterGroup();
+    var markers = L.markerClusterGroup();
     if (Object.keys(locations)) {
         locations.forEach(element => {
             let marker = L.marker([element.lat, element.lon])
@@ -148,7 +151,12 @@
                     'From: ' + element.start_date + '</br>' +
                     'To: ' + element.end_date +
                     '</br>' +
-                    "<a href='{% url 'account_login' %}' rel='noopener noreferrer'>" + "More..." + "</a>" +
+                    '<div class="text-center" >' + 
+                        "<a href='{% url 'account_login' %}' class='badge text-bg-primary' rel='noopener noreferrer'>" + 
+                            '<span class="fs-6 text-center">' + "More..." + '</span>' + 
+                        "</a>" +
+                    '</div>'
+                    +
                     '</div>'
                 );
             markers.addLayer(marker);
@@ -182,17 +190,18 @@
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    let locations = JSON.parse(document.getElementById('trips_json').textContent);
+    var locations = JSON.parse(document.getElementById('trips_json').textContent);
     if (!Array.isArray(locations)) {
         locations = [locations];
     }
 
-    let markers = L.markerClusterGroup();
+    var markers = L.markerClusterGroup();
+    
     if (Object.keys(locations)) {
         locations.forEach(element => {
             let marker = L.marker([element.lat, element.lon])
                 .bindPopup(
-                    '<div>' +
+                    '<div class="fs-6">' +
                     //<img src='img/" + feature.properties.img_name + "' width='259'/>+
                     '<b>' + element.place + ', ' + element.country + '</b>' +
                     '</br>' +
@@ -201,7 +210,12 @@
                     'From: ' + element.start_date + '</br>' +
                     'To: ' + element.end_date +
                     '</br>' +
-                    "<a href='{% url 'gallery' %}' rel='noopener noreferrer'>" + "More..." + "</a>" +
+                    '<div class="text-center" >' + 
+                        "<a href='{% url 'shared_gallery' %}' class='badge text-bg-primary' rel='noopener noreferrer'>" + 
+                            '<span class="fs-6 text-center">' + "More..." + '</span>' + 
+                        "</a>" +
+                    '</div>'
+                    +
                     '</div>'
                 );
             markers.addLayer(marker);
@@ -222,9 +236,11 @@
 
 </script>
 {% endif %}
- -->
 
 {% endblock content%}
+
+
+
 
 
 

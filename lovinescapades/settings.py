@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'cloudinary',
     'contact',
+    'gallery',
     'trip',
     'user_profile',
     'django_filters',

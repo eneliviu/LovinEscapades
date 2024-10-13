@@ -88,9 +88,8 @@ def _add_trip_form(request):
     else:
         cleaned_errors = []
         for field, errors in add_trip_form.errors.items():
-            print(*errors)
             for error in errors:
-                print(error)
+           
                 if field == '__all__':
                     cleaned_errors.append(error)
                 else:
@@ -184,24 +183,6 @@ def custom_404_view(request, exception):
         {},
         status=404
     )
-
-
-# ==================================================== #
-def gallery(request, trip_id):
-    '''
-    Redirect user after registration
-    '''
-    trip = get_object_or_404(Trip, pk=trip_id, user=request.user)
-    images = trip.images.all()
-    return render(
-        request,
-        'trip/shared_gallery.html',
-        context={
-            'images': images,
-            'trips': trip,
-        }
-    )
-# ==================================================== #
 
 
 def _edit_trip_form(request, trip_id):
@@ -328,7 +309,6 @@ def trip_details_page(request, trip_id):
 
 def delete_photo(request, photo_id):
     image = Image.objects.filter(id=photo_id)
-    print(image.values())
     if image:
         image.delete()
         messages.add_message(

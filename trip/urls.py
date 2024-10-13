@@ -7,15 +7,20 @@ from . import views as trip_views
 
 urlpatterns = [
     path(
+        '',
+        trip_views.landing_page,
+        name='home'
+    ),
+    path(
         'user_page/',
         trip_views.user_page,
         name='user'
     ),
-    path(
-        'gallery/',
-        trip_views.gallery,
-        name='gallery'
-    ),
+    # path(
+    #     'gallery/',
+    #     trip_views.gallery,
+    #     name='shared_gallery'
+    # ),
     path(
         'delete_trip/<int:trip_id>',
         trip_views.delete_trip,
@@ -36,11 +41,7 @@ urlpatterns = [
         trip_views.delete_photo,
         name='delete_photo'
     ),
-    path(
-        '',
-        trip_views.landing_page,
-        name='home'
-    ),
+
     # path('', trip_views.custom_404_view, name='404_page'), <str:username>
 
 ]

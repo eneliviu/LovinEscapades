@@ -22,8 +22,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (Object.keys(locations)) {
         locations.forEach(element => {
             // Determine the URL based on authentication status
+            console.log(isAuthenticated)
             let moreUrl = isAuthenticated ? '/gallery/' : '/accounts/signup/';
             
+
             let marker = L.marker([element.lat, element.lon])
                 .bindPopup(
                     '<div>' +
