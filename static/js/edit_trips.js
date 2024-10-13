@@ -1,11 +1,16 @@
-
+/**
+ * Implements validation and reset functionality for the "Edit Trip" form.
+ * Functionality:
+ * - Validates trip dates on submission, ensuring logical date sequences.
+ * - Displays error messages and prevents form submission if validation fails.
+ * - Resets the form when the cancel button is clicked.
+ */
 document.addEventListener("DOMContentLoaded", function () {
     let edit_form = document.getElementById("editTripForm");
     let cancelButton_edit = document.getElementById("cancelButtonTrip");
-    console.log('OK')
 
-    edit_form.addEventListener("submit", (e) => {
-        
+    edit_form.addEventListener("submit", function (e){
+
         // Retrieve the start and end dates
         let startDateValue = document.getElementById("id_start_date").value;
         let endDateValue = document.getElementById("id_end_date").value;
@@ -13,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let selectedIndex = tripStatus.selectedIndex;
         let selectedOption = tripStatus.options[selectedIndex].value;
-        console.log(selectedOption)
 
         // Convert the date strings to Date objects
         let startDate = new Date(startDateValue).toLocaleDateString();
@@ -23,50 +27,38 @@ document.addEventListener("DOMContentLoaded", function () {
         let currentDate = new Date().toLocaleDateString();
         let errMsg;
 
-        // console.log(selectedOption);
-        // console.log(startDateValue);
-        // console.log(endDateValue);
-        // console.log(currentDate);
-
-    
         // Check if end date is earlier than start date
         if (endDate < startDate) {
             errMsg = "Error: End date cannot be earlier than start date.";
-        };
-        if ((selectedOption === 'Planned') && (startDate < currentDate)) {
+        }
+        if ((selectedOption === "Planned") && (startDate < currentDate)) {
             // Validate dates for Planned trips
             errMsg = "Error: Cannot plan a trip on past dates.";
-        };
-        if ((selectedOption === 'Ongoing') && 
+        }
+        if ((selectedOption === "Ongoing") &&
             !((startDate <= currentDate) && (endDate >= currentDate) )) {
             // Validate dates for Ongoing trips
             errMsg = "Error: Ongoing trip must include the current date.";
-        };
-        if ((selectedOption === 'Completed') &&
+        }
+        if ((selectedOption === "Completed") &&
             ((startDate > currentDate) || (currentDate < endDate))) {
             // Validate dates for Completed trips
-            errMsg = "Error: Completed trip cannot have an end date in the future.";
-        };
+            errMsg = "Error: Completed trip cannot end in the future.";
+        }
 
         if (errMsg) {
-            // Prevent default submission if there is an error.      
+            // Prevent default submission if there is an error.
             e.preventDefault();
             alert(errMsg);
         }
-        // Otherwise, allows the form to be submitted naturally 
+        // Otherwise, allows the form to be submitted naturally
         // if validations passes (standard HTTP form submission).
-        // The form data will be sent to the server, and Django will handle the form processing
+        // The form data will be sent to the server, and Django will handle
+        // the form processing
         // and validation on the server-side.
     });
 
-    cancelButton_edit.addEventListener('click', (e) => {
+    cancelButton_edit.addEventListener("click", function(e) {
         document.getElementById("editTripForm").reset();
-    })
-
-    
-
-
+    });
 });
-
-/*--------------------------------------------------------------------*/
-
