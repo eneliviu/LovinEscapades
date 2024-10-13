@@ -156,29 +156,28 @@ This app provides essential functionality for site visitors to send inquiries to
 ## Technologies Used
 
 ### **Django:** 
-A web framework made with Python that helps build web apps quickly and efficiently. It's great for managing databases and organizing code, making it easier to create complex features for ***LovinEscapades***.
+- A web framework made with Python that helps build web apps quickly and efficiently. It's great for managing databases and organizing code, making it easier to create complex features for ***LovinEscapades***.
 
 ### **JavaScript:** 
-A programming language that makes web pages interactive. It's used to add features like real-time updates and dynamic content that responds to user actions.
+- A programming language that makes web pages interactive. It's used to add features like real-time updates and dynamic content that responds to user actions.
 
 ### **jQuery:**
-A Javascript library that makes it easier to use JavaScript. It simplifies tasks like handling mouse clicks or animations, making the site more user-friendly.
-The JQuery was included in the project via a Content Delivery Network (CDN) link. 
+- A Javascript library that makes it easier to use JavaScript. It simplifies tasks like handling mouse clicks or animations, making the site more user-friendly. The JQuery was included in the project via a Content Delivery Network (CDN) link. 
 
 ### **Bootstrap 5.3 CSS:** 
-A toolkit for building websites that look good on all devices. It comes with ready-to-use designs, which help in quickly creating a clean and modern interface for the app.
+- A toolkit for building websites that look good on all devices. It comes with ready-to-use designs, which help in quickly creating a clean and modern interface for the app. Boostrap library was included in the project via CDN link. 
 
 ### **Custom CSS:** 
-Styles written specifically for ***LovinEscapades*** to personalize the look of the site, ensuring it matches the overall theme and design vision.
+- Styles written specifically for ***LovinEscapades*** to personalize the look of the site, ensuring it matches the overall theme and design vision.
 
 ### **Leaflet JavaScript mapping library:** 
-A tool for creating interactive maps that work well on different devices. It helps users see trip locations and explore the map easily.
+- A tool for creating interactive maps that work well on different devices. It helps users see trip locations and explore the map easily.
 
 ### **Geopy Python Module:** 
-A library that helps find geographic coordinates, like latitude and longitude, from place names. It’s used to show trip locations accurately on the map.
+- A library that helps find geographic coordinates, like latitude and longitude, from place names. It’s used to show trip locations accurately on the map.
 
 ### **Django graph models:** 
-[Django Extensions](https://shorturl.at/GxkSs) is a collection of custom extensions for the Django Framework that can be used for creating ER (Entity-Relationship) diagrams for the project database. These diagrams make it easier to visualize, understand, and manage the database structure. You can view these database model relationships using the online [GraphViz generator](https://shorturl.at/AAuhy). 
+- [Django Extensions](https://shorturl.at/GxkSs) is a collection of custom extensions for the Django Framework that can be used for creating ER (Entity-Relationship) diagrams for the project database. These diagrams make it easier to visualize, understand, and manage the database structure. You can view these database model relationships using the online [GraphViz generator](https://shorturl.at/AAuhy). 
 
 ### **Python modules**
 The following Python modules were installed using the `pip install` command in the terminal and were listed in the `requirements.txt` file:
@@ -210,23 +209,17 @@ The following Python modules were installed using the `pip install` command in t
 
 
 ### **Markdown**
-The Markdown formatting for README.md and HELP.md files was done according to the documentation provided at
+- The Markdown formatting for README.md and HELP.md files was done according to the documentation provided at
 [www.markdownguide.org](https://www.markdownguide.org/basic-syntax/).
 
 
 ### Cloud deployment
-The app is currently deployed on [Heroku Cloud Application Platform](https://www.heroku.com)
+- The app is currently deployed on [Heroku Cloud Application Platform](https://www.heroku.com)
 For cloud deployment, the [dependency requirements file](requirements.txt) was compiled using the
-```
-pip freeze --local > requirements.txt
-```
-command in the VSCode PowerShell. 
-
-The processes to run on the Heroku platform are specified in the `Procfile`. 
-
-Sensitive information is stored in the `env.py` file, which is listed in the `.gitignore` to prevent it from being uploaded to GitHub.
-
-The app can be accessed at [***LovinEscapades***](https://shorturl.at/f4uCn).
+`pip freeze --local > requirements.txt` command in the VSCode PowerShell. 
+- The processes to run on the Heroku platform are specified in the `Procfile`. 
+- Sensitive information is stored in the `env.py` file, which is listed in the `.gitignore` to prevent it from being uploaded to GitHub.
+- The app can be accessed at [***LovinEscapades***](https://shorturl.at/f4uCn).
 
 
 [*Back to top*](#)
@@ -245,11 +238,9 @@ The app can be accessed at [***LovinEscapades***](https://shorturl.at/f4uCn).
 - The website’s style is minimalistic, primarily based on predefined Bootstrap 5.3 themes and touches of custom CSS. This approach ensures good contrast and a decent aesthetic, supporting accessibility and visual appeal.
 
 ### Icons
-- Font Awesome were used for the Logo, social media icons in the Footer, `My profile`-page link and like buttons on share photos in the ??`Gallery`-page. 
-
+- Font Awesome were used for the Logo, social media icons in the Footer, `My profile`-page link and like buttons on share photos in the `Gallery`-page. 
 
 [*Back to top*](#)
-
 
 
 ## Usage and screenshots
@@ -261,6 +252,27 @@ The app can be accessed at [***LovinEscapades***](https://shorturl.at/f4uCn).
 
 [*Back to top*](#)
 
+**************************************************************************************************#
+
+
+
+
+
+
+
+
+
+
+**************************************************************************************************#
+
+
+## Database schema
+
+The Entity Relationship Diagram (EDR) for the full project database shcema was produced using the 
+[Graph models extention](https://shorturl.at/psHzX) and visualized using the online [GraphViz generator](https://shorturl.at/AAuhy). 
+
+![Main menu](static/docs/graphviz_all_models.webp#center)
+*<center><font color="red">LovinEscapades</font>: EDR project database diagram*.</center><br>
 
 
 ## Online Validators
