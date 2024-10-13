@@ -37,18 +37,23 @@ header {
 }
 
 
-#message_trip_added {
+.message_trip_added {
     position: fixed;
+    padding: 0;
     bottom: 80px;  
     right: 20px;  
     z-index: 2050;
     height: auto;  
-    max-width: 300px;
+    max-width: 280px;
 }
 
 .link {
-    color: #23BBBB;
+    color: #065245;
+    padding: 5px;
     text-decoration: none;
+    font-size: larger;
+    font-weight: 700;
+    /* background-color: #0c192e; */
 }
 
 
@@ -61,12 +66,13 @@ header {
 
 main {
     flex: 1;
+    
 }
 
 
 #testimonials {
     padding: 1.5rem 0;
-    background: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 1) !important;
     /*z-index: 0 !important;*/
 }
 
@@ -107,7 +113,6 @@ main {
     padding: 1rem;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     margin: 0.5rem 0;
-    /*z-index: -2 !important;*/ 
 }
 
 
@@ -125,10 +130,12 @@ main {
 
 
 .c_map{
-    width: auto;
-    height: 100%;
-    min-height: 400px;
-    min-width: 280px;
+    /* REMEMBER */
+    width: 100%; /* full width of its container */
+    height: 100%; /* full height of its container */
+    max-width: 100%;  /* Prevents extending beyond parent container */
+    min-height: 450px; /* Keeps a minimum height for better usability */
+    box-sizing: border-box; /* Includes padding and border in the map dimensions */
 }
 
 
@@ -139,7 +146,7 @@ main {
 
 .btn-signup,
 .btn-edit {
-    background-color: #188181;
+    background-color: #0a5c5c;
     color: #fff;
     width: 6rem;
 }
@@ -156,8 +163,8 @@ main {
 .btn-edit:active,
 .btn-more:active,
 .btn-more:hover {
-    background-color: #fff;
-    color: #23BBBB;
+    background-color: #fafafa;
+    color: #032929;
     width: 6rem;
 }
 
@@ -183,16 +190,16 @@ main {
 
 
 footer a i {
-    color: white;
+    color: #fafafa;
     transition: color 0.3s;
-    scale: 1.1;
+    transform: scale(1.1);
 }
 
 
 footer a:hover i {
-    color: #ccc; /* Adjust the color on hover as needed */
+    color: #fff; /* Adjust the color on hover as needed */
     display:inline-block;
-    scale: 1.5;
+    transform: scale(1.5);
 }
 
 
@@ -207,14 +214,8 @@ footer a {
 }
 
 
-.error-message {
-    color: #dc3545;
-    display: none;  /* Initially hidden, will be shown on error */
-}
-
-
 .modal-backdrop {
-    z-index: 9000! important; /* Ensure the backdrop is behind the modal */
+    z-index: 9000! important;
 }
 
 
@@ -223,10 +224,7 @@ footer a {
 }
 
 #img-container {
-    background-color: var(--bgk-col-body);
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 
@@ -240,12 +238,19 @@ footer a {
     margin-top: 0;
 }
 
+.c-card-text{
+    word-break: break-all
+}
+
+
 #edit-trip-card{
     min-width: 280px;
 }
 
 
-
+#contact-us-card{
+    min-width: 280px;
+}
 
 @media screen and (min-width: 768px) {
     .c-img {
