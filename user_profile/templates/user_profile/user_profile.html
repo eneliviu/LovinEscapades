@@ -24,7 +24,7 @@
         </h2>
         <hr>
 
-        <div class="my-3 d-flex flex-row">
+        <div class="my-4 d-flex flex-row">
             {% if not user.first_name %}
             <span class="badge c-badge bg-secondary text-light py-2 mx-2">
                 First name
@@ -42,7 +42,7 @@
             {% endif %}
         </div>
 
-        <div class="my-3">
+        <div class="my-4">
             {% if not user.last_name %}
             <span class="badge c-badge bg-secondary text-light py-2 mx-2">
                 Last name
@@ -60,7 +60,7 @@
             {% endif %}
         </div>
 
-        <div class="my-3">
+        <div class="my-4">
             <span class="badge c-badge bg-success text-light py-2 mx-2">
                 Email
             </span>
@@ -70,7 +70,7 @@
         </div>
 
         <div class="container text-center">
-            <a type="button" href="{% url 'update_user_profile' %}" class="btn btn-edit btn-lg w-50 btn-sm mt-4">
+            <a type="button" href="{% url 'update_user_profile' %}" class="btn btn-edit btn-lg w-50 my-3">
                 <!--data-bs-target="#editProfileModal data-bs-toggle="modal"" -->
                 Update
             </a>
@@ -82,7 +82,7 @@
     <div class="testimonial-card col-lg-7 my-2 h-100 mx-3">
 
         <!-- Button to trigger add testimonial modal -->
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between align-items-center">
             <h2 class="m-0">
                 Your testimonials
             </h2>
@@ -134,20 +134,18 @@
         </div>
         {% endif %}
 
-
-
     </div>
 
     <!-- Add Testimonial Form Modal -->
     <div class="modal fade" id="addTestimonialModal" tabindex="-1" aria-labelledby="addTestimonialModalLabel"
-        aria-hidden="true">
-        <h2 class="visually-hidden">Testimonial form</h2>
+        aria-describedby="addTestimonialModalLabelDescription" aria-hidden="true">
+        <h2 class="visually-hidden" id="addTestimonialModalLabel">Testimonial form</h2>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="addTestimonialModalLabelDescription">
                     <div class="col-md-12 card mb-2 mt-2">
                         <div class="card-body">
                             <form id="addTestimonialForm" method="POST" style="margin-top: 1.2em;">
@@ -168,14 +166,16 @@
 </section>
 
 <!-- Delete confirmation modal -->
-<div class="modal fade" id="deleteModalPost" tabindex="-1" aria-labelledby="deleteModalPostLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModalPost" tabindex="-1" aria-labelledby="deleteModalPostLabel" 
+    aria-describedby="deleteModalPostLabelDescription" aria-hidden="true">
+    <h1 class="visually-hidden" id="deleteModalPostLabel"> Delete Post Modal</h1>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteModalPostLabel">Delete testimonial?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="deleteModalPostLabelDescription">
                 Are you sure you want to delete your post? This action cannot be undone.
             </div>
             <div class="modal-footer">
@@ -185,5 +185,7 @@
         </div>
     </div>
 </div>
+
 <script src="{% static 'js/manage_user.js' %}" type="text/javascript" defer></script>
+
 {% endblock content %}

@@ -22,21 +22,26 @@ document.addEventListener('DOMContentLoaded', function () {
     if (Object.keys(locations)) {
         locations.forEach(element => {
             // Determine the URL based on authentication status
-            console.log(isAuthenticated)
-            let moreUrl = isAuthenticated ? '/gallery/' : '/accounts/signup/';
+            // console.log(isAuthenticated)
+            // let moreUrl = isAuthenticated ? '/gallery/' : '/accounts/signup/';
             
 
             let marker = L.marker([element.lat, element.lon])
                 .bindPopup(
                     '<div>' +
-                    '<b>' + element.place + ', ' + element.country + '</b>' +
-                    '</br>' +
-                    '<b>' + element.trip_category + '</b>' +
-                    '</br>' +
-                    'From: ' + element.start_date + '</br>' +
-                    'To: ' + element.end_date +
-                    '</br>' +
-                    `<a href="${moreUrl}" rel="noopener noreferrer">More...</a>` +
+                        '<b>' + element.place + ', ' + element.country + '</b>' +
+                        '</br>' +
+                        '<b>' + element.trip_category + '</b>' +
+                        '</br>' +
+                        'From: ' + element.start_date + '</br>' +
+                        'To: ' + element.end_date +
+                        '</br>' +
+                        '<div class="text-center" >' + 
+                            "<a href='/gallery/' class='badge text-bg-primary' rel='noopener noreferrer'>" + 
+                                '<span class="fs-6 text-center">' + "More..." + '</span>' + 
+                            "</a>" +
+                        '</div>'
+                            +
                     '</div>'
                 );
             markers.addLayer(marker);
