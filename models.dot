@@ -1,6 +1,6 @@
 digraph model_graph {
   // Dotfile by Django-Extensions graph_models
-  // Created: 2024-10-13 20:08
+  // Created: 2024-10-13 20:20
   // Cli Options: -a
 
   fontname = "Roboto"

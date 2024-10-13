@@ -70,6 +70,12 @@ INSTALLED_APPS = [
     'django_filters',
 ]
 
+GRAPH_MODELS = {
+    'all_applications': True,
+    'gruoup_models': True,
+}
+
+
 SITE_ID = 1
 # Note: We need to add a SITE_ID of 1 so that Django can handle multiple
 # sites from one database. We need to give each project an ID value so
