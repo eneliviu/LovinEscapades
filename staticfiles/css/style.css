@@ -69,6 +69,10 @@ main {
     
 }
 
+.c-img {
+    width: 720px; 
+    height: auto;
+  }
 
 #testimonials {
     padding: 1.5rem 0;
@@ -136,6 +140,7 @@ main {
     max-width: 100%;  /* Prevents extending beyond parent container */
     min-height: 450px; /* Keeps a minimum height for better usability */
     box-sizing: border-box; /* Includes padding and border in the map dimensions */
+
 }
 
 

@@ -81,45 +81,102 @@
                     <ul class="navbar-nav w-100 me-auto">
 
                         <li class="nav-item mx-3 fw-bold">
-                            <a class="nav-link {% if request.path == home_url %}active aria-current='page' {% endif %}"
-                                href="{% url 'home' %}">Home</a>
+                            {% if request.path == home_url  %}
+                                <a class="nav-link active" href="{% url 'home' %}" aria-current="page">
+                                    Home
+                                </a>
+                            {% else %}
+                                <a class="nav-link active" href="{% url 'home' %}">
+                                    Home
+                                </a>
+                            {% endif %}
                         </li>
 
                         {% if user.is_authenticated %}
                         <li class="nav-item mx-3 fw-bold">
-                            <a class="nav-link {% if request.path == logout_url %}active aria-current='page'{% endif %}"
-                                href="{% url 'account_logout' %}">Logout</a>
+                            {% if request.path == logout_url %}
+                            <a class="nav-link active" href="{% url 'account_logout' %}" aria-current='page'>
+                                Logout
+                            </a>
+                            {% else %}
+                            <a class="nav-link" href="{% url 'account_logout' %}">
+                                Logout
+                            </a>
+                            {% endif %}
                         </li>
                         <li class="nav-item mx-3 fw-bold">
-                            <a class="nav-link {% if request.path == '/user/' %}active aria-current='page'{% endif %}"
-                                href="{% url 'user' %}">Dashboard</a>
+                            {% if request.path == '/user/' %}
+                            <a class="nav-link active" href="{% url 'user' %}" aria-current='page'>
+                                Dashboard
+                            </a>
+                            {% else %}
+                            <a class="nav-link" href="{% url 'user' %}">
+                                Dashboard
+                            </a>
+                            {% endif %}
                         </li>
                         <li class="nav-item mx-3 fw-bold">
-                            <a class="nav-link {% if request.path == '/gallery/' %}active{% endif %}"
-                                aria-current="page" href="{% url 'gallery' %}"> Gallery </a>
+                            {% if request.path == '/gallery/' %}
+                            <a class="nav-link active" href="{% url 'gallery' %}" aria-current="page"> 
+                                Gallery
+                            </a>
+                            {% else %}
+                            <a class="nav-link" href="{% url 'gallery' %}"> 
+                                Gallery
+                            </a>
+                            {% endif %}
                         </li>
                         {% else %}
                         <li class="nav-item mx-3 fw-bold">
-                            <a class="nav-link {% if request.path == signup_url %}active aria-current='page'{% endif %}"
-                                href="{% url 'account_signup' %}">Register</a>
+                            {% if request.path == signup_url %}
+                                <a class="nav-link active" href="{% url 'account_signup' %}" aria-current='page'>
+                                    Register
+                                </a>
+                            {% else %}
+                                <a class="nav-link" href="{% url 'account_signup' %}">
+                                    Register
+                                </a>
+                            {% endif %}
                         </li>
                         <li class="nav-item mx-3 fw-bold">
-                            <a class="nav-link {% if request.path == login_url %}active aria-current='page'{% endif %}"
-                                href="{% url 'account_login' %}">Login</a>
+                            {% if request.path == login_url %}
+                            <a class="nav-link active" href="{% url 'account_login' %}" aria-current='page'>
+                                Login
+                            </a>
+                            {% else %}
+                            <a class="nav-link" href="{% url 'account_login' %}">
+                                Login
+                            </a>
+                            {% endif %}
                         </li>
                         {% endif %}
 
                         <li class="nav-item mx-3 fw-bold">
-                            <a class="nav-link {% if request.path == '/contact/' %}active aria-current='page'{% endif %}"
-                                href="{% url 'contact' %}"> Contact Us </a>
+                            {% if request.path == '/contact/' %}
+                            <a class="nav-link active" href="{% url 'contact' %}" aria-current='page'>
+                                Contact Us 
+                            </a>
+                            {% else %}
+                            <a class="nav-link" href="{% url 'contact' %}">
+                                Contact Us 
+                            </a>
+                            {% endif %}
                         </li>
 
                         {% if user.is_authenticated %}
                         <li class="nav-item mx-3 ms-lg-auto fw-bold">
-                            <a class="nav-link text-decoration-none {% if request.path == '/profile/' %}active aria-current='page'{% endif %}"
-                                href="{% url 'profile' %}">
+                            {% if request.path == '/profile/' %}
+                            <a class="nav-link text-decoration-none active" href="{% url 'profile' %}" aria-current='page'>
                                 My profile
                                 <i class="bi bi-person-circle ms-2"></i>
+                            </a>
+                            {% else %}
+                            <a class="nav-link text-decoration-none" href="{% url 'profile' %}" >
+                                My profile
+                                <i class="bi bi-person-circle ms-2"></i>
+                            </a>
+                            {% endif %}
+                                
                             </a>
                         </li>
                         {% endif %}
