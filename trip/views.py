@@ -64,18 +64,18 @@ def landing_page(request):
 
 def _trip_stats(trips):
     """
-    Calculates the total number of comments and images across trips.
+    Calculates the total number of images across trips for a user.
 
     :param trips: A list or queryset of :model:`Trip` objects.
     :return: A tuple containing total comment count and image count.
     """
-    comments_count = 0
+    # comments_count = 0
     images_count = 0
     if trips:
         for trip in trips:
-            comments_count += trip.comments.all().count()
+            # comments_count += trip.comments.all().count()
             images_count += trip.images.all().count()
-    return comments_count, images_count
+    return images_count
 
 
 def _add_trip_form(request):
@@ -96,9 +96,9 @@ def _add_trip_form(request):
             f'New trip to {trip_form.place}, {trip_form.country} added'
         )
         # Reload trips and recalculate stats after saving:
-        trips = Trip.objects.filter(user=request.user).\
-            prefetch_related('images')
-        comments_count, images_count = _trip_stats(trips)
+        # trips = Trip.objects.filter(user=request.user).\
+        #    prefetch_related('images')
+        # comments_count, images_count = _trip_stats(trips)
     else:
         cleaned_errors = []
         for field, errors in add_trip_form.errors.items():
@@ -166,7 +166,7 @@ def handle_get_request_user_page(request):
     https://djangocentral.com/adding-pagination-with-django/#adding-pagination-using-function-based-views
     '''
     trips = Trip.objects.filter(user=request.user).prefetch_related('images')
-    comments_count, images_count = _trip_stats(trips)
+    images_count = _trip_stats(trips)
     user = request.user
 
     testimonials_active = user.testimonials.filter(approved=True).count()
@@ -188,7 +188,7 @@ def handle_get_request_user_page(request):
     context = {
         'page': page,
         'trips': trip_list,
-        'comments_count': comments_count,
+        # 'comments_count': comments_count,
         'testimonials_count_active': testimonials_active,
         'testimonials_count_pending': testimonials_pending,
         'testimonials_count_all': testimonials_all,

@@ -26,8 +26,17 @@ header {
 }
 
 
+
 #logo{
-   color:rgb(5, 45, 173)
+   color:rgb(5, 45, 173);
+   font-family: Lato, sans-serif;
+   font-size: 1.4rem;
+   font-weight: 700;
+}
+
+
+.hero-heading{
+    font-family: Lato, sans-serif;
 }
 
 .navbar__base {

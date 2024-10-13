@@ -31,9 +31,9 @@
     <meta name="theme-color" content="#dafeff">
 
     <!-- Google Fonts CSS -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" rel="stylesheet"/>
 
     <!-- Font Awesome CSS -->
     <script src="https://kit.fontawesome.com/498c29f243.js" crossorigin="anonymous"></script>
@@ -44,16 +44,16 @@
 
     <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <!-- Leaflet.MarkerCluster -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js'></script>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css'
-        rel='stylesheet' />
+        rel='stylesheet'/>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css'
-        rel='stylesheet' />
+        rel='stylesheet'/>
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -203,10 +203,8 @@
                     </ul>
                 </div>
                 {% if not user.is_authenticated %}
-                <span
-                    class="navbar-text navbar-text mx-3 d-none d-lg-inline small fst-italic text-primary-emphasis text-muted">
-                    <spans class="fw-bolder"> sharing travel experiences
-                </span>
+                <span class="navbar-text navbar-text mx-3 d-none d-lg-inline small fst-italic text-primary-emphasis text-muted">
+                    <span class="fw-bolder"> sharing travel experiences</span>
                 </span>
                 {% endif %}
             </div>
@@ -216,7 +214,7 @@
     </header>
 
 
-    <main class="container" role="main">
+    <main class="container">
 
         {% block content %}
 

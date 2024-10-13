@@ -19,7 +19,6 @@ let deleteImageConfirm = document.getElementById("deleteImageConfirm");
 for (let button of deleteImageButtons) {
         button.addEventListener("click", (e) => {
                 let photoId = e.target.getAttribute("data-photo_id");
-                let tripId = e.target.getAttribute("data-trip_id");
                 deleteImageConfirm.href = `/delete_photo/${photoId}`;
                 deleteImageModal.show();
         });

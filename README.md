@@ -5,7 +5,7 @@
 ### **Table of content:**
 - [Overview](#overview)
 - [Application development](#application-development)
-- [Features](#features)
+- [Main features](#main-features)
 - [Technologies Used](#technologies-used)
 - [Manual testing](#manual-testing)
 - [Unit testing](#unit-testing)
@@ -18,186 +18,179 @@
 
 
 ## Overview
-LovinEscapades is a trip-tracking web application developed as part of the Milestone Project 4 in the Full Stack Software Development program at Code Institute. 
-This project showcases a complete full-stack development approach, utilizing:
+
+***LovinEscapades*** is a web CRUD application developed as part of Milestone Project 4 in the Full Stack Software Development program at Code Institute. This project showcases a complete full-stack Django development approach, utilizing:
 
 - Python with the Django framework
 - JavaScript with jQuery
 - Custom CSS
 
+In its present form, ***LovinEscapades*** allows registered users to:
 
-LovinEscapades allows users to dynamically create and edit a straightforward trip tracking list, providing a seamless way to monitor and manage trip-related tasks as they progress.
+- Log in via the `Log In` page using their username and password
+- Create, update, edit, and delete information regarding their trips
+- Upload and delete photos associated with a particular trip
+- Share information about their trips and images with other users or unregistered site visitors
+- Post testimonials (upon site admin approval) about their experiences with the site and its community
 
-Designed with user-friendliness in mind, LovinEscapades is an intuitive application aimed at helping users maintain focus and boost productivity. It's important to note that this app serves as a demonstration of acquired Python programming skills and fulfills the requirements of Milestone Project 4, rather than being a fully polished product.
+For site visitors who are not registered users, it is still possible to:
+
+- View shared trip locations marked on a Leaflet map using georeferenced markers
+- Navigate to the `Gallery` page via the links in the marker popups
+- Send inquiries to the site admin from the `Contact Us` page
+- Register on the site from the `Registration` page
+
+Designed with user-friendliness in mind, ***LovinEscapades*** is an intuitive application aimed at helping users maintain focus and boost engagement. It's important to note that this app serves as a demonstration of acquired full-stack programming skills in fulfillment of the requirements of Milestone Project 4, rather than being a final product.
 
 ### Target Audience
 
-The LovinEscapades app is conceived to serve a wide spectrum of users seeking a straightforward yet efficient solution for managing trip itineraries. The development process was guided by user stories that enhanced the application's functionality and usability, ensuring it effectively meets user needs.
-
-Our target audience includes individuals who value personal productivity and organizational skills. The app is designed to accommodate a diverse user base, embracing individuals from varied geographic locales, cultures, and backgrounds globally.
-
+***LovinEscapades*** targets travel enthusiasts and individuals who enjoy documenting and sharing their travel experiences. It appeals to users looking to organize their trips, connect with a community, and explore destinations through shared content. Designed with simplicity in mind, the platform suits both tech-savvy individuals and those new to online travel documentation, providing an intuitive space for managing itineraries and memories. The app is designed to accommodate a diverse user base, embracing individuals from varied geographic locales, cultures, and backgrounds globally, fostering a rich exchange of experiences and perspectives.
 
 
 ## Application development
-The development of the LovinEscapades application followed an iterative approach, guided by essential Agile development principles. 
-While still familiarizing myself with Agile methodologies, the focus was on implementing a select number of user stories per iteration. 
-Some of the user stories that shaped the development process include:
+The development of the ***LovinEscapades*** application followed an iterative approach, incorporating essential Agile principles. However, as I was still familiarizing myself with Agile methodologies, I found these principles challenging to follow consistently.
 
-- As a potential user, I need to register and set up a user profile.
-- As a registered user, I want the ability to delete my account.
-- As a user, I want a clear view of overdue tasks.
+Much of the development process was guided by a trial-and-error approach, as I initially lacked a clear vision of the project content. Despite these challenges, I focused on implementing a select number of user stories to ensure progress.
 
-Throughout the development process, significant progress was made despite encountering numerous bugs and undergoing substantial code refactoring to adhere to the DRY (Don't Repeat Yourself) principles.
+The user stories were crafted using a custom template, structured as follows::
 
-<!-- During iterations, the overview over the app development was guided using Lucid wireframes like the one shwon below:
+*<center>**Title:***</center>
 
-![App flowchart](/assets/images/Flowchart_CLI_TODO.png)<br>
-<center>*LovinPlans: Lucid flowchart for application development.*</center><br> -->
+*<center>**Description:***</center>
+*<center>As a **[role]** I can **[capability]** so that **[received benefit]***</center>
+
+*<center>**Acceptance Criteria:***</center>
+*<center>Acceptance Criteria 1:*</center>
+*<center>Acceptance Criteria 2:*</center>
+*<center>Acceptance Criteria 3:*</center>
+
+Key user stories that influenced development included:
+- As a site visitor, I can register for an account or log in to an existing one, so I can access personalized features and services.
+- As a registered user, I want the ability to create, edit, and delete a trip record.
+- As a registered user, I can create and share my trip, allowing me to document my travel experiences and share them with others.
+- As a site visitor, I want a view of shared trip locations and photos.
+
+All the `User Stories` labeled in the `must have` category were fulfilled by the time of project submission.
+
+![Main menu](static/docs/Kanban.webp#center)
+*<center><font color="red">LovinEscapades</font>: Github Kanban baord with project User stories*.</center><br>
+
+![Main menu](static/docs/Kanban_detail.webp#center)
+*<center><font color="red">LovinEscapades</font>: Custom template for User Stories*.</center><br>
+
+During development, I encountered numerous bugs and conducted extensive code refactoring to adhere to the DRY (Don't Repeat Yourself) principle. Frequent Git commits were made throughout the process to ensure consistent progress tracking and effective version control.
+
+
+[*Back to top*](#)
+
+
+## Main Features
+
+### **User Registration and Authentication:**
+- Secure user registration and login system.
+- Automatically creates a User Profile instance for new registrations.
+- Allows registered users to follow others, currently accessible only via the admin page.
+
+### **Trip Management:**
+- Create, update, and delete trip entries with descriptions, locations, and dates.
+
+### **Photo Gallery:**
+- Upload and manage photos linked to each trip.
+- Browse a gallery of all trip-related photos.
+
+### **Interactive Map:**
+- Show trip locations on a Leaflet map with markers.
+- Connect map markers to trip details and photo galleries.
+
+### **User Testimonials:**
+- Submit testimonials on site experiences, pending admin approval.
+
+### **Contact Form:**
+- Contact page for user inquiries and feedback to site admin.
+
+### **Error Handling:**
+- Provides a smooth user experience by handling errors gracefully and delivering helpful messages.
+
+### **Responsive Design:**
+- Fully responsive design for seamless use across different devices and screen sizes.
+
+### **Cross-Platform Accessibility:**
+- Usable on any device with an internet connection, including mobile, tablet, and desktop.
+
+### **Security:**
+- Secures actions for logged-in users using `@login_required`.
+- Utilizes the `AllAuth` extension for safe user registration and login.
+- Limits access to sensitive information to authorized users, like site admins and data owners.
+
+These features highlight the core functionalities of ***LovinEscapades***, showcasing its capabilities for user interaction, content management, and community engagement. 
+More details about the app functionality are provided in the [Usage and Screenshots](#usage-and-screenshots) section.
 
 [*Back to top*](#)
 
 
-## Features
+## Application structure
 
-### **1. A user-friendly interface**
+### ***Lovingescapades*** project consists of  three apps:
 
-***LovinEscapades*** is a Django application that provides an intuitive user experience.
+### 1. `trip`
+This app features the `Dashboard` page, allowing users to:
+- View updated counts of trips, uploaded photos, and testimonials awaiting approval.
+- Decide if new trip information will be shared publicly or kept private. Public trips are mapped on the landing page, while private trips are visible only to the authenticated user.
+- Quickly access trip details through trip card elements, which provide basic trip information (destination, start and end dates, creation date) along with options to edit/delete trips and upload/delete photos.
+- Display approved user testimonials on the landing page and map the locations of shared trips.  
 
-- The app opens with a Landing Page than provides the following options:
-    - 1 (User Login): Login of regsitered users via username and password;
-    - 2 (Register): Requires a valid username, password and email address to creates a user profile
-        and a dedicated Dashobard-page for managing the trips;
-    - 3 (Contact Us): Allows the site visitors to reach out with inquiries or issues, which could help convert them into registered users;
-    - 4 (Exit): Gracefully exiting the application.
+### 2. `user_profile`
+The user profile app offers two primary sections:
+- Profile update section for editing basic user information such as username, first and last name, and email address.
+- Functionality for posting and deleting testimonials, which are subject to admin approval before appearing on the landing page.  
 
-![Main menu](/assets/images/main-menu.png#center)
-*<center><font color="red">LovinPlans</font>: App initialization and main menu configuration*.</center><br>
+### 3. `contact`
+This app provides essential functionality for site visitors to send inquiries to the site admin via a dedicated form.
 
-- After the Login, the User Menu section handles the following options for the registered users:
-    - 1 (View tasks): List all tasks;
-    - 2 (Add task): Add a new task;
-    - 3 (Delete task): Delete a task;
-    - 4 (Delete account): Delete user account;
-    - 5 (Exit): Return to the main menu.
-
-![User menu](/assets/images/user-menu.png) <br>
-*<font color="red">LovinPlans</font>: User menu configuration.*<br>
-
-- In addition, the users can invoque forced exit by entering 'exit' from the keyboard instead of the suggested options. In the script, the forced exit calls the sys.exit(0) Python routine to close the app gracefully.
-- The app is user-friendly and easy to start using without a steep learning curve. To assist new users, the Main Menu includes a Help Menu option that offers a quick tour of the app's functionality (more details in the [Help Menu](#help-menu) section).
-
-### **2. Use of Leaflet.js**
-
-The user information and the TODO lists are stored in a dedicated document hosted by Google Sheets.
-The app uses two categories of worksheets:
-- users-worksheet for storing the user login information and contact details such as:
-    - user id
-    - username
-    - email address
-    - user password
-    - number of tasks
-
-![users worksheet](/assets/images/users-worksheet.png) <br>
-*<font color="red">LovinPlans</font>: The 'users' worksheet containing the registered users profiles.*<br>
-
-- provate user worksheets for storing the user login information and contact details such as:
-    - task id
-    - task description
-    - task creation date (MM-DD-YYYY format)
-    - task due date (MM-DD-YYYY format)
-    - status (active / overdue)
-By convention, the registered usernames are used for labeling the dedicated user worksheets.
-
-![user worksheet](/assets/images/user-worksheet.png) <br>
-*<font color="red">LovinPlans</font>: A typical user worksheet containing the users tasks.*<br>
-
-### **3. Create and delete user accounts**
-- New users can easily register and create their own TODO list with a few inputs.
-- User registration requires:
-    - a valid username (non-empty)
-    - a password  of at minimum eight chatacters, of which at least one capital letter and two numerals (e.g., Password12)
-    - an email address with valid formatting (e.g., someone@somewhere.com) that passess the regex
-
-### **4. Task Creation and Editing**
-- Users can effortlessly create new tasks and edit existing ones with just a few clicks.
-- The process of creating a new task requires:
-    - a (non-empty) text input of maximum 44 characters
-    - a due date specification using the MM-DD-YYYY formatting (e.g., 12-30-2024)
-- By default, all newly created tasks receive an 'active' status
-- The current local time is also registered in the user worksheet to allow tracking of the overdue tasks.
-
-### **5 Task Views**
-- The user tasks are printed on the terminal using the tabulate Python module that allows formatting the output as a table.
-- The task viewing functionality is also available for listing the available tasks before selecting the ones to be removed.
-
-![Tasks view](/assets/images/tasks-view.png) <br>
-*<font color="red">LovinPlans</font>: Printing the user tasks on the Herou console.*<br>
-
-### **Clear the terminal option**
-- After each main operation such views or multiple entries during user registation or task deletion, the app provides the option to clear the terminal to eliminate the cluttering provide a positive UX to the user.
-- This also allows the user to stay logged in and explore the app's functionality without being constrained by the terminal height.
-
-![Clear terminal](/assets/images/clear.png) <br>
-*<font color="red">LovinPlans</font>: Option to clear the terminal.*<br>
-
-### **6. Help Menu**
-- The Help Menu provides a quick overview of the main app functionality.
-- The Help Menu content was printed using the user_help() function that opens and writes a Markdown file in the console, as described at
-[https://rich.readthedocs.io/en/stable/](https://rich.readthedocs.io/en/stable/console.html).
-
-![Help menu](/assets/images/help-menu.png)<br>
-*<font color="red">LovinPlans</font>: Help menu content.*<br>
-
-### **7. Task follow up**
-- The app allows users to enter task details such as the due date.
-- At login, the due date of each user task is checked against the curent date.
-- If a task has passed its due date, the task status changes from 'active' to 'overdue', and the overdue tasks are
-also marked with light red color background in the worksheet.
-
-### **8. Menu Navigation**
-- The app allows users to switch between menu options without exiting the application using recursive function calls.
-
-### **9. Exception Handling**
-- A great deal of attention was put on handling exceptions in order to provide a positive UX.
-- The exception handling was implemented using try-except blocks for detect error during executions and provide relevant error messages to the user.
-
-### **10. Cross-Platform Accessibility**
-- The app can be used on any device (mobile, tablet, laptop/desktop) that is connected to internet.
-
-More details about the app functionality are provided in the [Usage and screenshots](#usage-and-screenshots) section.
-
-[*Back to top*](#)
+### 4. `gallery`
+- Hosts the photo gallery where all publicly shared photos by registered users can be viewed by any visitor.
+- Users can publish photos even if they choose not to make the associated trip information public.
+- Each photo in the gallery includes a like icon and basic trip details, though the feature for sending and receiving likes has not been implemented yet.
 
 
 ## Technologies Used
-The app was written in Python 3.11.7 version using an external VSCode IDE on a Windows 11 desktop. The script utilizes a functional design approach that (***hopefully***) adheres to the DRY (Don't Repeat Yourself) principles. The structure of the app is provided in the [run.py file](run.py) that containts the Python script.
 
-### Python call stack
-The script contains the following main sections:
-- External modules imports
-- Connection to Google Sheets via API calls using private credentials.
-- Declaration of constant variables such as:
-    - connections to the project LovePlanning Google Sheet
-    - the names of the Google worksheets used by the app
-    - the column names (headers) of those worksheets
-    - standard user choices available through the console
-- Python function definitions with a main() function that calls the stack.
-    - As a rule of thumb, all functions that receive more than two arguments are called using **kwargs.
-    - Docstrins were placed after function definitions to document the code.
-    - Where necessary, text comments were placed in the script to provide further explanations.
-    - To the best of my Python abilities, I tried to use type hints for all function arguments.
+### **Django:** 
+A web framework made with Python that helps build web apps quickly and efficiently. It's great for managing databases and organizing code, making it easier to create complex features for ***LovinEscapades***.
 
+### **JavaScript:** 
+A programming language that makes web pages interactive. It's used to add features like real-time updates and dynamic content that responds to user actions.
 
-### Python modules
-The following external Python modules were installed using the `pip install` command in the terminal:
-- asgiref==3.8.1 ([ASGI specs, helper code, and adapters](https://pypi.org/project/asgiref/))
-- cloudinary==1.36.0 ([Python and Django SDK for Cloudinary](https://pypi.org/project/cloudinary/))
-- crispy-bootstrap5==0.7 ([Bootstrap5 template pack for django-crispy-forms](https://pypi.org/project/crispy-bootstrap5/))
+### **jQuery:**
+A Javascript library that makes it easier to use JavaScript. It simplifies tasks like handling mouse clicks or animations, making the site more user-friendly.
+The JQuery was included in the project via a Content Delivery Network (CDN) link. 
+
+### **Bootstrap 5.3 CSS:** 
+A toolkit for building websites that look good on all devices. It comes with ready-to-use designs, which help in quickly creating a clean and modern interface for the app.
+
+### **Custom CSS:** 
+Styles written specifically for ***LovinEscapades*** to personalize the look of the site, ensuring it matches the overall theme and design vision.
+
+### **Leaflet JavaScript mapping library:** 
+A tool for creating interactive maps that work well on different devices. It helps users see trip locations and explore the map easily.
+
+### **Geopy Python Module:** 
+A library that helps find geographic coordinates, like latitude and longitude, from place names. It’s used to show trip locations accurately on the map.
+
+### **Django graph models:** 
+[Django Extensions](https://shorturl.at/GxkSs) is a collection of custom extensions for the Django Framework that can be used for creating ER (Entity-Relationship) diagrams for the project database. These diagrams make it easier to visualize, understand, and manage the database structure. You can view these database model relationships using the online [GraphViz generator](https://shorturl.at/AAuhy). 
+
+### **Python modules**
+The following Python modules were installed using the `pip install` command in the terminal and were listed in the `requirements.txt` file:
+- asgiref==3.8.1 
+- cloudinary==1.36.0 
+- crispy-bootstrap5==0.7
 - dj-database-url==0.5.0
 - dj3-cloudinary-storage==0.0.6
 - Django==4.2.16
 - django-allauth==0.57.2
 - django-crispy-forms==2.3
+- django-extensions==3.2.3
 - django-filter==24.3
 - geographiclib==2.0
 - geopy==2.4.1
@@ -212,11 +205,11 @@ The following external Python modules were installed using the `pip install` com
 - urllib3==1.26.20
 - whitenoise==5.3.0
 
-### Javascript libraries
+### **Javascript libraries**
 - Leaflet 1.9.4 ([JavaScript library for mobile-friendly interactive maps](https://leafletjs.com/index.html))
 
 
-### Markdown
+### **Markdown**
 The Markdown formatting for README.md and HELP.md files was done according to the documentation provided at
 [www.markdownguide.org](https://www.markdownguide.org/basic-syntax/).
 
@@ -225,24 +218,39 @@ The Markdown formatting for README.md and HELP.md files was done according to th
 The app is currently deployed on [Heroku Cloud Application Platform](https://www.heroku.com)
 For cloud deployment, the [dependency requirements file](requirements.txt) was compiled using the
 ```
-pip freeze > requirements.txt
+pip freeze --local > requirements.txt
 ```
-command in the VSCode PowerShell.
+command in the VSCode PowerShell. 
 
-The app is currently deployed on github and can be accessed at: https://lovinescapades-dd5c221f87db.herokuapp.com/.
+The processes to run on the Heroku platform are specified in the `Procfile`. 
+
+Sensitive information is stored in the `env.py` file, which is listed in the `.gitignore` to prevent it from being uploaded to GitHub.
+
+The app can be accessed at [***LovinEscapades***](https://shorturl.at/f4uCn).
+
 
 [*Back to top*](#)
 
 
+## Accessibility and Design
+
 ### Accessibility
+- Attention was given to the ARIA (Accessible Rich Internet Applications) content, ensuring that screen readers can effectively retrieve information when needed.
 
-- Attention was given to the aria content, such that the screen readers can effectivly retrive the information when needed.
-- The font 'Permanent Marker' was chosen as the font for the logo as well as logo related statement text. It is legible, but also rough and gritty. Breaking the clean visual of the site.
-- 'Alatsi' was chosen for the Headings and Roboto for the general text. Both are easily readable and clean in their optic.
+### Fonts
+- The font 'Lato' was chosen for the logo and related statement text. It is both legible and adds a rough, gritty   texture, breaking the clean visual of the site.
+- The font 'Roboto' was used for general text, both offering a clean and easily readable appearance.
+
+### Colors and Themes
+- The website’s style is minimalistic, primarily based on predefined Bootstrap 5.3 themes and touches of custom CSS. This approach ensures good contrast and a decent aesthetic, supporting accessibility and visual appeal.
+
+### Icons
+- Font Awesome were used for the Logo, social media icons in the Footer, `My profile`-page link and like buttons on share photos in the ??`Gallery`-page. 
 
 
-Colors and themes
-The website's style and vibe are quite minimalistic since are mostly based on predefined Bootstrap 5.3 themes, but it provides good contrast and (I think) decent aestethics. 
+[*Back to top*](#)
+
+
 
 ## Usage and screenshots
 
@@ -253,35 +261,116 @@ The website's style and vibe are quite minimalistic since are mostly based on pr
 
 [*Back to top*](#)
 
----
-#### PEP8
 
-The [Pep8 CI](https://pep8ci.herokuapp.com/) Python Linter retuned no errors:
 
-| App            | File                 | CI Linter Result           |  Status |
+## Online Validators
+
+### **PEP8**
+The [Pep8 CI](https://pep8ci.herokuapp.com/) Python Linter returned no errors:
+
+| App            | File         | CI Linter Result           |  Status |
 | --- | --- | --- | --- |
-| `trip`           | forms.py           | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | filters.py           | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | models.py            | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | utils.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | urls.py              | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | views.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| `contact`      | forms.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | models.py            | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | urls.py              | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | views.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| `gallery`      | forms.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | models.py            | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | urls.py              | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | views.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| `user_profile` | forms.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | models.py            | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | urls.py              | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-|                | views.py             | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `trip`         | `forms.py`   | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `filters.py` | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `models.py`  | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `utils.py`   | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `urls.py`    | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `views.py`   | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `contact`      | `forms.py`   | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `models.py`  | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `urls.py`    | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `views.py`   | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `gallery`      | `forms.py`   | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `models.py`  | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `urls.py`    | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `views.py`   | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `user_profile` | `forms.py`   | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `models.py`  | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `urls.py`    | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+|                | `views.py`   | All clear, no errors found | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
 
 ---
+
+### **JSHint**
+The [JSHint](https://jshint.com/) validator flagged two warnings across all JavaScript files concerning the use of Bootstrap 5.3 modals and Leaflet `L` objects.
+
+![Main menu](static/docs/JSHint.webp#center)
+*<center><font color="red">LovinEscapades</font>: JSHint validator results*.</center><br>
+
+### **Lighthouse**
+The Lighthouse validator showed very good results, with an warning related to a Leaflet internal issue. 
+
+![Main menu](static/docs/Lighthouse_navtest.webp)
+*<center><font color="red">LovinEscapades</font>: Lighthouse navigation test*.</center><br>
+
+
+![Main menu](static/docs/Lighthouse_snapshot_test.webp)
+*<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
+
+
+### Jigsaw CSS Validator
+
+The Jigsaw CSS Validator reported no errors for the custom CSS.
+
+![Main menu](static/docs/W3C-CSS-CustomCSS.webp)
+*<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
+
+However, it identified two errors in the Leaflet CSS, both related to Leaflet specifically:
+
+![Main menu](static/docs/W3C-CSS-Errors-URL.webp)
+*<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
+
+Upon further investigation using [caniuse.com](https://caniuse.com), it was confirmed that `plus-lighter` is a valid value for the `mix-blend-mode` property.
+
+![Main menu](static/docs/CANIUSE_plus-lighter.webp)
+*<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
+
+For the second error, no relevant results were found, and I am unable to provide an explanation or a fix.
+
+![Main menu](static/docs/CANIUSE_behaviour.webp)
+*<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
+
+
+### Web Accessibility Evaluation Tool (WAVE) 
+
+The WAVE Tool reports no errors but does issue an alert.
+
+![Main menu](static/docs/WAVE_test.webp)
+*<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
+
+Upon investigating further, it suggests that both the site logo and the "Home" navbar element have the same link pointing to the homepage. I have not addressed this alert because having multiple links leading to the home page is a common practice and does not typically impede navigation or accessibility.
+
+![Main menu](static/docs/WAVE_test_alert.webp)
+*<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
+
+Finally, the WAVE contrast check test also passes successfully.
+
+![Main menu](static/docs/WAVE_test_contrast.webp)
+*<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
+
+
 
 ## Manual testing:
+
+| Feature | Expected behaviour | Test | Status |
+| --- | --- | --- | --- |
+| `User registration` | **New user can register**
+| &nbsp;&nbsp;- *Username validation* | Accept a valid username | Non-empty string | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Username validation* | Accept a valid password | Strong password |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Redirect to dashboard* | Innloged user redirected to `Dashboard`-page | Successful navigation (200 status code) |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Success message* | Returns Django messsage for successful login | Green message box on screen |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+
+| `User login` | **User information retrieved, user can login**
+| &nbsp;&nbsp;- *Username validation* | Username matched in 'users' worksheet | Non-empty user input | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Password validation* | Password matched in 'users' worksheet | Min. 8 characters, 1 capital letter, 2 numerals |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Email address validation* |Email address matched in 'users' worksheet | Valid format (name, @, and domain) |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Redirect to dashboard* | App runs until the the user inputs are valid | Entry valid and invalid user inputs |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Success message* | Returns Django messsage for successful login | Green message box on screen |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+
+| &nbsp;&nbsp;- *Welcome message* | Dispalys username and welcome message | Green message box on screen |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+
+
+
 
 | Feature | Expected behaviour | Test | Status |
 | --- | --- | --- | --- |
@@ -343,31 +432,24 @@ If you encounter issues or bugs, please create an issue by clicking [here](https
 
 ## Further improvements
 
-### Fix formatting-errors reported by Lint according to Python's PEP 8 coding standard
 - Refactor the delete functions since there is quite a bit of overlap between them.
-
-### Contact the user
 - Functionality to reply to user inquiries send through the form on the Contact Us page
-
-### Filtering and Sorting Trips
 - Filter and sort options to organize and view the trips and photos according to more detailed criteria.
     - Add a day-time picker to improve the map filter
     - Add separate filter for the image gallery page
     - Add separate filter for dashboard page
+- Reminders
+    - Set due dates with automatic reminder to receive timely notifications for upcoming trips and deadlines.
+- Social Sharing:
+    - Share trip experiences and images with other users and visitors.
+    - Comment and interact on shared trip entries.
 
-### Reminders
-- Set due dates with automatic reminder to receive timely notifications for upcoming trips and deadlines.
-
-### About menu option
-For further development, including an About option would to provide more information about the various releases and other information
-that helps keeping the users updated.
-
-### Collaboration tools
-- Include features for inviting people to like, comment, and follow each other.
 
 [*Back to top*](#)
 
+
 ## Contributing
+
 ### To contribute to the ***LovinPlans*** project:
 - Fork the repository on GitHub to create your own copy.
 - Clone the forked repository to your local machine.
@@ -384,18 +466,21 @@ that helps keeping the users updated.
 
 ## License
 ### Open Source
-As an open-source project, ***LovinEscapades*** encourages transparency, and community involvement.
-
-The code is available on GitHub, such that developers can view, fork, and contribute to the project if they wish so.
+As an open-source project, ***LovinEscapades*** promotes transparency and community involvement. The code is accessible on GitHub, allowing developers to view, fork, and contribute to the project as they desire.
 
 [*Back to top*](#)
 
 ## Acknowledgements
 - Further details on the usage of Leaflet JS were obtained from https://leafletjs.com/
-- The use of ChatGPT was restricted to getting sensible inputs for the text content, Readme-file and for proof-checking the language.
+- [`BugBytes` Youtube channel](https://www.youtube.com/watch?v=qzrE7cfc_3Q) for using Django Graphs 
+- `ChatGPT` was utilized to generate sensible input for text content, assist in crafting the README file, and perform language proof-checking.
+
+
 [*Back to top*](#)
 
+
 ## Documentation version
-Last updated: July 12, 2024
+
+Last updated: Oct 14, 2024
 
 [*Back to top*](#)

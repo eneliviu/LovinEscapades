@@ -6,9 +6,6 @@
 * Display the modal with the appropriate deletion URL when a button is clicked.
 * Logs errors if required elements are missing.
 */
-let deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-let deleteButtons = document.getElementsByClassName("btn-delete");
-let deleteConfirm = document.getElementById("deleteConfirm");
 document.addEventListener("DOMContentLoaded", function() {
     let deleteModalElement = document.getElementById("deleteModal");
     if (deleteModalElement) {
@@ -102,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (errMsg.length>0) {
             // Prevent default submission if there is an error.
             e.preventDefault();
-            let alert(errMsg.join("\n") );
+            alert(errMsg.join("\n") );
         }
         // Otherwise, allows the form to be submitted naturally
         // if validations passes (standard HTTP form submission).
