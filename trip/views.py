@@ -89,7 +89,6 @@ def _add_trip_form(request):
         cleaned_errors = []
         for field, errors in add_trip_form.errors.items():
             for error in errors:
-           
                 if field == '__all__':
                     cleaned_errors.append(error)
                 else:
@@ -101,7 +100,13 @@ def _add_trip_form(request):
                 *cleaned_errors)  # Unpack the error list
 
 
+@login_required
 def delete_trip(request, trip_id):
+    '''
+    This function allows users to delete their own trips.
+    Since it modifies personal data, only authorized users
+    should access this functionality.
+    '''
     qs = Trip.objects.filter(user=request.user)
     trip = get_object_or_404(qs, id=trip_id)
     if trip:
@@ -162,10 +167,13 @@ def handle_post_request_user_page(request):
     _add_trip_form(request)
     return redirect('user')
 
-# @login_required
+
+@login_required
 def user_page(request):
     """
-    View for Dashboard
+     This function serves as the user's dashboard, handling both GET
+     and POST requests related to a user's personal data.
+     It should definitely require the user to be logged in.
     """
     if request.method == 'GET':
         return handle_get_request_user_page(request)
@@ -259,8 +267,12 @@ def handle_post_request_upload_image(request, trip_id):
     return redirect('edit_page', trip_id=trip_id)  # back to edit page
 
 
+@login_required
 def edit_trip_page(request, trip_id):
     """
+    Handles the editing of specific user trips, which involves user-specific
+    operations and data modifications, thus requiring authentication.
+
     View for Dashboard
     https://stackoverflow.com/questions/1395807/proper-way-to-handle-multiple-forms-on-one-page-in-django
     """
@@ -290,7 +302,12 @@ def _trip_details(request, trip_id):
         )
 
 
+@login_required
 def trip_details_page(request, trip_id):
+    '''
+    Displays details of a trip associated with the logged-in user.
+    Since it's accessing personal data, the user must be authenticated.
+    '''
     trip = get_object_or_404(
             Trip,
             user=request.user,
@@ -307,7 +324,12 @@ def trip_details_page(request, trip_id):
         )
 
 
+@login_required
 def delete_photo(request, photo_id):
+    '''
+    Allows users to delete photos. This action modifies the user's own data
+    and should be protected.
+    '''
     image = Image.objects.filter(id=photo_id)
     if image:
         image.delete()
