@@ -576,8 +576,11 @@ python manage.py runserver
 - A user can choose to share a photo, but not to make the entire trip public.
 - Deleting a trip will delete also the associated photos from the `Gallery`-page
 
+
+
  ![Main menu](static/clips/Shared_gallery.webp#center)
-*<center><font color="red">LovinEscapades</font>: Inquiry successfully sent to site admin*.</center><br>
+
+*<font color="red">LovinEscapades</font>: Inquiry successfully sent to site admin*.<br>
 
 
 [*Back to top*](#)
@@ -588,8 +591,11 @@ python manage.py runserver
 The Entity Relationship Diagram (EDR) for the full project database shcema was produced using the 
 [Graph models extention](https://shorturl.at/psHzX) and visualized using the online [GraphViz generator](https://shorturl.at/AAuhy). 
 
+
+
 ![Main menu](static/docs/graphviz_all_models.webp#center)
-*<center><font color="red">LovinEscapades</font>: EDR project database diagram*.</center><br>
+
+*<font color="red">LovinEscapades</font>: EDR project database diagram*.<br>
 
 
 ## Online Validators
@@ -623,18 +629,23 @@ The [Pep8 CI](https://pep8ci.herokuapp.com/) Python Linter returned no errors:
 ### **JSHint**
 The [JSHint](https://jshint.com/) validator flagged two warnings across all JavaScript files concerning the use of Bootstrap 5.3 modals and Leaflet `L` objects.
 
+
 ![Main menu](static/docs/JSHint.webp#center)
-*<center><font color="red">LovinEscapades</font>: JSHint validator results*.</center><br>
+
+*<font color="red">LovinEscapades</font>: JSHint validator results*.<br>
 
 ### **Lighthouse**
 The Lighthouse validator showed very good results, with an warning related to a Leaflet internal issue. 
 
+
 ![Main menu](static/docs/Lighthouse_navtest.webp#center)
-*<center><font color="red">LovinEscapades</font>: Lighthouse navigation test*.</center><br>
+
+*<font color="red">LovinEscapades</font>: Lighthouse navigation test*.<br>
 
 
 ![Main menu](static/docs/Lighthouse_snapshot_test.webp#center)
-*<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
+
+*<font color="red">LovinEscapades</font>: Lighthouse snapshot test*.<br>
 
 
 ### Jigsaw CSS Validator
@@ -669,7 +680,9 @@ For the second error, no relevant results were found, and I am unable to provide
 The WAVE Tool reports no errors but does issue an alert.
 
 ![Main menu](static/docs/WAVE_test.webp#center)
-*<center><font color="red">LovinEscapades</font>: WAVE accessibility test*.</center><br>
+
+*<font color="red">LovinEscapades</font>: WAVE accessibility test*.<br>
+
 
 Upon investigating further, it suggests that both the site logo and the "Home" navbar element have the same link pointing to the homepage. I have not addressed this alert because having multiple links leading to the home page is a common practice and does not typically impede navigation or accessibility.
 
