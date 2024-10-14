@@ -854,15 +854,20 @@ If you encounter other bugs, please create an issue by clicking [here](https://g
 ### Open Source
 As an open-source project, ***LovinEscapades*** promotes transparency and community involvement. The code is accessible on GitHub, allowing developers to view, fork, and contribute to the project as they desire.
 
+
 [*Back to top*](#)
+
 
 ## Acknowledgements
 - Further details on the usage of Leaflet JS were obtained from https://leafletjs.com/
-- [`BugBytes` Youtube channel](https://www.youtube.com/watch?v=qzrE7cfc_3Q) for using Django Graphs
+- [`BugBytes` Youtube channel](https://www.youtube.com/watch?v=qzrE7cfc_3Q) for using Django Graphs and great short examples of using extensions
 - [`BugBytes` Youtube channel](https://www.youtube.com/watch?v=E2bhoCOMlsA&t=44s) for the Django - Leaflet integration idea  
+- [Pagination with Django](https://djangocentral.com/adding-pagination-with-django/#adding-pagination-using-function-based-views)
+- [On handling multiple forms on the same template](https://stackoverflow.com/questions/1395807/proper-way-to-handle-multiple-forms-on-one-page-in-django)
+- [Codemy Youtube channel](https://www.youtube.com/watch?v=H8MmNqDyra8&list=PLCC34OHNcOtoQCR6K4RgBWNi3-7yGgg7b&index=3) for automatically creating profile pages
 - `ChatGPT` was utilized to generate sensible input for text content, assist in crafting the README file, and perform language proof-checking.
 
-
+    
 [*Back to top*](#)
 
 
