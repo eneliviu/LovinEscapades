@@ -38,9 +38,9 @@ document.addEventListener("DOMContentLoaded", function() {
  * Displays error messages and prevents submission if validation fails.
  * Resets the form when the cancel button is clicked.
  */
-document.addEventListener("DOMContentLoaded", function () {
-
+document.addEventListener("DOMContentLoaded", function (e) {
     let add_form = document.getElementById("addTripForm");
+
     //let button = document.getElementById("submitButton");
     let cancelButton_add = document.getElementById("cancelButton");
     add_form.addEventListener("submit", function (e) {
@@ -63,52 +63,47 @@ document.addEventListener("DOMContentLoaded", function () {
         let errMsg = [];
 
         // Datetime inputs:
-
         // Check if end date is earlier than start date
         if (endDate < startDate) {
             errMsg.push("Error: End date cannot be earlier than start date.");
         }
-        if ( (selectedOption === 'Planned') && (startDate < currentDate) ) {
+        if ((selectedOption === 'Planned') && (startDate < currentDate)) {
             // Validate dates for Planned trips
             errMsg.push("Error: Cannot plan a trip on past dates.");
         }
-        if ( (selectedOption === 'Ongoing') && 
-            !( (startDate <= currentDate) && (endDate >= currentDate)) ) {
+        if ((selectedOption === "Ongoing") &&
+            !((startDate <= currentDate) && (endDate >= currentDate))) {
             // Validate dates for Ongoing trips
             errMsg.push("Error: Ongoing trip must include the current date.");
         }
-        if ( (selectedOption === "Completed") &&
-             (startDate>currentDate && endDate > currentDate) ) {
+        if ((selectedOption === "Completed") &&
+            (startDate > currentDate && endDate > currentDate)) {
             // Validate dates for Completed trips
             errMsg.push("Error: Completed trip cannot end in the future.");
         }
 
         // Text inputs
-
-        if(title.length === 0){
-            errMsg.push("Error: Title cannot be empty string.");
+        if (title.length === 0) {
+            errMsg.push("Error: Title cannot be an empty string.");
         }
-        if(place.length === 0){
-            errMsg.push("Error: Place cannot be empty string.");
+        if (place.length === 0) {
+            errMsg.push("Error: Place cannot be an empty string.");
         }
-        if(country.length === 0){
-            errMsg.push("Error: Country cannot be empty string.");
+        if (country.length === 0) {
+            errMsg.push("Error: Country cannot be an empty string.");
         }
 
         // Show errors
-        if (errMsg.length>0) {
+        if (errMsg.length > 0) {
             // Prevent default submission if there is an error.
             e.preventDefault();
-            alert(errMsg.join("\n") );
+            alert(errMsg.join("\n"));
         }
         // Otherwise, allows the form to be submitted naturally
-        // if validations passes (standard HTTP form submission).
-        // The form data will be sent to the server, and Django
-        // will handle the form processing and validation on the server-side.
+        // if validations pass (standard HTTP form submission).
     });
 
-    cancelButton_add.addEventListener("click", function (e) {
+    cancelButton_add.addEventListener("click", () => {
         document.getElementById("addTripForm").reset();
     });
-
 });
