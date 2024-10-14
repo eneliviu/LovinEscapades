@@ -213,6 +213,10 @@ The following Python modules were installed using the `pip install` command in t
 [www.markdownguide.org](https://www.markdownguide.org/basic-syntax/).
 
 
+### Cloudinary serving
+- The static assets (images in our case) are served using Cloudinary's capabilities
+
+
 ### Cloud deployment
 - The app is currently deployed on [Heroku Cloud Application Platform](https://www.heroku.com)
 For cloud deployment, the [dependency requirements file](requirements.txt) was compiled using the
@@ -243,6 +247,8 @@ For cloud deployment, the [dependency requirements file](requirements.txt) was c
 [*Back to top*](#)
 
 
+**************************************************************************************************#
+
 ## Usage and screenshots
 
 - A quick demonstration of using the app can be found here: [***here.***](assets/giffs/Demo-functionality.gif)
@@ -250,9 +256,147 @@ For cloud deployment, the [dependency requirements file](requirements.txt) was c
 - An example for the trip deletion process can be found here: [***here.***](assets/giffs/Demo-functionality-task-delete.gif)
 - An example for adding a new trip can be found here: [***here.***](assets/giffs/Demo-functionality-task-add.gif)
 
+
+### Responsive design
+
+![Main menu](static/clips/Responsive_large_screen.webp#center)
+*<center><font color="red">LovinEscapades</font>: Responsive design: large screen*.</center><br>
+
+
+![Main menu](static/clips/Responsive_tablet_phone.webp#center)
+*<center><font color="red">LovinEscapades</font>: Responsive design: tablet and mobile phone*.</center><br>
+
+
+### User Registration
+
+- The site visitor must fill in a standard registration form:
+
+![Main menu](static/clips/User_registration_form.webp#center)
+*<center><font color="red">LovinEscapades</font>: Responsive design: tablet and mobile phone*.</center><br>
+
+- The user instroduces username, email and a strong password
+![Main menu](static/clips/User_registration_form_fill.webp#center)
+*<center><font color="red">LovinEscapades</font>: Responsive design: tablet and mobile phone*.</center><br>
+
+- If the registration is successful, the user is redirect to the home page and a success message is posted.
+- For logged-in users, the Registration navbar menu is not visible anymore, and the 'My profile'- page with a user icon appears on the right side of the navbar.
+- Authenticated users can navigate to the Dashboard page
+
+![Main menu](static/clips/User_registration_logged.webp#center)
+*<center><font color="red">LovinEscapades</font>: Responsive design: tablet and mobile phone*.</center><br>
+
+
+### User Dashboard
+- The Dashboard offers CRUD fuctionality for managing trips and images
+
+![Main menu](static/clips/Dashboard_clean.webp#center)
+*<center><font color="red">LovinEscapades</font>: Dashboard page*.</center><br>
+
+#### **Create new trip**
+- On the Dashboard, the stats are null and the user can create a new trip record by clicking on the 'Add new trip' button to open an empty form in a Bootstrap modal.
+- By design, all form fields are required
+
+![Main menu](static/clips/Add_new_trip_start.webp#center)
+*<center><font color="red">LovinEscapades</font>:Add new trip form*.</center><br>
+
+- Using Javascript, the date picker entries are corroborated in real-time to the Trip status category (Completed, On-going and Planned) to avoid erroneous choices and to increase the UX. The eventual error are shown in browser alerrs, and the user can chose other entries accordingly. 
+- On the backend, the date entries are checked against those form other planned trips to eliminate possible collusions. There errors are hadled by Python logic in `trip.views.py`, and a Django error message is sent if necessary.
+
+![Main menu](static/clips/Add_trip_Completed_error.webp#center)
+*<center><font color="red">LovinEscapades</font>: Add new trip form: date choice missmatch for COMPLETED trips*.</center><br>
+
+![Main menu](static/clips/Add_trip_Planned_error.webp#center)
+*<center><font color="red">LovinEscapades</font>: Add new trip form: date choice missmatch for PLANNED trips*.</center><br>
+
+- After a new trip is created and posted as a trip card containg basic trip info  
+- Django success message is sent to the user.
+- The Dasboard is paginated such that it can handle a large number of trip instances 
+
+![Main menu](static/clips/Add_new_trip_success.webp#center)
+*<center><font color="red">LovinEscapades</font>: Add new trip form: correct date choice for ON-GOING trips*.</center><br>
+
+- The created trip, if the shared choice is `YES`, it will be sent to the Leaflet map on the landing page. By clicking on the marker, trip information and a redirecting link appear in a tooltip while the map zooms in at the marker location
+- The coordinates are calculated using the `geopy` Python module that uses the trip destination (Place and Country) to localize and retrieve the Longitude and the Latitude for mapping the location.
+- Although the form does not show the coordinates fields when creating a new trip, these fields exist and are populated when the coordinates are saved.  
+- If the location cannot be geolocated, a Django error message is sent to the user.  
+
+![Main menu](static/clips/Add_new_trip_on_map.webp#center)
+*<center><font color="red">LovinEscapades</font>: Add new trip form: correct date choice for ON-GOING trips*.</center><br>
+
+![Main menu](static/clips/Add_new_trip_on_map_tooltip.webp#center)
+*<center><font color="red">LovinEscapades</font>: Add new trip form: correct date choice for ON-GOING trips*.</center><br>
+
+#### **Managing trips**
+- After a  new trip is created, the dashboard stats are updated accordigly
+
+![Main menu](static/clips/Dashboard_update_stats.webp#center)
+*<center><font color="red">LovinEscapades</font>: Trip card with CRUD functionalitys*.</center><br>
+
+- The trip cards have CRUD functionality for editing trip data and uploading photos.
+
+![Main menu](static/clips/Trip_card.webp#center)
+*<center><font color="red">LovinEscapades</font>: Trip card with CRUD functionalitys*.</center><br>
+
+- By clicking on the `Update` button, the user is directed to a page containing two choices: 
+    - `Update trip` for changing the trip info.
+    - `Upload photo` for uploading trip photos.
+
+![Main menu](static/clips/Update_trip_page.webp#center)
+*<center><font color="red">LovinEscapades</font>: Trip card with CRUD functionalitys*.</center><br>
+
+- Selecting `Update trip` opens the create trip form with all fields filled in, such that the user can modify and save the new trip information.
+
+![Main menu](static/clips/Edit_trip_form.webp#center)
+*<center><font color="red">LovinEscapades</font>: Edit trip page*.</center><br>
+
+- Selecting `Update photo` option opens a form for loading photos.
+- All form fields are mandatory and must be non-empty.
+- Constraints on min and max text length are in place using Django Validators.
+- After upload, a success message is sent to the user.
+- If the user chooses to share it, then the photo is also sent to the `Gallery`-page.
+
+![Main menu](static/clips/Upload_photos_form.webp#center)
+*<center><font color="red">LovinEscapades</font>: Upload photo form*.</center><br>
+
+![Main menu](static/clips/Upload_photo_success.webp#center)
+*<center><font color="red">LovinEscapades</font>: Upload photo success*.</center><br>
+
+- After image upload, the stats on the dashboard are updated accordingly
+
+![Main menu](static/clips/Dasboard_stats_1_photo_1_trip.webp#center)
+*<center><font color="red">LovinEscapades</font>: Updated dashboard with trip and photo added*.</center><br>
+
+- The user can access the uploaded photo using the `Photos` button on the trip card to navigate to a `details<image_id>` URL that opens a masonry gallery of image cards. 
+
+
+![Main menu](static/clips/User_trip_photo.webp#center)
+*<center><font color="red">LovinEscapades</font>: Gallery page with shared photo*.</center><br>
+
+- Shared photos can be seen by any site visitor on the `Gallery`-page.
+![Main menu](static/clips/Gallery_shared_photo.webp#center)
+*<center><font color="red">LovinEscapades</font>: Gallery page with shared photo*.</center><br>
+
+- Each photo can be individually deleted form the  `details<image_id>`
+
+![Main menu](static/clips/Delete_photo.webp#center)
+*<center><font color="red">LovinEscapades</font>: Delete photo modal confirmation*.</center><br>
+
+- After the photo is being deleted, the user is redirected to Dashboard and a Django success message is sent to the user.
+- The stats on the Dashboard are updated accordingly
+
+![Main menu](static/clips/Delete_photo_success.webp#center)
+*<center><font color="red">LovinEscapades</font>: Delete photo success message and updated dashboard stats*.</center><br>
+
+### Manage the user profile
+- The user profile  
+![Main menu](static/clips/USer_profile_clean.webp#center)
+*<center><font color="red">LovinEscapades</font>: Gallery page with shared photo*.</center><br>
+
+
+**************************************************************************************************#
+
 [*Back to top*](#)
 
-**************************************************************************************************#
 
 
 
@@ -262,8 +406,6 @@ For cloud deployment, the [dependency requirements file](requirements.txt) was c
 
 
 
-
-**************************************************************************************************#
 
 
 ## Database schema

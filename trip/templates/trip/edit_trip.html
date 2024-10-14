@@ -70,11 +70,6 @@
     </div>
 
 
-    <!--
-    Handling multiple forms:
-    https://stackoverflow.com/questions/1395807/proper-way-to-handle-multiple-forms-on-one-page-in-django
-    -->
-
     <!-- **UPLOAD IMAGE** Modal -->
     <div class="modal fade" id="uploadImageModal" tabindex="-1" aria-labelledby="uploadImageModalLabel"
         aria-hidden="true" aria-describedby="uploadImageModalLabelDescription">
@@ -91,19 +86,25 @@
                                 {% csrf_token %}
                                 {{ image_form | crispy }}
                                 <input type="hidden" name="form_type" value="uploadImageForm">
-                                <button id="cancelButtonImage" type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                                <button type="submit" class="btn btn-primary">
-                                    Upload
-                                </button>
-                            </form>
-                        </div>
+                                <div class="justify-content-between">
+                                    <button type="submit" class="btn btn-primary">
+                                        Upload
+                                    </button>
+    
+                                    <button id="cancelButtonImage" type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                            
+                                </div>
+                               
+
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 </section>
