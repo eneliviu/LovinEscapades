@@ -44,7 +44,9 @@ For site visitors who are not registered users, it is still possible to:
 - Send inquiries to the site admin from the `Contact Us` page
 - Register on the site from the `Registration` page
 
-Designed with user-friendliness in mind, ***LovinEscapades*** is an intuitive application aimed at helping users maintain focus and boost engagement. It's important to note that this app serves as a demonstration of acquired full-stack programming skills in fulfillment of the requirements of Milestone Project 4, rather than being a final product.
+Designed with user-friendliness in mind, ***LovinEscapades*** is an intuitive application aimed at helping users maintain focus and boost engagement. It's important to note that this app serves as a demonstration of acquired full-stack programming skills in fulfillment of the requirements of Milestone Project 4, rather than being a final product. 
+The project's foundation builds upon the concepts from Milestone Project 2, where I developed a TODO list using a front-end stack.
+ 
 
 The application can be accessed at [***LovinEscapades***](https://shorturl.at/f4uCn)
 
@@ -52,6 +54,7 @@ To login as admin, use the following credentials:
 - `username`: `test`
 - `password`: `iav4sie2`
 or create your own account.
+
 
 
 ### Target Audience
