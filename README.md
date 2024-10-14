@@ -42,6 +42,9 @@ For site visitors who are not registered users, it is still possible to:
 
 Designed with user-friendliness in mind, ***LovinEscapades*** is an intuitive application aimed at helping users maintain focus and boost engagement. It's important to note that this app serves as a demonstration of acquired full-stack programming skills in fulfillment of the requirements of Milestone Project 4, rather than being a final product.
 
+The application can be accessed at [***LovinEscapades***](https://shorturl.at/f4uCn)
+
+
 ### Target Audience
 
 ***LovinEscapades*** targets travel enthusiasts and individuals who enjoy documenting and sharing their travel experiences. It appeals to users looking to organize their trips, connect with a community, and explore destinations through shared content. Designed with simplicity in mind, the platform suits both tech-savvy individuals and those new to online travel documentation, providing an intuitive space for managing itineraries and memories. The app is designed to accommodate a diverse user base, embracing individuals from varied geographic locales, cultures, and backgrounds globally, fostering a rich exchange of experiences and perspectives.
@@ -130,7 +133,7 @@ More details about the app functionality are provided in the [Usage and Screensh
 
 ## Application structure
 
-### ***Lovingescapades*** project consists of  three apps:
+### ***Lovingescapades*** project consists of four apps:
 
 ### 1. `trip`
 This app features the `Dashboard` page, allowing users to:
@@ -155,7 +158,7 @@ This app provides essential functionality for site visitors to send inquiries to
 
 ## Technologies Used
 
-### **Django:** 
+### **Django Web Framework:** 
 - A web framework made with Python that helps build web apps quickly and efficiently. It's great for managing databases and organizing code, making it easier to create complex features for ***LovinEscapades***.
 
 ### **JavaScript:** 
@@ -207,23 +210,31 @@ The following Python modules were installed using the `pip install` command in t
 ### **Javascript libraries**
 - Leaflet 1.9.4 ([JavaScript library for mobile-friendly interactive maps](https://leafletjs.com/index.html))
 
-
 ### **Markdown**
 - The Markdown formatting for README.md and HELP.md files was done according to the documentation provided at
 [www.markdownguide.org](https://www.markdownguide.org/basic-syntax/).
 
-
 ### Cloudinary serving
 - The static assets (images in our case) are served using Cloudinary's capabilities
 
-
 ### Cloud deployment
 - The app is currently deployed on [Heroku Cloud Application Platform](https://www.heroku.com)
-For cloud deployment, the [dependency requirements file](requirements.txt) was compiled using the
-`pip freeze --local > requirements.txt` command in the VSCode PowerShell. 
-- The processes to run on the Heroku platform are specified in the `Procfile`. 
+- For cloud deployment, the [dependency requirements file](requirements.txt) was compiled using the following command in the VSCode terminal: 
+```
+pip freeze --local > requirements.txt
+```
+ 
+
+- The processes to run on the Heroku platform are specified in the `Procfile` file. 
 - Sensitive information is stored in the `env.py` file, which is listed in the `.gitignore` to prevent it from being uploaded to GitHub.
 - The app can be accessed at [***LovinEscapades***](https://shorturl.at/f4uCn).
+
+### Local deployment
+- For development or deployment on a local development, the web server can be started using the terminal command:
+
+```
+python manage.py runserver
+```
 
 
 [*Back to top*](#)
@@ -251,14 +262,8 @@ For cloud deployment, the [dependency requirements file](requirements.txt) was c
 
 ## Usage and screenshots
 
-- A quick demonstration of using the app can be found here: [***here.***](assets/giffs/Demo-functionality.gif)
-- The user registraton process can be found here: [***here.***](assets/giffs/Demo-functionality-registration.gif)
-- An example for the trip deletion process can be found here: [***here.***](assets/giffs/Demo-functionality-task-delete.gif)
-- An example for adding a new trip can be found here: [***here.***](assets/giffs/Demo-functionality-task-add.gif)
-
-
 ### Responsive design
-
+- The 
 ![Main menu](static/clips/Responsive_large_screen.webp#center)
 *<center><font color="red">LovinEscapades</font>: Responsive design: large screen*.</center><br>
 
@@ -388,20 +393,86 @@ For cloud deployment, the [dependency requirements file](requirements.txt) was c
 *<center><font color="red">LovinEscapades</font>: Delete photo success message and updated dashboard stats*.</center><br>
 
 ### Manage the user profile
-- The user profile  
-![Main menu](static/clips/USer_profile_clean.webp#center)
-*<center><font color="red">LovinEscapades</font>: Gallery page with shared photo*.</center><br>
+- Initially, the user profile contains only the username and email address that are required 
+    by the registration process, but the fields for first and last name are empty.
+   
+![Main menu](static/clips/User_profile_clean.webp#center)
+*<center><font color="red">LovinEscapades</font>: User profile page*.</center><br>
 
+- The `Update` button opens a form for updating the user information
+
+![Main menu](static/clips/Update_user_profile.webp#center)
+*<center><font color="red">LovinEscapades</font>: Update user profile form*.</center><br>
+
+- After submitting the form, the user is redirected back to `My Profile`-page where the personalia has been updated
+
+![Main menu](static/clips/Update_user_profile_success.webp#center)
+*<center><font color="red">LovinEscapades</font>: Update user profile form*.</center><br>
+
+- The user can post testimonials to the landing page using the 'New testimonial' button
+
+ ![Main menu](static/clips/Testimonials_form.webp#center)
+*<center><font color="red">LovinEscapades</font>: Post testimonial form*.</center><br>
+
+- After submitting the testimonial, the user is redirected to `My Profile`-page where the post is loaded and pending approval. 
+
+ ![Main menu](static/clips/Testimonials_success.webp#center)
+*<center><font color="red">LovinEscapades</font>: Posted testimonial*.</center><br>
+
+
+ ![Main menu](static/clips/Testimonial_admin.webp#center)
+*<center><font color="red">LovinEscapades</font>: Testimonial pending approval on admin page*.</center><br>
+
+ ![Main menu](static/clips/Testimonial_approved.webp#center)
+*<center><font color="red">LovinEscapades</font>: Approved testimonial on admin page*.</center><br>
+
+ ![Main menu](static/clips/Testimonial_approved_user_profile.webp#center)
+*<center><font color="red">LovinEscapades</font>: Approved testimonial on admin page*.</center><br>
+
+- The `Dashboard`-page has also been udated with a new testimonial post
+
+ ![Main menu](static/clips/Dashboard_trip_testimonial_approved.webp#center)
+*<center><font color="red">LovinEscapades</font>: Updated dashboard page with trip and approved testimonial*.</center><br>
+
+- After approval, the testimonial is posted on the landing page
+
+ ![Main menu](static/clips/Landing_page_with_testimonial.webp#center)
+*<center><font color="red">LovinEscapades</font>: Updated dashboard page with trip and approved testimonial*.</center><br>
+
+
+- Deleteing a trip will remove all the linked trip photos as well
+- The dasboard stats and the landing page map are also updated  
+
+ ![Main menu](static/clips/Example_two_trips_two_photos.webp#center)
+*<center><font color="red">LovinEscapades</font>: Updated dashboard page with trip and approved testimonial*.</center><br>
+
+ ![Main menu](static/clips/Map_two_trips.webp#center)
+*<center><font color="red">LovinEscapades</font>: Updated map with new trip marker added*.</center><br>
+
+ ![Main menu](static/clips/Delete_trip.webp#center)
+*<center><font color="red">LovinEscapades</font>: Delete trip and associated photo*.</center><br>
+
+
+ ![Main menu](static/clips/Delete_trip_success.webp#center)
+*<center><font color="red">LovinEscapades</font>: Delete trip and associated photo*.</center><br>
+
+ ![Main menu](static/clips/Map_one_trip_after_delete.webp#center)
+*<center><font color="red">LovinEscapades</font>: Delete trip marker from map after trip deletion*.</center><br>
 
 **************************************************************************************************#
+
 
 [*Back to top*](#)
 
 
+#### **Managing site admin inquiries**
+
+ ![Main menu](static/clips/Contact_us_form.webp#center)
+*<center><font color="red">LovinEscapades</font>: Form for sending inquiries to site admin*.</center><br>
 
 
-
-
+ ![Main menu](static/clips/Contact_success.webp#center)
+*<center><font color="red">LovinEscapades</font>: Inquiry successfully sent to site admin*.</center><br>
 
 
 
@@ -454,11 +525,11 @@ The [JSHint](https://jshint.com/) validator flagged two warnings across all Java
 ### **Lighthouse**
 The Lighthouse validator showed very good results, with an warning related to a Leaflet internal issue. 
 
-![Main menu](static/docs/Lighthouse_navtest.webp)
+![Main menu](static/docs/Lighthouse_navtest.webp#center)
 *<center><font color="red">LovinEscapades</font>: Lighthouse navigation test*.</center><br>
 
 
-![Main menu](static/docs/Lighthouse_snapshot_test.webp)
+![Main menu](static/docs/Lighthouse_snapshot_test.webp#center)
 *<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
 
 
@@ -466,22 +537,22 @@ The Lighthouse validator showed very good results, with an warning related to a 
 
 The Jigsaw CSS Validator reported no errors for the custom CSS.
 
-![Main menu](static/docs/W3C-CSS-CustomCSS.webp)
+![Main menu](static/docs/W3C-CSS-CustomCSS.webp#center)
 *<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
 
 However, it identified two errors in the Leaflet CSS, both related to Leaflet specifically:
 
-![Main menu](static/docs/W3C-CSS-Errors-URL.webp)
+![Main menu](static/docs/W3C-CSS-Errors-URL.webp#center)
 *<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
 
 Upon further investigation using [caniuse.com](https://caniuse.com), it was confirmed that `plus-lighter` is a valid value for the `mix-blend-mode` property.
 
-![Main menu](static/docs/CANIUSE_plus-lighter.webp)
+![Main menu](static/docs/CANIUSE_plus-lighter.webp#center)
 *<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
 
 For the second error, no relevant results were found, and I am unable to provide an explanation or a fix.
 
-![Main menu](static/docs/CANIUSE_behaviour.webp)
+![Main menu](static/docs/CANIUSE_behaviour.webp#center)
 *<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
 
 
@@ -489,17 +560,28 @@ For the second error, no relevant results were found, and I am unable to provide
 
 The WAVE Tool reports no errors but does issue an alert.
 
-![Main menu](static/docs/WAVE_test.webp)
+![Main menu](static/docs/WAVE_test.webp#center)
 *<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
 
 Upon investigating further, it suggests that both the site logo and the "Home" navbar element have the same link pointing to the homepage. I have not addressed this alert because having multiple links leading to the home page is a common practice and does not typically impede navigation or accessibility.
 
-![Main menu](static/docs/WAVE_test_alert.webp)
-*<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
+![Main menu](static/docs/WAVE_test_alert.webp#center)
+
+<font color="red">LovinEscapades</font>: Lighthouse snapshot test*.<br>
 
 Finally, the WAVE contrast check test also passes successfully.
 
-![Main menu](static/docs/WAVE_test_contrast.webp)
+![Main menu](static/docs/WAVE_test_contrast.webp#center)
+
+<font color="red">LovinEscapades</font>: Lighthouse snapshot test*.<br>
+
+
+### W3C Markup Validation Service
+
+The W3C HTML Validator displays parsing errors because of the Django Template Language. Attempting to find alternative validators online didn't yield any viable solutions. I'm open to suggestions on how to address this issue.
+
+
+![Main menu](static/docs/NU_HTML_checker.webp#center) 
 *<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
 
 

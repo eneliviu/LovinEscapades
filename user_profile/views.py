@@ -1,10 +1,7 @@
 from django.shortcuts import (render, redirect,
                               get_object_or_404)
 from django.contrib import messages
-# from django.http import HttpResponseRedirect
-# from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-# from allauth.account.forms import SignupForm
 from .models import Testimonial
 from .forms import TestimonialForm, UpdateProfileForm
 

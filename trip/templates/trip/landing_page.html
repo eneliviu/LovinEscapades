@@ -7,20 +7,13 @@
 <meta name="description" content="Landing page.">
 {% endblock %}
 
-
 {% block content %}
-<!-- Content Goes here -->
-
-
 <div class="row container-fluid d-flex flex-column align-items-center  mx-0 px-0">
-
-    <!-- Hero Section -->
     <section id='hero-section' class="container my-4 col-12 " aria-labelledby="hero-heading">
         <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg flex-lg-row-reverse">
             <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
                 <img id='hero-img' class="c-img" alt="Map image with pinned locations" width="400" height="267"
                     src="{% static 'images/hero.webp' %}">
-                <!-- src="{% static 'images/leandro-barreto-nomAp6_KVXU-unsplash.jpg' %}" -->
             </div>
             <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
                 <h1 class="display-4 fw-bold lh-1 text-body-emphasis hero-heading">
@@ -39,7 +32,6 @@
                         <a href="{% url 'user' %}" class="btn btn-outline-primary btn-lg px-4 me-md-2 fw-bold ">
                             Add Your Trip
                         </a>
-
                     </div>
                     {% endif %}
                 </div>
@@ -121,133 +113,3 @@
 <script src="{% static 'js/manage_jquery.js' %}" type="text/javascript" defer></script>
 
 {% endblock content%}
-
-
-<!-- {% if not user.is_authenticated %}
-<script type='text/javascript'>
-    // Greenwich Coordinates default
-    var map = L.map('map', { zoomControl: true }).setView([51.4934, 0.0098], 3);
-
-    // Creating scale control
-    var scale = L.control.scale();
-    scale.addTo(map);
-
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-
-    var locations = JSON.parse(document.getElementById('trips_json').textContent);
-    if (!Array.isArray(locations)) {
-        locations = [locations];
-    }
-
-    var markers = L.markerClusterGroup();
-    if (Object.keys(locations)) {
-        locations.forEach(element => {
-            let marker = L.marker([element.lat, element.lon])
-                .bindPopup(
-                    '<div>' +
-                    '<b>' + element.place + ', ' + element.country + '</b>' +
-                    '</br>' +
-                    '<b>' + element.trip_category + '</b>' +
-                    '</br>' +
-                    'From: ' + element.start_date + '</br>' +
-                    'To: ' + element.end_date +
-                    '</br>' +
-                    '<div class="text-center" >' + 
-                        "<a href='{% url 'account_login' %}' class='badge text-bg-primary' rel='noopener noreferrer'>" + 
-                            '<span class="fs-6 text-center">' + "More..." + '</span>' + 
-                        "</a>" +
-                    '</div>'
-                    +
-                    '</div>'
-                );
-            markers.addLayer(marker);
-        })
-        map.addLayer(markers);
-
-        if (Object.keys(locations).length > 1) {
-            var bounds = markers.getBounds();
-            if (bounds.isValid()) {
-                map.fitBounds(bounds, maxZoom = 8);
-            }
-        }
-
-        markers.on('click', function (e) {
-            map.flyTo(e.latlng, 6);
-        });
-    }
-
-</script>
-{% else %}
-<script type='text/javascript'>
-    // Greenwich Coordinates default
-    var map = L.map('map', { zoomControl: true }).setView([51.4934, 0.0098], 3);
-
-    // Creating scale control
-    var scale = L.control.scale();
-    scale.addTo(map);
-
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-
-    var locations = JSON.parse(document.getElementById('trips_json').textContent);
-    if (!Array.isArray(locations)) {
-        locations = [locations];
-    }
-
-    var markers = L.markerClusterGroup();
-    
-    if (Object.keys(locations)) {
-        locations.forEach(element => {
-            let marker = L.marker([element.lat, element.lon])
-                .bindPopup(
-                    '<div class="fs-6">' +
-                    //<img src='img/" + feature.properties.img_name + "' width='259'/>+
-                    '<b>' + element.place + ', ' + element.country + '</b>' +
-                    '</br>' +
-                    '<b>' + element.trip_category + '</b>' +
-                    '</br>' +
-                    'From: ' + element.start_date + '</br>' +
-                    'To: ' + element.end_date +
-                    '</br>' +
-                    '<div class="text-center" >' + 
-                        "<a href='{% url 'shared_gallery' %}' class='badge text-bg-primary' rel='noopener noreferrer'>" + 
-                            '<span class="fs-6 text-center">' + "More..." + '</span>' + 
-                        "</a>" +
-                    '</div>'
-                    +
-                    '</div>'
-                );
-            markers.addLayer(marker);
-        })
-        map.addLayer(markers);
-
-        if (Object.keys(locations).length > 1) {
-            var bounds = markers.getBounds();
-            if (bounds.isValid()) {
-                map.fitBounds(bounds, maxZoom = 8);
-            }
-        }
-
-        markers.on('click', function (e) {
-            map.flyTo(e.latlng, 6);
-        });
-    }
-
-</script>
-{% endif %} -->
-
-
-
-
-
-
-
-
-<!-- {% block extras %}
-<script src="{% static 'js/manage_jquery.js' %}" type="text/javascript"></script>
-{% endblock %} -->

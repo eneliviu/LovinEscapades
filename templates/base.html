@@ -1,6 +1,4 @@
 {% load static %}
-
-<!-- assign  URLs to a variables named xxx_url -->
 {% url 'home' as home_url %}
 {% url 'user' as user_url %}
 {% url 'gallery' as gallery_url %}
@@ -10,15 +8,12 @@
 {% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
 
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Current page.">
-
     <title>LovinEscapades</title>
     <link rel="shortcut icon" type="image/png" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="512x512" href="{% static 'favicon/android-chrome-512x512.png' %} ">
@@ -29,7 +24,6 @@
     <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#dafeff">
-
     <!-- Google Fonts CSS -->
     <link rel="preconnect" href="https://fonts.gstatic.com"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"/>

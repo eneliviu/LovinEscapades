@@ -103,17 +103,3 @@ class UpdateProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UpdateProfileForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
-
-    # def clean_first_name(self):
-    #     name = self.cleaned_data.get('first_name').strip()
-    #     if len(name) < 2:
-    #         raise forms.ValidationError("Name must be at least 2\
-    #             characters long.")
-    #     return name
-
-    # def clean_second_name(self):
-    #     name = self.cleaned_data.get('second_name').strip()
-    #     if len(name) < 2:
-    #         raise forms.ValidationError("Name must be at least 2\
-    #             characters long.")
-    #     return name
