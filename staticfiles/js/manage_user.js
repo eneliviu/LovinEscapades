@@ -1,6 +1,3 @@
-/* --------------------------------------------------------------------------*/
-/* ----------------------  DELETE  ------------------------------------------*/
-/* --------------------------------------------------------------------------*/
 /*
  * Initializes deletion functionality for the provided delete buttons.
  * 
@@ -12,9 +9,10 @@
  * the user for confirmation before deletion.
  */
 
-var deleteModalPost = new bootstrap.Modal(document.getElementById("deleteModalPost"));
-var deleteButtonsPost = document.getElementsByClassName("btn-delete");
-var deleteConfirmPost = document.getElementById("deletePostConfirm");
+let deleteModalPost = new bootstrap.Modal(document
+    .getElementById("deleteModalPost"));
+let deleteButtonsPost = document.getElementsByClassName("btn-delete");
+let deleteConfirmPost = document.getElementById("deletePostConfirm");
 
 for (let button of deleteButtonsPost) {
     button.addEventListener("click", (e) => {

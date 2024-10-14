@@ -3,7 +3,7 @@ from .forms import ContactForm
 
 
 # Create your tests here.
-class TestCollaborateForm(TestCase):
+class TestContactForm(TestCase):
 
     def test_form_is_valid(self):
         '''

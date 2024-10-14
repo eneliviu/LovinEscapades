@@ -4,13 +4,17 @@
 
 ### **Table of content:**
 - [Overview](#overview)
-- [Application development](#application-development)
-- [Main features](#main-features)
+- [Application Development](#application-development)
+- [Main Features](#main-features)
+- [Application Structure](#project-structure)
 - [Technologies Used](#technologies-used)
-- [Manual testing](#manual-testing)
-- [Unit testing](#unit-testing)
+- [Accessibility and Design](#accessibility-and-design)
+- [Usage and Screenshots](#usage-and-screenshots)
+- [Online Validators](#online-validators)
+- [Manual Testing](#manual-testing)
+- [Unit Testing](#unit-testing)
 - [Known bugs and issues](#known-bugs-and-issues)
-- [Possible improvements](#possible-improvements)
+- [Further improvements](#further-improvements)
 - [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
@@ -128,10 +132,11 @@ During development, I encountered numerous bugs and conducted extensive code ref
 These features highlight the core functionalities of ***LovinEscapades***, showcasing its capabilities for user interaction, content management, and community engagement. 
 More details about the app functionality are provided in the [Usage and Screenshots](#usage-and-screenshots) section.
 
+
 [*Back to top*](#)
 
 
-## Application structure
+## Project structure
 
 ### ***Lovingescapades*** project consists of four apps:
 
@@ -154,6 +159,9 @@ This app provides essential functionality for site visitors to send inquiries to
 - Hosts the photo gallery where all publicly shared photos by registered users can be viewed by any visitor.
 - Users can publish photos even if they choose not to make the associated trip information public.
 - Each photo in the gallery includes a like icon and basic trip details, though the feature for sending and receiving likes has not been implemented yet.
+
+
+[*Back to top*](#)
 
 
 ## Technologies Used
@@ -224,7 +232,6 @@ The following Python modules were installed using the `pip install` command in t
 pip freeze --local > requirements.txt
 ```
  
-
 - The processes to run on the Heroku platform are specified in the `Procfile` file. 
 - Sensitive information is stored in the `env.py` file, which is listed in the `.gitignore` to prevent it from being uploaded to GitHub.
 - The app can be accessed at [***LovinEscapades***](https://shorturl.at/f4uCn).
@@ -235,7 +242,6 @@ pip freeze --local > requirements.txt
 ```
 python manage.py runserver
 ```
-
 
 [*Back to top*](#)
 
@@ -258,9 +264,7 @@ python manage.py runserver
 [*Back to top*](#)
 
 
-**************************************************************************************************#
-
-## Usage and screenshots
+## Usage and Screenshots
 
 ### Responsive design
 - The 
@@ -459,8 +463,6 @@ python manage.py runserver
  ![Main menu](static/clips/Map_one_trip_after_delete.webp#center)
 *<center><font color="red">LovinEscapades</font>: Delete trip marker from map after trip deletion*.</center><br>
 
-**************************************************************************************************#
-
 
 [*Back to top*](#)
 
@@ -475,8 +477,26 @@ python manage.py runserver
 *<center><font color="red">LovinEscapades</font>: Inquiry successfully sent to site admin*.</center><br>
 
 
+ ![Main menu](static/clips/Inquiry_to_site_admin.webp#center)
+*<center><font color="red">LovinEscapades</font>: Inquiry successfully sent to site admin*.</center><br>
+
+ ![Main menu](static/clips/Inquiry_to_site_admin_read.webp#center)
+*<center><font color="red">LovinEscapades</font>: Inquiry successfully sent to site admin*.</center><br>
 
 
+[*Back to top*](#)
+
+#### **Managing photo gallery page**
+
+- The `Gallery`-page contains all the photos sahred by the user. 
+- A user can choose to share a photo, but not to make the entire trip public.
+- Deleting a trip will delete also the associated photos from the `Gallery`-page
+
+ ![Main menu](static/clips/Shared_gallery.webp#center)
+*<center><font color="red">LovinEscapades</font>: Inquiry successfully sent to site admin*.</center><br>
+
+
+[*Back to top*](#)
 
 
 ## Database schema
@@ -585,8 +605,7 @@ The W3C HTML Validator displays parsing errors because of the Django Template La
 *<center><font color="red">LovinEscapades</font>: Lighthouse snapshot test*.</center><br>
 
 
-
-## Manual testing:
+## Manual Testing:
 
 | Feature | Expected behaviour | Test | Status |
 | --- | --- | --- | --- |
@@ -595,58 +614,69 @@ The W3C HTML Validator displays parsing errors because of the Django Template La
 | &nbsp;&nbsp;- *Username validation* | Accept a valid password | Strong password |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
 | &nbsp;&nbsp;- *Redirect to dashboard* | Innloged user redirected to `Dashboard`-page | Successful navigation (200 status code) |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
 | &nbsp;&nbsp;- *Success message* | Returns Django messsage for successful login | Green message box on screen |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-
 | `User login` | **User information retrieved, user can login**
-| &nbsp;&nbsp;- *Username validation* | Username matched in 'users' worksheet | Non-empty user input | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Password validation* | Password matched in 'users' worksheet | Min. 8 characters, 1 capital letter, 2 numerals |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Email address validation* |Email address matched in 'users' worksheet | Valid format (name, @, and domain) |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Redirect to dashboard* | App runs until the the user inputs are valid | Entry valid and invalid user inputs |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Success message* | Returns Django messsage for successful login | Green message box on screen |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-
+| &nbsp;&nbsp;- *Username validation* | Valid username | Can login with corrent user name | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Password validation* | Valid password | Can login with correct password | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Redirect to home address* | Redirect | User redirected to home after registration |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Success message* | Returns messsage for successful login/registration | Green message box on screen |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
 | &nbsp;&nbsp;- *Welcome message* | Dispalys username and welcome message | Green message box on screen |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `Create new trip` | **Authenticated users can create a new trip**
+| &nbsp;&nbsp;- *Select time intervals* | Start date less or equal to end date | Type wrong dates combinations | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Select time intervals* | Completed trips cannot be in the future | Type wrong dates combintations | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Select time intervals* | Planned trips cannot be in the past | Type wrong dates combintations | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Select time intervals* | Ongoing trips must contain the current date | Type wrong dates combintations | ![fail](https://via.placeholder.com/10/FF0000?text=+) `fail`|
+| &nbsp;&nbsp;- *Success messages* | Create/delete trips must return a message to the user | Create and delete trips | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `Edit trip` | **Modify an existing trip**
+| &nbsp;&nbsp;- ** | Start date less or equal to end date | Type wrong dates combinations | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Select time intervals* | Completed trips cannot be in the future | Type wrong dates combintations | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Select time intervals* | Planned trips cannot be in the past | Type wrong dates combintations | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Select time intervals* | Ongoing trips must contain the current date | Type wrong dates combintations | ![fail](https://via.placeholder.com/10/FF0000?text=+) `fail`|
+| &nbsp;&nbsp;- *Success messages* | Create/delete trips must return a message to the user | Create and delete trips | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Change title* |  Title non-empty, min 100 char | Enter title with different  lengths | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Change place* | Place non-empty, min 2 char | Enter place names with different lengths | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Change country* | Country non-empty, 2-56 chars | Enter country names with different lengths | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Success messages* | Edit trips must return a message to the user | Edit trips | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Map the shared trips * | Shared trips must be mapped | Create trips with/without sharing rights | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `Delete trip` | **Modify an existing trip**
+| &nbsp;&nbsp;- *Remove trip and associated phots* | Deleting a trip must remove all associated photos | Create/delete trips | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Remove trip and map markers* | Deleting a trip must remove all associated map markers | Create/delete trips | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Success messages* | Removing trips must return a message to the user | Remove trips | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `Upload/Delete photos` | **An image can be uploaded to the site**
+| &nbsp;&nbsp;- *File type* | Only iamge files can be uploaded | Upload wrong file types | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Title length* | Title between 2-50 chars | Enter photo titles with different lengths  | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Description length* | Photo description 2-500 chars | Enter photos descriptions with different lengths | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Shared photos to gallery* | Shared photos must be uploaded to Gallery | Upload photos with/withoud sharing rights | ![fail](https://via.placeholder.com/10/FF0000?text=+) `fail`|
+| &nbsp;&nbsp;- *Delete photo* | Upload/delete photos must return a message to the user | Uploade/delete photos | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Success messages* | Upload/delete photos must return a message to the user | Uploade/delete photos | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `Post testimonials` | **An authenticated user can be post a testimonial**
+| &nbsp;&nbsp;- *Create testimonial* | A post should contain vaild text 2-50 chars | Enter posts with different lengths | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Testimonial on the landing page * | Approved testimonials should be posted on the lading page | Create and approve posts | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Delete testimonial* | Users can delete their own testimonials | Add and delete testimonials | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Success messages* | Add/delete testimonials must return a message to the user | Uploade/delete testimonials | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| `Send inquiries` | **A site visitor can send an email to site admin*
+| &nbsp;&nbsp;- *Valid sender name* | Sender name of 2-100 chars | Enter sender names with different lengths | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Valid message* | A message text of 50-500 chars | Enter messages with different lengths | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Admin can receive message* | The messages are visible on the admin page | Send messages | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Admin can approve message* | The admin can approve a message on admin page | Send messages | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
+| &nbsp;&nbsp;- *Success messages* | Sent inquries must return a message to the user | Send inquiries | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
 
-
-
-
-| Feature | Expected behaviour | Test | Status |
-| --- | --- | --- | --- |
-| `User login` | **User information retrieved, user can login**
-| &nbsp;&nbsp;- *Username validation* | Username matched in 'users' worksheet | Non-empty user input | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Password validation* | Password matched in 'users' worksheet | Min. 8 characters, 1 capital letter, 2 numerals |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Email address validation* |Email address matched in 'users' worksheet | Valid format (name, @, and domain) |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *App awaits for valid input* | App runs until the the user inputs are valid | Entry valid and invalid user inputs |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| `User registration` | **New user can open account and login**
-| &nbsp;&nbsp;- *Username validation* | Accept a valid username | Non-empty user input | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Username validation* | Accept a valid password | Min. 8 characters, 1 capital letter, 2 numerals |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Username validation* | Accept a valid email address | Valid format (name, @, and domain) |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *App awaits for valid input* | App runs until the the user inputs are valid | Entry valid and invalid user inputs |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| `Add a new task` | **User can add a new task**
-| &nbsp;&nbsp;- *Task description* | Accept a valid task description | Checks and raises error for empty input, text length less 3 characters or more than 40 characters |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Due date validation* | Accept a valid due date | Valid date format, and not prior to the current date |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Task update* | Increment number of tasks and task ID in 'users' sheet | Entry new user tasks |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Task status* | Mark overdue tasks | Change the cell background color from <span style="background-color:white"><span style="color:white">&nbsp;&nbsp;&nbsp;&nbsp;</span></span> to <span style="background-color:rgb(255, 132, 136)"><span style="color:rgb(255, 132, 136)">&nbsp;&nbsp;&nbsp;&nbsp;</span></span> for the overdue tasks |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *App awaits for valid input* | App runs until the the user inputs are valid | Entry valid and invalid user inputs |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| `Delete task` | **User can remove a task**
-| &nbsp;&nbsp;- *User confirmation* | User confirmation (yes/no) required, delete task if `y` and return to `User menu` if `n` | Enter valid `y/o` and invalid user inputs |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Due date validation* | Accept a valid due date | Valid date format, and not prior to the current date |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Task update* | Decrement number of tasks in 'users' sheet, and update task ID in the user's private sheet | Delete user tasks |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *App awaits for valid input* | App runs until the the user inputs are valid | Entry valid and invalid user inputs |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| `Delete user account` | **User can delete its own account**
-| &nbsp;&nbsp;- *User confirmation* | User confirmation (yes/no) required, delete task if `y` and return to `User menu` if `n` | Enter valid `y/o` and invalid user inputs |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Delete private user worksheet* | Delete the user worksheet | Try to delete user worksheets using correct and wrong worksheet names |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Delete info from 'users' worksheet* | Delete user information (row) and update the 'users' sheet | Delete user account |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *App awaits for valid input* | App runs until the the user inputs are valid | Entry valid and invalid user inputs |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| `Clear the terminal` | **User can clear the terminal**
-| &nbsp;&nbsp;- *User confirmation* | User confirmation (yes/no) required, delete task if `y` and return to `User menu` if `n` | Enter valid `y/n` and invalid user inputs |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *App awaits for valid input* | App runs until the the user inputs are valid | Entry valid and invalid user inputs |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| `Application exit (Menu option)` | **User can clear the terminal**
-| &nbsp;&nbsp;- *Exiting from the `Main Menu`* | User confirmation (yes/no) required, clear if `y` and stay in the loop if `n` | Enter valid `y/n` and invalid user inputs |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *Exiting from the `User Menu`* | User confirmation (yes/no) required, delete task if `y` stay in the loop if `n` | Enter valid `y/n` and invalid user inputs |![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| &nbsp;&nbsp;- *App awaits for valid input* | App runs until the the user inputs are valid | Entry valid and invalid user inputs |![warning](https://via.placeholder.com/10/00FF00?text=+) `pass`|
-| `Forced exit` | **User can force the App to exit with the menu Exit option**
-| &nbsp;&nbsp;- *Exiting the app from the `Main Menu`* | App exits when the user enters the number indicated by the `Exit`- menu option | Check if the user input corresponds to the `Exit`- menu option. Exits for correct input, or stays in the loop otherwise | ![pass](https://via.placeholder.com/10/00FF00?text=+) `pass`|
 
 ---
+
+### Unit Testing 
+
+I  run automatic testing for the simplest case - i.e. the ContactForm `contact` app with the command
+
+```
+python3 manage.py test contact
+```
+
+and I got the following error:
+`django.db.utils.OperationalError: near "None": syntax error`
+
+The error occured when running unit testing with all apps, and I have tried to redo the database migrations, but it didn't work. 
+For the time being, I am open for suggestions.
+
 
 ### Additional testing
 
@@ -657,17 +687,18 @@ on my smartphone (Samsung Galaxy S21) operating on Android OS, using the followi
 - Brave: version 1.70.126 Chromium: 125.0.6422.112 (Official Build) (64-bit)
 - Microsoft Edge: Version 129.0.2792.89 (Official build) (64-bit)
 
-## <font color="red">Known bugs and issues</font>
-- Switching back to the Main Menu from the User Menu not implemented yet;
-- In rare situations, the app may exit ungracefully due to API call errors.
-- Python Linter raises PEP 8 issues due to the length of the run.py script.
 
-If you encounter issues or bugs, please create an issue by clicking [here](https://github.com/eneliviu/LovePlanningCLI/issues).
+[*Back to top*](#)
+
+## <font color="red">Known bugs and issues</font>
+- There is a **Javascript error** that occurs when creating trips with the `Ongoing` status. I don't know if it is a logical error or a coding error, but I suspect that the inclusion of the javascript tags onto the Django templates may not be quite right.
+
+- If you encounter other bugs, please create an issue by clicking [here](https://github.com/eneliviu/LovePlanningCLI/issues).
 
 [*Back to top*](#)
 
 ## Further improvements
-
+- Refactor the Javascript functions 
 - Refactor the delete functions since there is quite a bit of overlap between them.
 - Functionality to reply to user inquiries send through the form on the Contact Us page
 - Filter and sort options to organize and view the trips and photos according to more detailed criteria.

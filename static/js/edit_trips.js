@@ -5,11 +5,12 @@
  * - Displays error messages and prevents form submission if validation fails.
  * - Resets the form when the cancel button is clicked.
  */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function (e) {
     let edit_form = document.getElementById("editTripForm");
     let cancelButton_edit = document.getElementById("cancelButtonTrip");
 
     edit_form.addEventListener("submit", function (e){
+        console.log(edit_form)
 
         // Retrieve the start and end dates
         let startDateValue = document.getElementById("id_start_date").value;
@@ -38,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if ((selectedOption === "Ongoing") &&
             !((startDate <= currentDate) && (endDate >= currentDate) )) {
             // Validate dates for Ongoing trips
+            console.log('OK')
             errMsg = "Error: Ongoing trip must include the current date.";
         }
         if ((selectedOption === "Completed") &&
@@ -58,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // and validation on the server-side.
     });
 
-    cancelButton_edit.addEventListener("click", function(e) {
+    cancelButton_edit.addEventListener("click", ()=> {
         document.getElementById("editTripForm").reset();
     });
 });
