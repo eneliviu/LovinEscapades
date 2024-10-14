@@ -50,11 +50,6 @@ The project's foundation builds upon the concepts from Milestone Project 2, wher
 
 The application can be accessed at [***LovinEscapades***](https://shorturl.at/f4uCn)
 
-To login as admin, use the following credentials:
-- `username`: `test`
-- `password`: `iav4sie2`
-or create your own account.
-
 
 
 ### Target Audience
