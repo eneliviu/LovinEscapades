@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    // Define a function to toggle class based on window width
     function imageResize() {
         if (window.innerWidth < 768) {
             $('#hero-img').addClass('img-fluid').removeClass('c-img');

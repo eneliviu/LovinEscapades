@@ -90,7 +90,8 @@
                             aria-label="Submit map filter query">
                             Submit
                         </button>
-                        <button id="clearButton" type="button" class="btn btn-more" href="{%  url 'home' %}"
+                        <button id="clearButton" type="button" class="btn btn-more"
+                            onclick="window.location.href='{% url 'home' %}'"
                             aria-label="Clear all filters and reset the map">
                             Clear all
                         </button>
