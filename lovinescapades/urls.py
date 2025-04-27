@@ -22,7 +22,7 @@ from django.urls import path, include
 # as your view function or vice-versa.
 # Look in app URL file for any trip urlpatterns.
 urlpatterns = [
-    path('admin', admin.site.urls),
+    path('admin/', admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path('contact_us/', include('contact.urls'), name='contact_page'),
     path('dashboard/', include('trip.urls')),

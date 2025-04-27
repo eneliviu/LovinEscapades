@@ -17,13 +17,17 @@ import sys
 # Connect the settings.py file to the env.py file:
 import dj_database_url
 import mimetypes
-if os.path.isfile('env.py'):
-    import env
+# if os.path.isfile('env.py'):
+#     import env
 
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
+MEDIA_URL = os.environ['CLOUDINARY_URL'] + '/image/upload/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -41,7 +45,8 @@ ALLOWED_HOSTS = [
     '.herokuapp.com',
     'https://*.codeanyapp.com',
     'https://*.herokuapp.com',
-    'https://*.127.0.0.1'
+    'https://*.127.0.0.1',
+    '127.0.0.1'
 ]
 
 
@@ -128,18 +133,20 @@ WSGI_APPLICATION = 'lovinescapades.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(
+            os.environ.get("DATABASE_URL")
+        )
+    }
 
-DATABASES = {
-    'default': dj_database_url.parse(
-        os.environ.get("DATABASE_URL")
-    )
-}
 if 'test' in sys.argv:
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
@@ -150,7 +157,6 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.herokuapp.com",
     'https://*.127.0.0.1',
     "https://*8000-eneliviu-lovinescapades-zperjpx7l8c.ws.codeinstitute-ide.net"
-    
 ]
 
 

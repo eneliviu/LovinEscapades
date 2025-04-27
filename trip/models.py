@@ -89,7 +89,11 @@ class Trip(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     created_on = models.DateTimeField(auto_now_add=True)
-    trip_status = models.CharField(choices=TRIP_STATUS, default='PLANNED')
+    trip_status = models.CharField(
+        choices=TRIP_STATUS,
+        default='PLANNED',
+        max_length=256
+        )
     shared = models.CharField(max_length=3,
                               choices=SHARE_CHOICES,
                               default='YES')
